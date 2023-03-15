@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 const links = [
   { href: '/', label: 'home' },
   { href: '/hello', label: 'hello' },
+  { href: '/blog', label: 'blog' },
 ];
 
 export default function TestDropdown() {
   return (
     <Menu as='div' className='relative inline-block text-left'>
-      <Menu.Button className='inline-flex justify-center w-full text-gray-700 rounded-m'>
-        Options
+      <Menu.Button className='inline-flex justify-center w-full p-3 text-gray-700 bg-blue-300 border-2 rounded-m'>
+        DevDropdown
       </Menu.Button>
       <Transition
         enter='transition duration-100 ease-out'
