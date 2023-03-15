@@ -26,8 +26,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(memberDto.getEmail())
                 .password(passwordEncoder.encode(memberDto.getPassword()))
                 .name(memberDto.getName())
-                .role(Role.COUNSELOR)
-                .content(memberDto.getContent())
+                .role(Role.USER)
                 .birth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE))
                 .phone(memberDto.getPhone())
                 .build();
@@ -50,7 +49,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long updateUser(Member authUser, MemberDto.Basic memberDto) {
 
-        authUser.changeContent(memberDto.getContent());
         authUser.changeName(memberDto.getName());
         authUser.changeBirth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE));
         authUser.changePhone(memberDto.getPhone());
