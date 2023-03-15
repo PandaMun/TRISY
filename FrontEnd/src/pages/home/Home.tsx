@@ -5,7 +5,7 @@ import TopSection from './components/TopSection';
 
 export default function Home() {
   return (
-    <div>
+    <div className=''>
       <TopSection />
       <MidSection />
       <BotSection />
