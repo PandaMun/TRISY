@@ -6,7 +6,6 @@ import Home from './pages/home/Home';
 import App from './App';
 
 // styles
-import './styles/index.scss';
 import './index.css';
 import Hello from './components/Hello';
 
