@@ -1,7 +1,7 @@
 package com.c202.trisy.user.auth;
 
-import com.c202.trisy.Entity.Member;
-import com.c202.trisy.Repository.MemberRepository;
+import com.c202.trisy.entity.Member;
+import com.c202.trisy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

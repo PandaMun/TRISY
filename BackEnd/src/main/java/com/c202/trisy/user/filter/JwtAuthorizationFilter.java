@@ -3,8 +3,8 @@ package com.c202.trisy.user.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.c202.trisy.Entity.Member;
-import com.c202.trisy.Repository.MemberRepository;
+import com.c202.trisy.entity.Member;
+import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import com.c202.trisy.user.common.JwtProperties;
 import com.c202.trisy.user.dto.RefreshToken;
@@ -41,7 +41,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository) {
         super(authenticationManager);
         this.memberRepository = memberRepository;

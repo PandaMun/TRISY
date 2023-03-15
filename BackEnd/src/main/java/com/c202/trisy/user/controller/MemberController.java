@@ -1,6 +1,6 @@
 package com.c202.trisy.user.controller;
 
-import com.c202.trisy.Entity.Member;
+import com.c202.trisy.entity.Member;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import com.c202.trisy.user.dto.MemberDto;
 import com.c202.trisy.user.service.MemberServiceImpl;

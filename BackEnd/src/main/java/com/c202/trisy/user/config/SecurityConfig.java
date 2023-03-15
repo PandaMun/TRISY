@@ -1,6 +1,6 @@
 package com.c202.trisy.user.config;
 
-import com.c202.trisy.Repository.MemberRepository;
+import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.user.filter.JwtAuthenticationFilter;
 import com.c202.trisy.user.filter.JwtAuthorizationFilter;
 import com.c202.trisy.user.repository.RefreshTokenRepository;

@@ -1,4 +1,4 @@
-package com.c202.trisy.Entity;
+package com.c202.trisy.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -2,7 +2,7 @@ package com.c202.trisy.user.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.c202.trisy.Entity.Member;
+import com.c202.trisy.entity.Member;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import com.c202.trisy.user.common.JwtProperties;
 import com.c202.trisy.user.dto.RefreshToken;

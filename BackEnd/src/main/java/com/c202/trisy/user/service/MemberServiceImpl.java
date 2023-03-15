@@ -1,8 +1,8 @@
 package com.c202.trisy.user.service;
 
-import com.c202.trisy.Entity.Member;
-import com.c202.trisy.Entity.Role;
-import com.c202.trisy.Repository.MemberRepository;
+import com.c202.trisy.entity.Member;
+import com.c202.trisy.entity.Role;
+import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

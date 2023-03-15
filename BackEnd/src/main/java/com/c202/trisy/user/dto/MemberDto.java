@@ -1,16 +1,10 @@
 package com.c202.trisy.user.dto;
 
 
-import com.c202.trisy.Entity.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class MemberDto {
 

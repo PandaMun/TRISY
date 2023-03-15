@@ -1,6 +1,6 @@
 package com.c202.trisy.user.service;
 
-import com.c202.trisy.Entity.Member;
+import com.c202.trisy.entity.Member;
 import com.c202.trisy.user.dto.MemberDto;
 
 public interface MemberService {

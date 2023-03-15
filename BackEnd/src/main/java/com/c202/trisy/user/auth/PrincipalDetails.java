@@ -1,6 +1,6 @@
 package com.c202.trisy.user.auth;
 
-import com.c202.trisy.Entity.Member;
+import com.c202.trisy.entity.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.c202.trisy.Entity;
+package com.c202.trisy.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
