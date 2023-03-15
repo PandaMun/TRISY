@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import TestDropdown from './TestDropdown';
 
-interface NavSectionProps {
-  isScroll: boolean;
-}
-
 export default function Nav() {
-  const [isScroll, setIsScroll] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      window.pageYOffset > 600 ? setIsScroll(true) : setIsScroll(false);
-    });
-  }, [isScroll]);
-
   return (
-    <S.NavSection isScroll={isScroll}>
+    <S.NavSection>
       <S.LeftBox>
         <span className='font-sans text-3xl font-extrabold'>야 여기어때 놀자</span>
         <span>MAKE YOUR ROUTE OPTIMIZED</span>
@@ -34,10 +22,8 @@ export default function Nav() {
 }
 
 const S = {
-  NavSection: styled.div<NavSectionProps>`
-    ${(props) =>
-      props.isScroll ? tw`bg-white shadow-sm` : tw`backdrop-blur-2xl backdrop-filter bg-white/30`};
-    ${tw`fixed left-0 right-0 flex justify-between items-center h-[100px] z-50`}
+  NavSection: styled.div`
+    ${tw`fixed left-0 right-0 flex justify-between h-[100px] bg-slate-300 backdrop-blur-2xl backdrop-filter`}
   `,
   LeftBox: styled.div`
     ${tw`space-x-7`}
