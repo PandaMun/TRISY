@@ -9,7 +9,7 @@ import App from './App';
 import './styles/index.scss';
 import './index.css';
 import Hello from './components/Hello';
-
+import { Recommand } from './pages/recommand/Recommand';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/hello',
         element: <Hello />,
+      },
+      {
+        path: '/recommand',
+        element: <Recommand />,
       },
     ],
   },
