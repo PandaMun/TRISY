@@ -10,8 +10,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
-      <Nav />
-      <Outlet />
+      <div className='bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200'>
+        <Nav />
+        <Outlet />
+      </div>
       <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
