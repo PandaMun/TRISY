@@ -16,13 +16,12 @@ export const KakaoMap = () => {
       const { kakao } = window;
       const container = mapRef.current;
       const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.624562, 127.1512),
         level: 9,
       };
       const map = new kakao.maps.Map(container, options);
       axios.get('http://localhost:3003/markers').then((res) => {
         res.data.forEach((el: MarkerType) => {
-          console.log(el);
           new kakao.maps.Marker({
             //마커가 표시 될 지도
             map: map,
@@ -33,6 +32,8 @@ export const KakaoMap = () => {
           });
         });
       });
+      const zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     };
   }, []);
   return <MapContainer ref={mapRef} />;
