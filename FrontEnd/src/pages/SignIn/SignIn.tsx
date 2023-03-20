@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { SignInForm } from './components/SignInForm';
@@ -17,6 +18,12 @@ export const SignIn = () => {
           <div></div>
         </S.OrBox>
         <SignInForm />
+        <S.NewUser>
+          회원이 아니세요? {` `}
+          <Link to='/signup' className='font-bold text-primary-700 dark:text-primary-300'>
+            회원가입하기
+          </Link>
+        </S.NewUser>
       </S.Box>
     </S.Container>
   );
@@ -24,7 +31,7 @@ export const SignIn = () => {
 
 const S = {
   Container: styled.div`
-    ${tw`w-full px-6 mx-auto mb-24 lg:mb-32`}
+    ${tw`w-full min-h-screen px-6 mx-auto`}
   `,
   Box: styled.div`
     ${tw`max-w-md mx-auto space-y-6`}
@@ -37,5 +44,8 @@ const S = {
     div {
       ${tw`absolute left-0 w-full transform -translate-y-1/2 border top-1/2 border-neutral-100 dark:border-neutral-800`}
     }
+  `,
+  NewUser: styled.span`
+    ${tw`block text-center text-neutral-700 dark:text-neutral-300`}
   `,
 };

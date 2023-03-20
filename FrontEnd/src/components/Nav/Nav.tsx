@@ -21,7 +21,7 @@ export default function Nav() {
   return (
     <S.NavSection isScroll={isScroll}>
       <S.LeftBox>
-        <Link to='/' className='font-sans text-3xl font-extrabold'>
+        <Link to='/' className='text-3xl font-extrabold font-nexon'>
           TRISY
         </Link>
         <span>TRIP EASY</span>
@@ -50,6 +50,6 @@ const S = {
     ${tw`space-x-7`}
   `,
   RightBox: styled.div`
-    ${tw`flex items-center justify-center space-x-5 text-xl font-extrabold`}
+    ${tw`flex items-center justify-center space-x-5 text-xl font-extrabold font-nexon`}
   `,
 };

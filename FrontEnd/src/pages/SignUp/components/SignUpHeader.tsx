@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-export const SigninHeader = () => {
-  return <S.H2>로그인</S.H2>;
+
+export const SignUpHeader = () => {
+  return <S.H2>회원가입</S.H2>;
 };
 
 const S = {
