@@ -82,7 +82,7 @@ export const SignUpForm = () => {
       </S.PhoneLabel>
       <S.BirthdayLabel>
         <span>생년월일</span>
-        <S.Input type='date' {...register('birthday')}></S.Input>
+        <S.Input type='date' max='9999-12-31' {...register('birthday')}></S.Input>
         <S.ErrorMsg>{errors.birthday?.message}</S.ErrorMsg>
       </S.BirthdayLabel>
       <S.PasswordLabel>
