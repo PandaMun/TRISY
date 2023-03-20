@@ -7,7 +7,7 @@ export default function TopSection() {
     <S.Section>
       <S.LeftSection>
         <S.SiteIntroduction>AI 여행 스케줄링 플래너</S.SiteIntroduction>
-        <S.SiteName>야 여기 어때 놀자</S.SiteName>
+        <S.SiteName>TRISY</S.SiteName>
         <button type='button'>시작하기</button>
       </S.LeftSection>
       <S.RightSection>
