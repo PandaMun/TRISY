@@ -19,6 +19,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        nexon: ['NEXON Lv2 Gothic', 'sans-serif'],
+      },
       colors: {
         // neutral: {
         //   50: '#f8fafc',
@@ -71,5 +74,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
