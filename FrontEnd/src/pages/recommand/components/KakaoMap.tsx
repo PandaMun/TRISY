@@ -10,16 +10,15 @@ export const KakaoMap = () => {
       const container = mapRef.current;
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 10,
+        level: 9,
       };
       const map = new kakao.maps.Map(container, options);
     };
   }, []);
-
   return <MapContainer ref={mapRef} />;
 };
 
 const MapContainer = styled.div`
   height: 80vh;
-  width: 80vw;
+  width: 60vw;
 `;

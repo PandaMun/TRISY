@@ -6,17 +6,22 @@ export const Recommand = () => {
 
   return (
     <>
-      <Headtwo>Recommand</Headtwo>
-      <KakaoMap></KakaoMap>
+      <Temporarydiv />
+      <MainContainer>
+        <KakaoMap />
+      </MainContainer>
     </>
   );
 };
 
+const Temporarydiv = styled.div`
+  ${tw`w-screen h-32`}
+`;
 const Headtwo = styled.h2`
   text-decoration: underline;
   text-decoration-color: red;
 `;
 
-const Mapdiv = styled.div`
-  ${tw`max-w-[250px] max-h-[500px] shadow-xl hover:cursor-pointer`}
+const MainContainer = styled.div`
+  ${tw`flex justify-center items-center`}
 `;
