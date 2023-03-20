@@ -1,5 +1,6 @@
 package com.c202.trisy.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -9,14 +10,15 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@Builder
 public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mainCategory;
-    private String mainCategoryName;
+    private String mainName;
     private String middleCategory;
-    private String middleCategoryName;
+    private String middleName;
     private String subCategory;
-    private String subCategoryName;
+    private String subName;
 }

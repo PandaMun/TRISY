@@ -1,10 +1,9 @@
 package com.c202.trisy.controller;
 
-import com.c202.trisy.entity.Area;
+import com.c202.trisy.dto.Area;
 import com.c202.trisy.service.ApiService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,11 @@ public class ApiController {
 
     @GetMapping("/theme")
     public ResponseEntity<?> saveTheme(){
-
+        try {
+            apiService.saveTheme();
+        } catch (IOException e) {
+            return new ResponseEntity<>("save theme " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>("save theme success" , HttpStatus.OK);
     }
 
