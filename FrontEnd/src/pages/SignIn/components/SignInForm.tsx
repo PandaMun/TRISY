@@ -5,11 +5,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
-
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { userLogin } from '~/types/sharedTypes';
+import { useAuth } from '~/hooks/useAuth';
 
 const schema = yup
   .object({
@@ -19,15 +16,17 @@ const schema = yup
   .required();
 
 export const SignInForm = () => {
+  const { useLogin } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<userLogin>({
     resolver: yupResolver(schema),
   });
-  const onSignIn: SubmitHandler<FormValues> = (data) => {
+  const onSignIn: SubmitHandler<userLogin> = (data) => {
     console.log(data);
+    useLogin.mutate(data);
   };
   return (
     <S.SignInForm onSubmit={handleSubmit(onSignIn)}>

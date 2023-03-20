@@ -4,15 +4,8 @@ import tw from 'twin.macro';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  phone: string;
-  birthday: string; // Use string instead of Date to avoid validation errors
-};
+import { useAuth } from '~/hooks/useAuth';
+import { userSignUp } from '~/types/sharedTypes';
 
 const schema = yup
   .object({
@@ -39,6 +32,7 @@ const schema = yup
 
 export const SignUpForm = () => {
   const [phone, setPhone] = useState('');
+  const { useSignUp } = useAuth();
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
@@ -53,12 +47,13 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<userSignUp>({
     resolver: yupResolver(schema),
   });
 
-  const onSignUp: SubmitHandler<FormValues> = (data) => {
+  const onSignUp: SubmitHandler<userSignUp> = (data) => {
     console.log(data);
+    useSignUp.mutate(data);
   };
 
   return (
