@@ -17,11 +17,15 @@ export const KakaoMap = () => {
       const container = mapRef.current;
       const options = {
         center: new kakao.maps.LatLng(37.624562, 127.1512),
-        level: 9,
+        level: 8,
       };
       const map = new kakao.maps.Map(container, options);
+      // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+      const bounds = new kakao.maps.LatLngBounds();
       axios.get('http://localhost:3003/markers').then((res) => {
         res.data.forEach((el: MarkerType) => {
+          const position = new kakao.maps.LatLng(el.lat, el.lng);
+          bounds.extend(position);
           new kakao.maps.Marker({
             //마커가 표시 될 지도
             map: map,
@@ -32,6 +36,7 @@ export const KakaoMap = () => {
           });
         });
       });
+      map.setBounds(bounds);
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     };
