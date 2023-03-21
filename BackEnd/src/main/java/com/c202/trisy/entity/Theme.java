@@ -4,17 +4,20 @@ import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 @Getter
-public class Theme {
+public class Theme{
     @Id
-    private Long id;
-    private String mainCategory;
-    private String middleCategory;
-    private String subCategory;
+    private String subCategoryCode;
+    private String mainCategoryName;
+    private String mainCategoryCode;
 
-//    @OneToOne(mappedBy = "theme")
-//    private TourSpot tourSpot;
+    private String middleCategoryName;
+    private String middleCategoryCode;
+
+    private String subCategoryName;
+
 }
 

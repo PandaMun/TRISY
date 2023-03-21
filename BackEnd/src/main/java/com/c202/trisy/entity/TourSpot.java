@@ -16,26 +16,33 @@ import javax.persistence.*;
 @Entity
 public class TourSpot extends BaseEntity{
 
-    private String lat;
 
-    private String lng;
+    private String mainAddress;
 
-    private String phone;
+    private String subAddress;
 
-    private String spotInfo;
+    private double lat;
+
+    private double lng;
 
     private String spotName;
 
-    private String zipcode;
+    private String spotInfo;
 
-    private String image;
+    private String imageUrl;
 
-    @OneToOne
-    @JoinColumn(name = "theme_id")
+    private String thumbnailUrl;
+
+    private int zipcode;
+
+    private String phoneNumber;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Theme theme;
 
-    @OneToOne
-    @JoinColumn(name = "region_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
 
 

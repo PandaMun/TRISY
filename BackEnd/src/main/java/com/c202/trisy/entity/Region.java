@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Getter
-public class Region {
+public class Region extends BaseEntity{
     @Id
     private Long id;
     private int siCode;
@@ -16,8 +16,6 @@ public class Region {
     private int guGunCode;
     private String guGunName;
 
-//    @OneToOne(mappedBy = "region")
-//    private TourSpot tourSpot;
 
 }
 

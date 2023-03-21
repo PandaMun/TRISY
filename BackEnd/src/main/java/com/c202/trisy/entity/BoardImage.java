@@ -17,15 +17,14 @@ import javax.persistence.ManyToOne;
 @Builder
 public class BoardImage extends BaseEntity{
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "board_id")
+//    private Board board;
 
     private String urlPath;
 
     private String originName;
 
-    private String saveName;
+    private String savedName;
 
 }
