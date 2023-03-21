@@ -24,16 +24,23 @@ export const KakaoMap = () => {
       const bounds = new kakao.maps.LatLngBounds();
       await axios.get('http://localhost:3003/markers').then((res) => {
         res.data.forEach((el: MarkerType) => {
+          const content = `<div class ="label" style =" border-radius: 10%; padding: 5px; background-color: rgba(38, 219, 225, .9);  color: white;"><span class="left"></span><span class="center">${el.title}</span><span class="right"></span></div>`;
+
           const position = new kakao.maps.LatLng(el.lat, el.lng);
           bounds.extend(position);
-          new kakao.maps.Marker({
-            //마커가 표시 될 지도
-            map: map,
-            //마커가 표시 될 위치
-            position: new kakao.maps.LatLng(el.lat, el.lng),
-            //마커에 hover시 나타날 title
-            title: el.title,
+          const customOverlay = new kakao.maps.CustomOverlay({
+            position: position,
+            content: content,
           });
+          // new kakao.maps.Marker({
+          //   //마커가 표시 될 지도
+          //   map: map,
+          //   //마커가 표시 될 위치
+          //   position: new kakao.maps.LatLng(el.lat, el.lng),
+          //   //마커에 hover시 나타날 title
+          //   title: el.title,
+          // });
+          customOverlay.setMap(map);
         });
       });
       const zoomControl = new kakao.maps.ZoomControl();
