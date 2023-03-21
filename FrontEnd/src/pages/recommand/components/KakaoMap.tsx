@@ -32,14 +32,6 @@ export const KakaoMap = () => {
             position: position,
             content: content,
           });
-          // new kakao.maps.Marker({
-          //   //마커가 표시 될 지도
-          //   map: map,
-          //   //마커가 표시 될 위치
-          //   position: new kakao.maps.LatLng(el.lat, el.lng),
-          //   //마커에 hover시 나타날 title
-          //   title: el.title,
-          // });
           customOverlay.setMap(map);
         });
       });
@@ -49,16 +41,15 @@ export const KakaoMap = () => {
     };
   }, []);
   return (
-    <>
+    <MapDiv>
       <MapContainer ref={mapRef} />
-    </>
+    </MapDiv>
   );
 };
-
+const MapDiv = styled.section`
+  min-width: 60vw;
+`;
 const MapContainer = styled.div`
   height: 80vh;
   width: 60vw;
 `;
-function componentDidMount() {
-  throw new Error('Function not implemented.');
-}
