@@ -1,13 +1,17 @@
 package com.c202.trisy.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Spot {
     @Id
     private int contentId;
@@ -17,7 +21,7 @@ public class Spot {
     private double mapY;
     private String imageUrl;
     private String thumbnailUrl;
-    private int zipCode;
+    private String zipCode;
     private String title;
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;

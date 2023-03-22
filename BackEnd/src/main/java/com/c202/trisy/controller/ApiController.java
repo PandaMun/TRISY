@@ -51,4 +51,15 @@ public class ApiController {
         return new ResponseEntity<>("save theme success" , HttpStatus.OK);
     }
 
+
+    @GetMapping("/spot")
+    public ResponseEntity<?> saveSpot(){
+        try {
+            apiService.saveSpot();
+        } catch (IOException e) {
+            return new ResponseEntity<>("save spot " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("save spot success" , HttpStatus.OK);
+    }
+
 }
