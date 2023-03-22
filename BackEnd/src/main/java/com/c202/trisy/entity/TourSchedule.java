@@ -23,6 +23,6 @@ public class TourSchedule extends BaseEntity{
     private Member member;
 
 
-    @OneToMany(mappedBy = "tour_schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tour_schedule")
     private List<TourScheduleDetails> tourScheduleList = new ArrayList<>();
 }
