@@ -17,6 +17,8 @@ const schema = yup
 
 export const SignInForm = () => {
   const { useLogin } = useAuth();
+
+  // react-hook-form, yup
   const {
     register,
     handleSubmit,
@@ -24,6 +26,8 @@ export const SignInForm = () => {
   } = useForm<userLogin>({
     resolver: yupResolver(schema),
   });
+
+  // 로그인
   const onSignIn: SubmitHandler<userLogin> = (data) => {
     console.log(data);
     useLogin.mutate(data);

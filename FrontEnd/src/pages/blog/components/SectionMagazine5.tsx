@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
+import { post } from '~/types/sharedTypes';
 import { PostDataType } from '../../../data/types';
 import Card12 from './Card12';
 import Card13 from './Card13';
 
 export interface SectionMagazine5Props {
-  posts: PostDataType[];
+  posts: post[];
 }
 
 const SectionMagazine5: FC<SectionMagazine5Props> = ({ posts }) => {

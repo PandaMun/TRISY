@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
+import { useAuth } from '~/hooks/useAuth';
 import SwitchDarkMode from '../SwitchDarkMode/SwitchDarkMode';
 import TestDropdown from './TestDropdown';
 
@@ -11,6 +12,8 @@ interface NavSectionProps {
 
 export default function Nav() {
   const [isScroll, setIsScroll] = useState(false);
+  const { useUser, logout } = useAuth();
+  const { data: user } = useUser;
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -32,7 +35,15 @@ export default function Nav() {
         <span>여행지</span>
         <span>마이로</span>
         <span>이용방법</span>
-        <Link to='/login'>로그인</Link>
+        {user && (
+          <>
+            <span>{user.name}</span>
+            <button type='button' onClick={logout}>
+              로그아웃
+            </button>
+          </>
+        )}
+        {!user && <Link to='/login'>로그인</Link>}
       </S.RightBox>
     </S.NavSection>
   );

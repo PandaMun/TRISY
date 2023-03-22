@@ -12,3 +12,10 @@ export interface userLogin {
   email: string;
   password: string;
 }
+// 게시글
+export interface post {
+  id: number;
+  title: string;
+  content: string;
+  image: string;
+}
