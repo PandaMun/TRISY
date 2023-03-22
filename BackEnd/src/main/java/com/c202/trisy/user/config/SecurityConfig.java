@@ -1,8 +1,10 @@
 package com.c202.trisy.user.config;
 
 import com.c202.trisy.repository.MemberRepository;
+import com.c202.trisy.user.common.JwtUtil;
 import com.c202.trisy.user.filter.JwtAuthenticationFilter;
 import com.c202.trisy.user.filter.JwtAuthorizationFilter;
+import com.c202.trisy.user.oauth.PrincipalOauth2UserService;
 import com.c202.trisy.user.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,13 @@ public class SecurityConfig {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
+    private final PrincipalOauth2UserService principalOauth2UserService;
+
+    @Autowired
     private final CorsConfig corsConfig;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -48,6 +56,8 @@ public class SecurityConfig {
                 .authenticated()
                 .antMatchers(HttpMethod.POST,"/api/user")
                 .permitAll()
+                .antMatchers("/api/user")
+                .authenticated()
                 .antMatchers(HttpMethod.GET,"/api/user/email/**")
                 .permitAll()
                 .antMatchers("/api/user/**")
@@ -55,6 +65,10 @@ public class SecurityConfig {
                 .antMatchers("/api/admin/**")
                 .hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll();
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint()
+//                .userService(principalOauth2UserService);
 
         return http.build();
 
@@ -67,12 +81,12 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, refreshTokenRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
-
+//            jwtAuthenticationFilter.setFilterProcessesUrl("/login/oauth2/code/google");
 
             http
                     .addFilter(corsConfig.corsFilter())
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, refreshTokenRepository));
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, refreshTokenRepository, jwtUtil));
         }
     }
 

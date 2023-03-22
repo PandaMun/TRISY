@@ -31,6 +31,9 @@ public class Member extends BaseTimeEntity{
     @Column(nullable = false,length = 11)
     private String phone;
 
+    private String provider;
+    private String providerId;
+
     public void setUserPassword(String password) {
         this.password = password;
     }

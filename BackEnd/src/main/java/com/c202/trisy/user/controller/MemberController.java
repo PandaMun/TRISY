@@ -7,6 +7,7 @@ import com.c202.trisy.user.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,6 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-
         Member member = principalDetails.getMember();
         MemberDto.Basic ud = MemberDto.Basic.builder()
                 .id(member.getId())
