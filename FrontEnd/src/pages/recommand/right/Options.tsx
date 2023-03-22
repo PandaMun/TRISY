@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { RecommandCard } from '../components/RecommandCard';
-import { useRecommand } from '../querys/RecommandList';
+import { selectRecommand, setPlace } from '../recommandSlice';
+import { useAppDispatch, useAppSelector } from '~/app/hooks';
+import { useEffect } from 'react';
+import axios from 'axios';
 interface Recommand {
   title: string;
   lat: string;
@@ -9,15 +12,22 @@ interface Recommand {
 }
 
 export const Options = () => {
-  const { recommandList } = useRecommand();
-  if (recommandList.data) {
+  const dispatch = useAppDispatch();
+  const currentState = useAppSelector(selectRecommand);
+  useEffect(() => {
+    axios.get('http://localhost:3003/markers').then((res) => {
+      dispatch(setPlace({ place: res.data }));
+    });
+  }, []);
+  const recommandList = currentState;
+  if (recommandList.recommandList) {
     return (
       <>
         <OptionBox>
           <OptionTitle>추천 장소</OptionTitle>
-          {recommandList.data.length > 0 && (
+          {recommandList.recommandList.length > 0 && (
             <div>
-              {recommandList.data.map((recommand: Recommand) => (
+              {recommandList.recommandList.map((recommand: Recommand) => (
                 <RecommandCard key={recommand.lat} title={recommand.title} src={recommand.lat} />
               ))}
             </div>
@@ -31,6 +41,7 @@ export const Options = () => {
 
 const OptionBox = styled.section`
   ${tw`flex grow flex-col justify-center items-center`}
+  min-width: 10vw
 `;
 const OptionTitle = styled.span`
   ${tw`text-xl font-bold`}

@@ -11,8 +11,8 @@ const recommandSlice = createSlice({
   name: 'recommand',
   initialState,
   reducers: {
-    setPlace: (state: any, action: PayloadAction<any>) => {
-      state.recommandList = action.payload;
+    setPlace: (state: any, action: PayloadAction<{ place: [] }>) => {
+      state.recommandList = action.payload.place;
       console.log(state.recommandList);
     },
     // pickPlace: (state: any) =>{

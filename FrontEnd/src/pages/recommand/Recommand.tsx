@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { KakaoMap } from './centermap/KakaoMap';
 import { Options } from './right/Options';
+import { PickList } from './left/PickList';
 export const Recommand = () => {
   // const map = new kakao.maps.Map(container, options);
 
@@ -9,7 +10,7 @@ export const Recommand = () => {
     <>
       <Temporarydiv />
       <MainContainer>
-        <Options />
+        <PickList />
         <KakaoMap />
         <Options />
       </MainContainer>

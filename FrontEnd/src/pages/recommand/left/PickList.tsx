@@ -1,24 +1,27 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { RecommandCard } from '../components/RecommandCard';
-import { useRecommand } from '../querys/RecommandList';
+import { useAppSelector } from '~/app/hooks';
+import { selectRecommand } from '../recommandSlice';
+
 interface Recommand {
   title: string;
   lat: string;
   lng: string;
 }
 
-export const Options = () => {
-  const { recommandList } = useRecommand();
-  if (recommandList.data) {
+export const PickList = () => {
+  const currentState = useAppSelector(selectRecommand);
+  const pickList = currentState.pickList;
+  if (pickList) {
     return (
       <>
         <OptionBox>
-          <OptionTitle>추천 장소</OptionTitle>
-          {recommandList.data.length > 0 && (
+          <OptionTitle>선택 목록</OptionTitle>
+          {pickList.length > 0 && (
             <div>
-              {recommandList.data.map((recommand: Recommand) => (
-                <RecommandCard key={recommand.lat} title={recommand.title} src={recommand.lat} />
+              {pickList.map((pick: Recommand) => (
+                <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} />
               ))}
             </div>
           )}
@@ -31,6 +34,7 @@ export const Options = () => {
 
 const OptionBox = styled.section`
   ${tw`flex grow flex-col justify-center items-center`}
+  min-width: 10vw
 `;
 const OptionTitle = styled.span`
   ${tw`text-xl font-bold`}
