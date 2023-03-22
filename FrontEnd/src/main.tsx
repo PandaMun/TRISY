@@ -10,6 +10,8 @@ import './styles/index.scss';
 import './index.css';
 import Hello from './components/Hello';
 import BlogPage from './pages/blog/BlogPage';
+import { SignIn } from './pages/SignIn/SignIn';
+import { SignUp } from './pages/SignUp/SignUp';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: '/blog',
         element: <BlogPage />,
+      },
+      {
+        path: '/login',
+        element: <SignIn />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
       },
     ],
   },
