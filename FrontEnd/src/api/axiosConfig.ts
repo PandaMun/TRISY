@@ -2,6 +2,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const BASE_URL = 'http://localhost:8080/api';
+const MOCK_URL = 'http://localhost:5000';
+
+const mockApi = axios.create({ baseURL: MOCK_URL });
 
 // Create an axios instance with the specified configuration
 const api = axios.create({
@@ -53,4 +56,4 @@ api.interceptors.request.use(
 api.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
 // Export the configured axios instance for use in other parts of the application
-export { api };
+export { api, mockApi };

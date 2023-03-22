@@ -2,8 +2,6 @@ import { getUserApi } from './../api/userApi';
 import { loginApi, signUpApi } from '../api/userApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
 const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);

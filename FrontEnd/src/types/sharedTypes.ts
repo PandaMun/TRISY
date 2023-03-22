@@ -17,5 +17,5 @@ export interface post {
   id: number;
   title: string;
   content: string;
-  img: string;
+  image: string;
 }
