@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { KakaoMap } from './centermap/KakaoMap';
-import { Options } from './rignth/Options';
+import { Options } from './right/Options';
 export const Recommand = () => {
   // const map = new kakao.maps.Map(container, options);
 
