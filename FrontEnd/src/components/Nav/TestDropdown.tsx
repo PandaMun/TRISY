@@ -6,6 +6,7 @@ const links = [
   { href: '/', label: 'home' },
   { href: '/hello', label: 'hello' },
   { href: '/blog', label: 'blog' },
+  { href: '/createPost', label: 'createPost' },
 ];
 
 export default function TestDropdown() {

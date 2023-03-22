@@ -13,3 +13,10 @@ export const loginApi = async (payload: userLogin) => {
   const response = await api.post('/users/login', payload);
   return response.data;
 };
+
+// get user
+export const getUserApi = async () => {
+  const response = await api.get('/user/mypage');
+  console.log(response);
+  return response.data;
+};
