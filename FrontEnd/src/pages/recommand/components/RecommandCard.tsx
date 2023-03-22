@@ -1,16 +1,25 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-interface Imgsrc {
+import { useAppDispatch } from '~/app/hooks';
+import { pickPlace } from '../recommandSlice';
+interface CardInfo {
   src: string;
   title: string;
+  id: number;
 }
-export const RecommandCard = ({ title, src }: Imgsrc) => {
+export const RecommandCard = ({ title, src, id }: CardInfo) => {
+  const dispatch = useAppDispatch();
+
+  const handleClick = (id: number): void => {
+    dispatch(pickPlace({ id }));
+  };
   return (
     <>
       <CardDiv>
         <CardImg src={src} alt='aaaa' />
         <Textdiv>
           <RecommandTitle>{title}</RecommandTitle>
+          <Button onClick={() => handleClick(id)}>+</Button>
         </Textdiv>
       </CardDiv>
     </>
@@ -31,5 +40,12 @@ const Textdiv = styled.div`
 `;
 
 const RecommandTitle = styled.h5`
-  ${tw`mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white`}
+  ${tw`mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white`}
+`;
+
+const Button = styled.button`
+  ${tw`bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center text-2xl font-bold`}
+  position: relative;
+  bottom: 0;
+  right: 0;
 `;

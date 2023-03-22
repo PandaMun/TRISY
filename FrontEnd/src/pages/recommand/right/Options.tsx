@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { useEffect } from 'react';
 import axios from 'axios';
 interface Recommand {
+  id: number;
   title: string;
   lat: string;
   lng: string;
@@ -28,7 +29,12 @@ export const Options = () => {
           {recommandList.recommandList.length > 0 && (
             <div>
               {recommandList.recommandList.map((recommand: Recommand) => (
-                <RecommandCard key={recommand.lat} title={recommand.title} src={recommand.lat} />
+                <RecommandCard
+                  key={recommand.id}
+                  title={recommand.title}
+                  src={recommand.lat}
+                  id={recommand.id}
+                />
               ))}
             </div>
           )}
