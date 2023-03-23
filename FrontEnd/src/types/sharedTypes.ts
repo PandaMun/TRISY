@@ -14,7 +14,7 @@ export interface userLogin {
 }
 // 게시글
 export interface post {
-  id: number;
+  id: string;
   title: string;
   content: string;
   image: string;

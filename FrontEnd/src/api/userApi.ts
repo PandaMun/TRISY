@@ -17,6 +17,5 @@ export const loginApi = async (payload: userLogin) => {
 // get user
 export const getUserApi = async () => {
   const response = await api.get('/user/mypage');
-  console.log(response);
   return response.data;
 };

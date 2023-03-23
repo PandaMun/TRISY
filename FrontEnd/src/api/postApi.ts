@@ -3,6 +3,10 @@ import { mockApi } from './axiosConfig';
 
 export const getPosts = async (): Promise<post[]> => {
   const response = await mockApi.get('/posts');
-  console.log(response);
+  return response.data;
+};
+
+export const getPostById = async (id: string): Promise<post> => {
+  const response = await mockApi.get(`/posts/${id}`);
   return response.data;
 };

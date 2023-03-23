@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import TextEditor from './components/PostEditor';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const handleTextChange = (value: string) => {
+    setContent(value);
+  };
   const createPost = async () => {
     try {
       const response = await axios.post('http://localhost:5000/posts', {
@@ -29,13 +33,16 @@ export const CreatePost = () => {
         placeholder='Post title'
         className='border-2'
       />
-      <input
+      {/* <input
         type='text'
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder='Post Content'
         className='border-2'
-      />
+      /> */}
+      <div className='w-[90%] mx-auto my-20'>
+        <TextEditor value={content} onChange={handleTextChange} />
+      </div>
       <button onClick={createPost}>Create</button>
     </div>
   );

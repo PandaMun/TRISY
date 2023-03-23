@@ -1,21 +1,19 @@
-import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import NcImage from '~/components/NcImage/NcImage';
 import PostTypeFeaturedIcon from '~/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon';
 import { post } from '~/types/sharedTypes';
 
 export interface Card12Props {
-  className?: string;
   post?: post;
 }
 
-const Card12: FC<Card12Props> = ({ className = 'h-full', post }) => {
-  const { title, content, image } = post as post;
+const Card12 = ({ post }: Card12Props) => {
+  const { id, title, content, image } = post as post;
 
   return (
-    <div className={`nc-Card12 group relative flex flex-col ${className}`} data-nc-id='Card12'>
+    <div className={`nc-Card12 group relative flex flex-col h-full`} data-nc-id='Card12'>
       <Link
-        to='/'
+        to={`/post/${id}`}
         className='relative flex-grow flex-shrink-0 block w-full h-0 overflow-hidden aspect-w-4 aspect-h-3 rounded-3xl'
       >
         <NcImage containerClassName='absolute inset-0' src={image} alt={title} />
@@ -34,7 +32,7 @@ const Card12: FC<Card12Props> = ({ className = 'h-full', post }) => {
         <h2
           className={`nc-card-title block font-semibold text-neutral-900 dark:text-neutral-100 transition-colors text-lg sm:text-2xl`}
         >
-          <Link to='/' className='line-clamp-2' title={title}>
+          <Link to={`/post/${id}`} className='line-clamp-2' title={title}>
             {title}
           </Link>
         </h2>
