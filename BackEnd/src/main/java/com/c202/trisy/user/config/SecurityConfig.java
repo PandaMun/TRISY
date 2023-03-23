@@ -15,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -52,8 +51,8 @@ public class SecurityConfig {
                 .apply(new MyCustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/")
-                .authenticated()
+//                .antMatchers("/")
+//                .authenticated()
                 .antMatchers(HttpMethod.POST,"/api/user")
                 .permitAll()
                 .antMatchers("/api/user")
@@ -65,10 +64,6 @@ public class SecurityConfig {
                 .antMatchers("/api/admin/**")
                 .hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll();
-//                .and()
-//                .oauth2Login()
-//                .userInfoEndpoint()
-//                .userService(principalOauth2UserService);
 
         return http.build();
 
@@ -81,7 +76,6 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, refreshTokenRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
-//            jwtAuthenticationFilter.setFilterProcessesUrl("/login/oauth2/code/google");
 
             http
                     .addFilter(corsConfig.corsFilter())
