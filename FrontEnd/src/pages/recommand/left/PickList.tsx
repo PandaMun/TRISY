@@ -8,6 +8,7 @@ interface Recommand {
   title: string;
   lat: string;
   lng: string;
+  id: number;
 }
 
 export const PickList = () => {
@@ -21,7 +22,7 @@ export const PickList = () => {
           {pickList.length > 0 && (
             <div>
               {pickList.map((pick: Recommand) => (
-                <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} />
+                <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
               ))}
             </div>
           )}
