@@ -26,5 +26,5 @@ const Temporarydiv = styled.div`
 `;
 
 const MainContainer = styled.div`
-  ${tw`flex justify-center items-center`}
+  ${tw`flex justify-between items-center`}
 `;

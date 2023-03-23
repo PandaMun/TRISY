@@ -34,8 +34,9 @@ export const PickList = () => {
 };
 
 const OptionBox = styled.section`
-  ${tw`flex grow flex-col justify-center items-center`}
-  min-width: 10vw
+  ${tw`flex flex-col justify-center items-center`}
+  min-width: 280px;
+  width: 300px;
 `;
 const OptionTitle = styled.span`
   ${tw`text-xl font-bold`}

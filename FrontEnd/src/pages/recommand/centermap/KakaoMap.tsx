@@ -48,8 +48,9 @@ export const KakaoMap = () => {
 };
 const MapDiv = styled.section`
   min-width: 60vw;
+  display: flex;
 `;
 const MapContainer = styled.div`
   height: 80vh;
-  width: 60vw;
+  flex-grow: 1;
 `;
