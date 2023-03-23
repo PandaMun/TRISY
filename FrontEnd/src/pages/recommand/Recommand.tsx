@@ -3,11 +3,14 @@ import tw from 'twin.macro';
 import { KakaoMap } from './centermap/KakaoMap';
 import { Options } from './right/Options';
 import { PickList } from './left/PickList';
+import { useState, useEffect } from 'react';
+import { ExitModal } from './components/ExitModal';
 export const Recommand = () => {
-  // const map = new kakao.maps.Map(container, options);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
+      {showModal && <ExitModal />}
       <Temporarydiv />
       <MainContainer>
         <PickList />

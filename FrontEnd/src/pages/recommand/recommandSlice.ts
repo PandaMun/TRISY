@@ -18,7 +18,7 @@ const recommandSlice = createSlice({
     pickPlace: (state: any, action: PayloadAction<{ id: number }>) => {
       for (let i = 0; i < state.recommandList.length; i++) {
         if (state.recommandList[i].id === action.payload.id) {
-          state.pickList.push(state.recommandList.pop());
+          state.pickList.push(state.recommandList.splice(i, 1)[0]);
           break;
         }
       }
