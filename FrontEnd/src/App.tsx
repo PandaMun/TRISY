@@ -14,7 +14,9 @@ function App() {
         <ScrollToTop />
         <div className='bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200'>
           <Nav />
-          <Outlet />
+          <div className='pt-[100px]'>
+            <Outlet />
+          </div>
         </div>
         <ReactQueryDevtools initialIsOpen />
       </Provider>
