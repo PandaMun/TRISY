@@ -11,6 +11,8 @@ import './index.css';
 import Hello from './components/Hello';
 import BlogPage from './pages/blog/BlogPage';
 
+import { Recommand } from './pages/recommand/Recommand';
+import { Survey } from './pages/Survey/Survey';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: '/blog',
         element: <BlogPage />,
+      },
+      {
+        path: '/recommand',
+        element: <Recommand />,
+      },
+      {
+        path: '/survey',
+        element: <Survey />,
       },
     ],
   },
