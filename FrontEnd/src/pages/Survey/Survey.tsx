@@ -1,16 +1,19 @@
 import ProgressBar from '@ramonak/react-progress-bar';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { FadeInUp } from '~/gsap/FadeinUp';
 import gsap from 'gsap';
 import './components/progressbarStyle.scss';
 import { QuestionList, COLORS } from './components/QList';
+import tw from 'twin.macro';
 export const Survey = () => {
   const containerRef = useRef(null);
+  const loadingRef = useRef(null);
   const [step, setStep] = useState(20);
   const [color, setBgColor] = useState(0);
-  const handleClick = () => {
-    console.log(Math.round(step / 20));
+  const [visible, setVigible] = useState(true);
+  const index = Math.min(Math.round(step / 20), QuestionList.length - 1);
+  const handleClick = async () => {
+    setBgColor(color + 1);
     gsap.to(containerRef.current, {
       duration: 0.5,
       y: '-100%',
@@ -18,77 +21,122 @@ export const Survey = () => {
       ease: 'power2.inOut',
       onComplete: () => {
         setStep(step + 10);
-        gsap.to(containerRef.current, {
-          duration: 0.5,
-          y: '0%',
-          opacity: 1,
-          ease: 'power2.inOut',
-        });
+        if (step < 30) {
+          gsap.to(containerRef.current, {
+            duration: 0.5,
+            y: '0%',
+            opacity: 1,
+            ease: 'power2.inOut',
+          });
+        } else {
+          gsap.from(loadingRef.current, {
+            duration: 0.5,
+            y: '-100%',
+            opacity: 0,
+            ease: 'power2.inOut',
+          });
+          setVigible(false);
+        }
       },
     });
-    setBgColor(color + 1);
   };
   return (
     <>
       <Container color={COLORS[color]}>
         <MainDiv>
-          <ProgressBar
-            completed={step}
-            borderRadius='100px'
-            barContainerClassName='container'
-            height='50px'
-            labelAlignment='center'
-            className='m-10 min-w-fit'
-          />
-          <SubDiv ref={containerRef}>
-            <Question>{QuestionList[Math.round(step / 20)]}</Question>
-            <div>
-              <button
-                onClick={() => {
-                  handleClick();
-                }}
-                className='m-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-              >
-                산
-              </button>
-              <button
-                onClick={() => {
-                  setStep(step + 10);
-                  handleClick();
-                }}
-                className='m-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-              >
-                바다
-              </button>
-            </div>
+          <TopDiv>
+            <Trisy>TRiSY</Trisy>
+            <ProgressBar
+              completed={step}
+              borderRadius='100px'
+              barContainerClassName='container'
+              height='40px'
+              labelAlignment='center'
+              className='m-10 min-w-fit'
+            />
+          </TopDiv>
+          <SubDiv ref={containerRef} visible={visible}>
+            <Question>{QuestionList[index]}</Question>
+            <Button
+              style={{ width: '440px', height: '66px' }}
+              onClick={() => {
+                setStep(step + 10);
+                handleClick();
+              }}
+            >
+              산으로 떠나요
+            </Button>
+            <Button
+              style={{ width: '440px', height: '66px' }}
+              onClick={() => {
+                setStep(step + 10);
+                handleClick();
+              }}
+            >
+              바다로 떠나요
+            </Button>
           </SubDiv>
+          <LoadingDiv ref={loadingRef} visible={visible}>
+            <LoadingMessage>현우님의 취향에 맞는 여행지를 찾고있어요.</LoadingMessage>
+          </LoadingDiv>
+          <Footer>Trip Easy with TRiSY</Footer>
         </MainDiv>
       </Container>
     </>
   );
 };
-const MainDiv = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const SubDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const Question = styled.h1`
-  font-weight: bold;
-  font-size: 50px;
-`;
 const Container = styled.div`
   background-color: ${(props) => props.color};
   transition: background-color 0.8s ease-in-out;
-  height: 100vh;
-  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height
+`;
+const MainDiv = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5vh 0;
+  height: 80vh;
+`;
+const SubDiv = styled.div<{ visible: boolean }>`
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const LoadingDiv = styled.div<{ visible: boolean }>`
+  display: ${(props) => (props.visible ? 'none' : 'flex')};
+  transition: display 0.8s ease-in-out;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+`;
+
+const TopDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const Question = styled.div`
+  ${tw`font-bold text-4xl mb-[150px]`}
+`;
+
+const Trisy = styled.div`
+  ${tw`font-extrabold text-3xl `}
+`;
+const LoadingMessage = styled.div`
+  ${tw`font-extrabold text-3xl `}
+`;
+const Footer = styled.div`
+  ${tw`font-bold text-xl `}
+`;
+const Button = styled.button`
+  ${tw`m-6 inline-block px-6 py-3 rounded-full bg-white text-black font-bold text-lg focus:outline-none transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg`}
 `;
