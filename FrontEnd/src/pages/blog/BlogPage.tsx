@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import SectionMagazine5 from './components/SectionMagazine5';
 import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
 import { usePost } from 'usePost';
-import SectionPost from './components/SectionPost';
+import { SectionPost } from './components/SectionPost';
+import { SectionMagazine5 } from './components/SectionMagazine5';
 
 export default function BlogPage() {
   const { getPost } = usePost();
