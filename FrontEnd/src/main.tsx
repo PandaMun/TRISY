@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/Home';
-
+import 'react-quill/dist/quill.snow.css';
 import App from './App';
 
 // styles
@@ -13,6 +13,7 @@ import BlogPage from './pages/blog/BlogPage';
 import { SignIn } from './pages/SignIn/SignIn';
 import { SignUp } from './pages/SignUp/SignUp';
 import { CreatePost } from './pages/blog/CreatePost';
+import { PostDetail } from './pages/blog/PostDetail';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/blog',
         element: <BlogPage />,
+      },
+      {
+        path: '/post/:id',
+        element: <PostDetail />,
       },
       {
         path: '/createPost',

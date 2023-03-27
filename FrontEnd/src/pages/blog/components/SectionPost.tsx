@@ -1,13 +1,13 @@
-import React, { FC, useState } from 'react';
 import { post } from '~/types/sharedTypes';
 import Card13 from './Card13';
 import Pagination from 'react-js-pagination';
+import { useState } from 'react';
 
 export interface SectionMagazine5Props {
   posts: post[];
 }
 
-const SectionPost: FC<SectionMagazine5Props> = ({ posts }) => {
+export const SectionPost = ({ posts }: SectionMagazine5Props) => {
   const [activePage, setActivePage] = useState(1);
   const postsPerPage = 3; // Change this value as needed
   const indexOfLastPost = activePage * postsPerPage;
@@ -42,5 +42,3 @@ const SectionPost: FC<SectionMagazine5Props> = ({ posts }) => {
     </div>
   );
 };
-
-export default SectionPost;
