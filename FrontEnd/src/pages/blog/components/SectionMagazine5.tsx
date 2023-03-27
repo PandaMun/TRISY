@@ -1,13 +1,12 @@
-import React, { FC } from 'react';
-import { PostDataType } from '../../../data/types';
+import { post } from '~/types/sharedTypes';
 import Card12 from './Card12';
 import Card13 from './Card13';
 
 export interface SectionMagazine5Props {
-  posts: PostDataType[];
+  posts: post[];
 }
 
-const SectionMagazine5: FC<SectionMagazine5Props> = ({ posts }) => {
+export const SectionMagazine5 = ({ posts }: SectionMagazine5Props) => {
   return (
     <div className='nc-SectionMagazine5'>
       <div className='grid gap-6 lg:grid-cols-2 md:gap-8'>
@@ -23,5 +22,3 @@ const SectionMagazine5: FC<SectionMagazine5Props> = ({ posts }) => {
     </div>
   );
 };
-
-export default SectionMagazine5;

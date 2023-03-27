@@ -1,29 +1,25 @@
-import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { PostDataType } from '../../../data/types';
-import { DEMO_POSTS } from '../../../data/posts';
 import NcImage from '~/components/NcImage/NcImage';
 import PostTypeFeaturedIcon from '~/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon';
+import { post } from '~/types/sharedTypes';
 
 export interface Card12Props {
-  className?: string;
-  post?: PostDataType;
+  post?: post;
 }
 
-const Card12: FC<Card12Props> = ({ className = 'h-full', post = DEMO_POSTS[0] }) => {
-  const { title, href, featuredImage, desc, postType } = post;
+const Card12 = ({ post }: Card12Props) => {
+  const { id, title, content, image } = post as post;
 
   return (
-    <div className={`nc-Card12 group relative flex flex-col ${className}`} data-nc-id='Card12'>
+    <div className={`nc-Card12 group relative flex flex-col h-full`} data-nc-id='Card12'>
       <Link
-        to={href}
+        to={`/post/${id}`}
         className='relative flex-grow flex-shrink-0 block w-full h-0 overflow-hidden aspect-w-4 aspect-h-3 rounded-3xl'
       >
-        <NcImage containerClassName='absolute inset-0' src={featuredImage} alt={title} />
+        <NcImage containerClassName='absolute inset-0' src={image} alt={title} />
         <span>
           <PostTypeFeaturedIcon
             className='absolute bottom-2 left-2'
-            postType={postType}
             wrapSize='w-8 h-8'
             iconSize='w-4 h-4'
           />
@@ -36,12 +32,12 @@ const Card12: FC<Card12Props> = ({ className = 'h-full', post = DEMO_POSTS[0] })
         <h2
           className={`nc-card-title block font-semibold text-neutral-900 dark:text-neutral-100 transition-colors text-lg sm:text-2xl`}
         >
-          <Link to={href} className='line-clamp-2' title={title}>
+          <Link to={`/post/${id}`} className='line-clamp-2' title={title}>
             {title}
           </Link>
         </h2>
         <span className='hidden mt-4 sm:block text-neutral-500 dark:text-neutral-400'>
-          <span className='line-clamp-2'> {desc}</span>
+          <span className='line-clamp-2'> {content}</span>
         </span>
         {/* <PostCardMeta className='mt-5' meta={post} /> */}
       </div>

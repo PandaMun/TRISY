@@ -7,7 +7,7 @@ export default function TopSection() {
     <S.Section>
       <S.LeftSection>
         <S.SiteIntroduction>AI 여행 스케줄링 플래너</S.SiteIntroduction>
-        <S.SiteName>야 여기 어때 놀자</S.SiteName>
+        <S.SiteName>TRISY</S.SiteName>
         <button type='button'>시작하기</button>
       </S.LeftSection>
       <S.RightSection>
@@ -24,7 +24,7 @@ const S = {
     ${tw`grid min-h-screen grid-cols-3`}
   `,
   LeftSection: styled.div`
-    ${tw`flex flex-col items-center justify-center col-span-1 space-y-10 max-xl:col-span-3`}
+    ${tw`flex flex-col items-center justify-center col-span-1 space-y-10 max-xl:col-span-3 pb-[100px]`}
     button {
       ${tw`py-5 text-2xl font-bold text-white bg-red-400 rounded px-28`}
     }

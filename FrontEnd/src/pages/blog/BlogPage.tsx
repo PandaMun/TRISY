@@ -1,26 +1,30 @@
-import React from 'react';
-import { DEMO_POSTS } from '../../data/posts';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import SectionMagazine5 from './components/SectionMagazine5';
 import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
-
-// DEMO DATA
-const POSTS = DEMO_POSTS;
-
-// DEMO POST FOR MAGAZINE SECTION
-const MAGAZINE1_POSTS = POSTS.filter((_, i) => i >= 0 && i < 8);
+import { usePost } from 'usePost';
+import { SectionPost } from './components/SectionPost';
+import { SectionMagazine5 } from './components/SectionMagazine5';
 
 export default function BlogPage() {
+  const { getPost } = usePost();
+  const { data: posts, isLoading, error } = getPost;
+  if (isLoading) return <div>로딩중</div>;
+  if (error) return <div>에러</div>;
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
       <S.Container>
         {/* SECTION1 */}
-        <S.SectionMagazine5>
-          <SectionMagazine5 posts={MAGAZINE1_POSTS} />
-        </S.SectionMagazine5>
+        {!posts && <div>게시글이 없습니다.</div>}
+        {posts && (
+          <>
+            <S.SectionMagazine5>
+              <SectionMagazine5 posts={posts.filter((_, i) => i >= 0 && i < 4)} />
+            </S.SectionMagazine5>
+            <SectionPost posts={posts.filter((_, i) => i >= 4)} />
+          </>
+        )}
       </S.Container>
     </S.Box>
   );
