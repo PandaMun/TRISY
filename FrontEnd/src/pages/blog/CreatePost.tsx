@@ -25,6 +25,18 @@ export const CreatePost = () => {
   };
   return (
     <div>
+      <div className='fixed top-0 left-0 right-0 z-30 bg-white h-[100px] flex justify-between items-center px-10'>
+        <span className='text-3xl font-bold'>TRiSY</span>
+        <button
+          onClick={createPost}
+          className='px-4 py-3 font-bold text-white bg-black border-black hover:scale-105 rounded-2xl hover:bg-white hover:text-black hover:border-2'
+        >
+          완료
+        </button>
+      </div>
+      <div className='absolute top-[30px] z-40 left-96 right-96'>
+        <TextEditor value={content} onChange={handleTextChange} />
+      </div>
       <h1>Create Post</h1>
       <input
         type='text'
@@ -33,17 +45,6 @@ export const CreatePost = () => {
         placeholder='Post title'
         className='border-2'
       />
-      {/* <input
-        type='text'
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder='Post Content'
-        className='border-2'
-      /> */}
-      <div className='w-[90%] mx-auto my-20'>
-        <TextEditor value={content} onChange={handleTextChange} />
-      </div>
-      <button onClick={createPost}>Create</button>
     </div>
   );
 };

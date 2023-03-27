@@ -1,0 +1,14 @@
+.quill {
+  @apply text-center border-0 border-white;
+}
+
+.quill.ql-error {
+  .ql-toolbar {
+    border-bottom: 1px solid red;
+  }
+  .ql-container {
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    border-bottom: 1px solid red;
+  }
+}

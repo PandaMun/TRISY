@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/Home';
-import 'react-quill/dist/quill.snow.css';
 import App from './App';
 
 // styles
