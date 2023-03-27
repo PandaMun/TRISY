@@ -79,10 +79,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
                 String token = request.getHeader(JwtProperties.ACCESS_HEADER_STRING)
                         .replace("Bearer ", "");
-
                 // 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
                 // 내가 SecurityContext에 직접접근해서 세션을 만들때 자동으로 UserDetailsService에 있는 loadByUsername이 호출됨.
                 email = jwtUtil.getUserEmail(token);
+//                System.out.println("이메일: "+email);
 
                 // 정상적으로 서명이 됨
                 if (email != null) {
@@ -99,16 +99,16 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                                     principalDetails, //나중에 컨트롤러에서 DI해서 쓸 때 사용하기 편함.
                                     null, // 패스워드는 모르니까 null 처리
                                     principalDetails.getAuthorities());
-
                     for (GrantedAuthority ga : principalDetails.getAuthorities()) {
-                        log.debug("role : {}", ga.toString());
+                        log.info("role : {}", ga.toString());
                     }
 
                     // 강제로 시큐리티의 세션에 접근하여 Authentication 객체를 저장
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                    log.info("테스트: {}",SecurityContextHolder.getContext().toString());
+                    chain.doFilter(request, response);
                 }
 
-                chain.doFilter(request, response);
             } catch(TokenExpiredException e) {
                 log.info("CustomAuthorizationFilter : Access Token이 만료되었습니다.");
                 String token = request.getHeader(JwtProperties.REFRESH_HEADER_STRING)
@@ -140,16 +140,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                             .withClaim("name", member.getName())
                             .withClaim("email", member.getEmail()) // 비공개 claim
                             .sign(Algorithm.HMAC512(JwtProperties.SECRET_KEY));
-//                    Map<String, String> responseMap = new HashMap<>();
-//                    responseMap.put(JwtProperties.ACCESS_HEADER_STRING, accessToken);
-//                    responseMap.put("message","expired access token");
                     response.setHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_HEADER_PREFIX+accessToken);
-//                    new ObjectMapper().writeValue(response.getWriter(), new ResponseEntity<Map>(responseMap, HttpStatus.UNAUTHORIZED));
-
-                    chain.doFilter(request,response);
 
                 }
-
+                chain.doFilter(request,response);
 
             } catch(Exception e) {
                 logger.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : " + e.getMessage());

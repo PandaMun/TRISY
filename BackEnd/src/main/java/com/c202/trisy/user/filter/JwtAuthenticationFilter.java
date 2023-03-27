@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.debug(member.toString());
+            log.debug(member.toString());
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(member.getEmail(), member.getPassword());
 
@@ -81,7 +81,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_HEADER_PREFIX+accessToken);
 
         String email = principalDetails.getMember().getEmail();
-//        String key = UUID.randomUUID().toString();
 
         String refreshToken = JWT.create()
                 .withSubject(principalDetails.getMember().getEmail())

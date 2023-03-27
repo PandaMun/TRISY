@@ -3,8 +3,11 @@ package com.c202.trisy.user.service;
 import com.c202.trisy.entity.Member;
 import com.c202.trisy.entity.Role;
 import com.c202.trisy.repository.MemberRepository;
+import com.c202.trisy.user.common.JwtUtil;
 import com.c202.trisy.user.dto.OAuthToken;
+import com.c202.trisy.user.dto.RefreshToken;
 import com.c202.trisy.user.model.oauth.KakaoProfile;
+import com.c202.trisy.user.repository.RefreshTokenRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,6 +40,12 @@ public class AuthService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Autowired
+    RefreshTokenRepository refreshTokenRepository;
 
     public OAuthToken getAccessToken(String code) {
 
@@ -77,16 +88,12 @@ public class AuthService {
         return oAuthToken; //(8)
     }
 
-    public Member saveUser(String token) {
-
-        //(1)
+    public Map<String,String> saveUserAndGetToken(String token) { //(1)
         KakaoProfile profile = findProfile(token);
 
-        //(2)
         Optional<Member> optionalMember = memberRepository.findByEmail(profile.getKakao_account().getEmail());
         Member member = null;
-        //(3) 회원가입 된 사용자가 아니라면
-        if(!optionalMember.isPresent()) {
+        if(!optionalMember.isPresent()) { //회원가입한 적이 없다면
             member = Member.builder()
                     .name(profile.getKakao_account().getProfile().getNickname())
                     .email(profile.getKakao_account().getEmail())
@@ -97,9 +104,16 @@ public class AuthService {
                     .role(Role.USER).build();
 
             memberRepository.save(member);
+        } else {
+            member = optionalMember.get();
         }
-
-        return member;
+        Map<String,String> jwtToken = new HashMap<>();
+        jwtToken.put("accessToken",jwtUtil.createAccessToken(member));
+        String refreshToken = jwtUtil.createRefreshToken(member);
+        RefreshToken redisToken = new RefreshToken(member.getEmail(), refreshToken);
+        refreshTokenRepository.save(redisToken);
+        jwtToken.put("refreshToken",refreshToken);
+        return jwtToken;
     }
 
 

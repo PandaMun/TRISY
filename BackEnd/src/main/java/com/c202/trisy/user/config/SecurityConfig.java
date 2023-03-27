@@ -51,19 +51,18 @@ public class SecurityConfig {
                 .apply(new MyCustomDsl())
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/")
-//                .authenticated()
                 .antMatchers(HttpMethod.POST,"/api/user")
                 .permitAll()
-                .antMatchers("/api/user")
-                .authenticated()
                 .antMatchers(HttpMethod.GET,"/api/user/email/**")
                 .permitAll()
+                .antMatchers(HttpMethod.GET,"/api/auth/**")
+                .permitAll()
+                .antMatchers("/api/user")
+                .hasAuthority("USER")
                 .antMatchers("/api/user/**")
-                .hasAnyAuthority("ADMIN","USER")
-                .antMatchers("/api/admin/**")
-                .hasAnyAuthority("ADMIN")
+                .hasAuthority("USER")
                 .anyRequest().permitAll();
+
 
         return http.build();
 

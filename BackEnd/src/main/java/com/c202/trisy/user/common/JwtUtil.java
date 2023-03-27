@@ -32,7 +32,7 @@ public class JwtUtil {
     @Autowired
     public JwtUtil(@Value("${jwt.secret}") String secretKey) {
         this.secretKey = secretKey;
-        this.ACCESS_EXP_TIME = 1000 * 30;
+        this.ACCESS_EXP_TIME = 1000 * 60;
         this.REFRESH_EXP_TIME = 1000 * 60 * 60 * 3;
     }
 
