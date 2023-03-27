@@ -14,6 +14,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Spot {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private int contentId;
     private String mainAddress;
     private String subAddress;
@@ -23,6 +25,8 @@ public class Spot {
     private String thumbnailUrl;
     private String zipCode;
     private String title;
+    @Lob
+    private String detailInfo;
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
 

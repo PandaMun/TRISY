@@ -9,10 +9,8 @@ import com.c202.trisy.entity.Theme;
 import com.c202.trisy.repository.RegionRepository;
 import com.c202.trisy.repository.SpotRepository;
 import com.c202.trisy.repository.ThemeRepository;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,11 +18,13 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +36,7 @@ public class ApiService {
     private final ThemeRepository themeRepository;
     private final SpotRepository spotRepository;
     public List<Area> getSi() throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/areaCode");
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaCode1");
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("20", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -79,7 +79,7 @@ public class ApiService {
 
     public void saveRegion(List<Area> areaList) throws IOException {
         for(Area area : areaList){
-            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/areaCode");
+            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaCode1");
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("35", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -120,7 +120,7 @@ public class ApiService {
 
     }
     public void saveTheme() throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/categoryCode");
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/categoryCode1");
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -156,7 +156,7 @@ public class ApiService {
     }
     public void saveThemeMiddle(List<MainCat> mainCatList) throws IOException {
         for (MainCat mainCat : mainCatList) {
-            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/categoryCode");
+            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/categoryCode1");
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -194,7 +194,7 @@ public class ApiService {
     }
     public void saveThemeSub(List<MiddleCat> middleCatList) throws IOException {
         for (MiddleCat middleCat : middleCatList) {
-            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/categoryCode");
+            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/categoryCode1");
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -241,8 +241,8 @@ public class ApiService {
         int numOfRows = 100;
         int repeatCount = totalCount/100 + 1;
 
-        for(int i = 0; i <= repeatCount; i++){
-            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/areaBasedList");
+        for(int i = 1; i <= repeatCount; i++){
+            StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaBasedList1");
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(numOfRows), "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(i), "UTF-8"));
@@ -256,6 +256,7 @@ public class ApiService {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-type", "application/json");
 
+
             System.out.println("subCat Response code: " + conn.getResponseCode());
 
             JsonObject obj = getConnectJsonObject(conn);
@@ -268,6 +269,7 @@ public class ApiService {
             for (JsonElement jsonElement : arr) {
                 JsonObject temp = jsonElement.getAsJsonObject();
 //                System.out.println(temp.get("cat3").getAsString());
+
                 Theme theme = themeRepository.findBySubCategory(temp.get("cat3").getAsString()).orElse(null);
 
 //                System.out.println(temp.get("areacode").getAsString() + " " +temp.get("sigungucode").getAsString());
@@ -275,7 +277,12 @@ public class ApiService {
                 int guGunCode = temp.get("sigungucode").getAsString().equals("") ? -1 : Integer.parseInt(temp.get("sigungucode").getAsString());
                 int siCode = temp.get("areacode").getAsString().equals("") ? -1 : Integer.parseInt(temp.get("areacode").getAsString());
                 Region region = regionRepository.findByGuGunCodeAndSiCode(guGunCode,siCode).orElse(null);
+                String contentId = temp.get("contentid").getAsString();
 
+                String detailInfo = getDetailInfo(contentId);
+                if(detailInfo == null){
+                    continue;
+                }
                 Spot spot = Spot.builder()
                         .mapY(temp.get("mapy").equals("") ? -1 : Double.parseDouble(temp.get("mapy").getAsString()))
                         .mapX(temp.get("mapx").equals("") ? -1 : Double.parseDouble(temp.get("mapx").getAsString()))
@@ -286,6 +293,7 @@ public class ApiService {
                         .mainAddress(temp.get("addr1") == null ? "wrong answer" : temp.get("addr1").getAsString())
                         .subAddress(temp.get("addr2") == null ? "wrong answer" : temp.get("addr2").getAsString())
                         .zipCode(temp.get("zipcode").getAsString().equals("")  ?  "wrong answer" : temp.get("zipcode").getAsString())
+                        .detailInfo(detailInfo)
                         .region(region)
                         .theme(theme)
                         .build();
@@ -301,9 +309,57 @@ public class ApiService {
 
 
     }
+    private String getDetailInfo(String contentId) throws IOException {
+        Optional<Spot> getSpot;
+        try{
+            int contentIdToInt = Integer.parseInt(contentId);
+             getSpot = spotRepository.findByContentId(contentIdToInt);
+        }catch (NumberFormatException e){
+            System.out.println("잘못된 방식의 content id : "+ contentId);
+            return "no content id";
+        }
 
+        if(!getSpot.isEmpty()){
+            return null;
+        }
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/detailCommon1");
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
+        urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("overviewYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
+
+
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "text/html;");
+        System.out.println("get detail info Response code: " + conn.getResponseCode());
+
+        JsonObject obj = getConnectJsonObject(conn);
+
+
+        JsonArray arr = obj.get("response").getAsJsonObject()
+                .get("body").getAsJsonObject()
+                .get("items").getAsJsonObject()
+                .get("item").getAsJsonArray();
+
+//
+
+        for (JsonElement jsonElement : arr) {
+            JsonObject temp = jsonElement.getAsJsonObject();
+            if(temp.get("overview") != null){
+                return temp.get("overview") == null ? "wrong answer": (temp.get("overview").getAsString());
+            }
+
+        }
+
+        return "wrong answer";
+    }
     private int getTotalCount() throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService/areaBasedList");
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaBasedList1");
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("20", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -350,7 +406,12 @@ public class ApiService {
         System.out.println(sb.toString());
 
         JsonParser parser = new JsonParser();
-        JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
+//        //////////
+        JsonReader reader = new JsonReader(new StringReader(sb.toString()));
+        reader.setLenient(true);
+        JsonObject obj = JsonParser.parseReader(reader).getAsJsonObject();
+//        ///////////
+//        JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
         return obj;
     }
 }
