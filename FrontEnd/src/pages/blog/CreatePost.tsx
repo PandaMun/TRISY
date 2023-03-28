@@ -63,7 +63,7 @@ export const CreatePost = () => {
 
 const S = {
   Box: styled.section`
-    ${tw`fixed top-0 left-0 bottom-0 right-0 z-30 min-h-screen bg-white min-w-[880px]`}
+    ${tw`fixed top-0 left-0 bottom-0 right-0 z-30 min-h-screen bg-white min-w-[880px] dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200`}
   `,
   GridContainer: styled.div`
     ${tw`grid grid-cols-6 pt-5`}

@@ -1,11 +1,12 @@
 .quill {
-  @apply text-center border-0 border-white;
+  @apply text-center border-0 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200;
 }
 
 .ql-toolbar {
   height: 120px; /* adjust the height as needed */
   border: 3px solid red;
   line-height: 0;
+  @apply bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200;
 }
 .ql-toolbar.ql-snow {
   border: none !important;
@@ -23,4 +24,13 @@
   margin-right: 10px !important;
   padding-right: 10px !important;
   border-right: 1px solid #efefef;
+  svg {
+    @apply dark:bg-slate-400 rounded;
+  }
+}
+
+.ql-active {
+  svg {
+    @apply dark:bg-white;
+  }
 }

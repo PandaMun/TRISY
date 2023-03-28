@@ -15,10 +15,17 @@ import { PostDetail } from './pages/blog/PostDetail';
 
 import { Recommand } from './pages/recommand/Recommand';
 import { Survey } from './pages/Survey/Survey';
+import { NotFound } from './pages/Handle/NotFound';
+import { HowToUse } from './pages/HowToUse/HowToUse';
+import { MyPage } from './pages/mypage/MyPage';
+import { MyInfo } from './pages/mypage/MyInfo';
+import { MyReview } from './pages/mypage/MyReview';
+import { MyTrip } from './pages/mypage/MyTrip';
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -56,6 +63,26 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+      },
+      {
+        path: '/howToUse',
+        element: <HowToUse />,
+      },
+      {
+        path: '/mypage',
+        element: <MyPage />,
+      },
+      {
+        path: '/myinfo',
+        element: <MyInfo />,
+      },
+      {
+        path: '/myreview',
+        element: <MyReview />,
+      },
+      {
+        path: '/mytrip',
+        element: <MyTrip />,
       },
     ],
   },
