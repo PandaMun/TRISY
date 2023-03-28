@@ -4,17 +4,28 @@ import com.c202.trisy.entity.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Data
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private Member member;
+    private Map<String, Object> attributes;
 
+    //일반 시큐리티 로그인시 사용
+    //생성자에 유저 넣어준다.
     public PrincipalDetails(Member member) {
         this.member = member;
+    }
+
+    // OAuth2.0 로그인 시 사용
+    public PrincipalDetails(Member member, Map<String, Object> attributes) {
+        this.member = member;
+        this.attributes = attributes;
     }
 
     @Override
@@ -59,5 +70,11 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    // User의 PrimaryKey
+    @Override
+    public String getName() {
+        return member.getId()+"";
     }
 }
