@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -29,7 +29,13 @@ public class Board extends BaseTimeEntity{
     @JoinColumn(name = "tour_schedule_id")
     private TourSchedule tourSchedule;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BoardImage> boardImages;
+
+    private String thumbnailUrl;
+
+    public void updateBoard(String title, String content, String thumbnailUrl){
+        this.title = title;
+        this.content = content;
+        this.thumbnailUrl = thumbnailUrl;
+    }
 
 }
