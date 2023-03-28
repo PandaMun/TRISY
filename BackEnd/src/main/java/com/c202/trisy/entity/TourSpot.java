@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 public class TourSpot extends BaseEntity{
 
+    private int contentId;
 
     private String mainAddress;
 
@@ -27,20 +28,18 @@ public class TourSpot extends BaseEntity{
 
     private String spotName;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String spotInfo;
 
     private String imageUrl;
 
     private String thumbnailUrl;
 
-    private int zipcode;
-
-    private String phoneNumber;
+    private String zipcode;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Theme theme;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
