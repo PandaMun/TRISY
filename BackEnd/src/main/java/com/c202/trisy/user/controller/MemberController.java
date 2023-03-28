@@ -7,6 +7,7 @@ import com.c202.trisy.user.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +24,14 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-
+        System.out.println("컨트롤러에는 들어온다.");
         Member member = principalDetails.getMember();
+        System.out.println("member: "+member);
         MemberDto.Basic ud = MemberDto.Basic.builder()
                 .id(member.getId())
                 .role(member.getRole().toString())
                 .email(member.getEmail())
                 .name(member.getName())
-                .content(member.getContent())
                 .birth(member.getBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .phone(member.getPhone())
                 .build();
