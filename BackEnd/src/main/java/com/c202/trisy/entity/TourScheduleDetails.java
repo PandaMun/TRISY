@@ -20,9 +20,9 @@ public class TourScheduleDetails extends  BaseEntity{
 
     private LocalDateTime planDateTime;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "tour_schedule_id")
-//    private TourSchedule tourSchedule;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_schedule_id")
+    private TourSchedule tourSchedule;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_spot_id")
