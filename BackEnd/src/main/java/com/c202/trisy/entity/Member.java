@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @EntityListeners(value = AuditingEntityListener.class)
 @Builder
 public class Member extends BaseTimeEntity{
+
     @Column(nullable = false, updatable = false, length = 45,unique = true)
     private String email;
     @Column(nullable = false, length = 100)

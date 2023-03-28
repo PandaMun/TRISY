@@ -1,36 +1,35 @@
 server:
+  port: 8080
   servlet:
-    encoding:
-      force: 'true'
-      enabled: 'true'
-      charset: UTF-8
     context-path: /
-  port: '8080'
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   ssl:
-    enabled: 'false'
+    enabled: false
+
 spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S08P22C202
+    username: S08P22C202@stg-yswa-kr-practice-db-master
+    password: GfNj2advQi
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   redis:
+    port: 6379
+    host: j8c202.p.ssafy.io
     lettuce:
       pool:
-        max-active: '10'
-        max-idle: '10'
-        min-idle: '2'
-    host: 127.0.0.1
-    port: '6379'
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
   servlet:
     multipart:
       max-file-size: 1MB
-  jpa:
-    hibernate:
-      ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: 'true'
-  datasource:
-    password: '1234'
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: c202
-    url: jdbc:mysql://localhost:3306/trisy?serverTimezone=Asia/Seoul
   profiles:
     include: oauth
 jwt:
