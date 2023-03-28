@@ -1,16 +1,21 @@
 package com.c202.trisy.tour.controller;
 
 
-import com.c202.trisy.entity.Member;
 import com.c202.trisy.tour.dto.RecommendRequest;
+import com.c202.trisy.tour.dto.TourDetailsResponse;
 import com.c202.trisy.tour.dto.TourRequest;
+import com.c202.trisy.tour.dto.TourResponse;
 import com.c202.trisy.tour.service.TourService;
+import com.c202.trisy.user.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.Authenticator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,8 +48,19 @@ public class TourController {
 
     //여행 일정 전체 조회(회원 아이디)
     @GetMapping
-    public ResponseEntity<?> searchTourSchedules(Authentication authentication){
+    public ResponseEntity<?> searchTourSchedules(Authentication authentication) {
 
+        try {
+            PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+
+            List<TourResponse> tourResponseList = tourService.getTourSchedule(principal.getMember().getEmail());
+
+            return ResponseEntity.ok(tourResponseList);
+        }catch (AuthenticationException e){
+
+        }catch (NoSuchElementException e){
+
+        }
         return null;
     }
 
@@ -52,22 +68,28 @@ public class TourController {
     @GetMapping("/{tourId}")
     public ResponseEntity<?> searchTourScheduleDetails(@PathVariable("tourId") Long tourId){
 
+        List<TourDetailsResponse> tourDetails = tourService.getTourDetails(tourId);
 
-        return null;
+        return ResponseEntity.ok(tourDetails);
+
     }
 
     //여행 일정 생성(아이디, 선택한 관광정보 리스트, 날짜 + 시간)
     @PostMapping
-    public ResponseEntity<?> createTourSchedule(@RequestBody TourRequest tourRequest){
+    public ResponseEntity<?> createTourSchedule(@RequestBody TourRequest tourRequest, Authentication authentication){
 
-        return null;
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String memberEmail = principal.getMember().getEmail();
+        tourService.addTourSchedule(tourRequest,memberEmail);
+        return ResponseEntity.ok("Success");
     }
 
     //여행 일정 수정(아이디, 선택한 관광정보 리스트, 날짜 + 시간)
     @PutMapping ("/{tourId}")
-    public ResponseEntity<?> modifyTourSchedule(@PathVariable("tourId") Long tourId){
+    public ResponseEntity<?> modifyTourSchedule(@RequestBody TourRequest tourRequest, @PathVariable("tourId") Long tourId){
 
-        return null;
+        tourService.updateTourSchedule(tourRequest, tourId);
+        return ResponseEntity.ok("Success");
     }
 
     //여행 일정 삭제(여행 아이디, 회원 아이디 비교 or 권한(authentication))
@@ -75,13 +97,9 @@ public class TourController {
     public ResponseEntity<?> deleteTourSchedule(@PathVariable("tourId") Long tourId, Authentication authentication){
 
 
-        try {
-            tourService.deleteTourSchedule(tourId);
-        }catch (Exception e){
+        tourService.deleteTourSchedule(tourId);
 
-        }
-
-        return null;
+        return ResponseEntity.ok("success");
     }
 
 
