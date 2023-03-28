@@ -7,7 +7,6 @@ import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.tour.dto.TourDetailsResponse;
 import com.c202.trisy.tour.dto.TourRequest;
 import com.c202.trisy.tour.dto.TourResponse;
-import com.c202.trisy.tour.repository.TourDetailsRepository;
 import com.c202.trisy.tour.repository.TourRepository;
 import com.c202.trisy.tour.repository.TourSpotRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
