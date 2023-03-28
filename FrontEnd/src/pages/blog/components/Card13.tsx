@@ -3,6 +3,7 @@ import NcImage from '~/components/NcImage/NcImage';
 import PostTypeFeaturedIcon from '~/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon';
 import { PostCardMeta } from '~/components/Shared/PostCardMeta';
 import { post } from '~/types/sharedTypes';
+import { htmlToPlainText } from '~/utils/htmlToPlainText';
 
 export interface Card13Props {
   post: post;
@@ -22,7 +23,7 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
         </h2>
         <span className='hidden my-3 sm:block text-neutral-500 dark:text-neutral-400 min-h-[32px]'>
           <Link to={`/post/${id}`} className='line-clamp-2'>
-            {content}
+            {htmlToPlainText(content)}
           </Link>
         </span>
         <span className='block mt-4 mb-5 text-sm sm:hidden text-neutral-500'>2022.12.12</span>

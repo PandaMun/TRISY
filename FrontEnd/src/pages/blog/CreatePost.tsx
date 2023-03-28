@@ -1,6 +1,11 @@
+import styled from 'styled-components';
+import tw from 'twin.macro';
 import React, { useState } from 'react';
 import axios from 'axios';
 import TextEditor from './components/PostEditor';
+import { Button } from '~/components/Shared/Button';
+import { Link } from 'react-router-dom';
+import { Line } from '~/components/Shared/Line';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -24,27 +29,52 @@ export const CreatePost = () => {
     }
   };
   return (
-    <div>
-      <div className='fixed top-0 left-0 right-0 z-30 bg-white h-[100px] flex justify-between items-center px-10'>
-        <span className='text-3xl font-bold'>TRiSY</span>
-        <button
-          onClick={createPost}
-          className='px-4 py-3 font-bold text-white bg-black border-black hover:scale-105 rounded-2xl hover:bg-white hover:text-black hover:border-2'
-        >
-          완료
-        </button>
-      </div>
-      <div className='absolute top-[30px] z-40 left-96 right-96'>
-        <TextEditor value={content} onChange={handleTextChange} />
-      </div>
-      <h1>Create Post</h1>
-      <input
-        type='text'
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder='Post title'
-        className='border-2'
-      />
-    </div>
+    <S.Box>
+      <S.GridContainer>
+        <S.GridLeft>
+          <Link to='/' className='text-3xl font-bold pl-5'>
+            TRiSY
+          </Link>
+          <Line />
+        </S.GridLeft>
+        <S.GridCenter>
+          <TextEditor value={content} onChange={handleTextChange} />
+          <input
+            type='text'
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder='제목을 입력해주세요'
+            className='absolute top-0 mt-12 p-3 py-5 border-b-2 rounded-none text-xl z-40 border-t-2 focus:outline-none focus:border-b-red-100 focus:border-t-[#E9EBEE]'
+          />
+        </S.GridCenter>
+        <S.GridRight>
+          <Button
+            type='button'
+            className='create-post-button bg-black mr-5'
+            text='완료'
+            onClick={createPost}
+          />
+          <Line />
+        </S.GridRight>
+      </S.GridContainer>
+    </S.Box>
   );
+};
+
+const S = {
+  Box: styled.section`
+    ${tw`fixed top-0 left-0 bottom-0 right-0 z-30 min-h-screen bg-white min-w-[880px]`}
+  `,
+  GridContainer: styled.div`
+    ${tw`grid grid-cols-6 pt-5`}
+  `,
+  GridLeft: styled.div`
+    ${tw`col-span-1 border-white`}
+  `,
+  GridCenter: styled.div`
+    ${tw`col-span-4 relative`}
+  `,
+  GridRight: styled.div`
+    ${tw`col-span-1 text-right`}
+  `,
 };

@@ -32,7 +32,7 @@ export default function Nav() {
       <TestDropdown />
       <S.RightBox>
         <SwitchDarkMode />
-        <span>여행지</span>
+        <Link to='/blog'>여행후기</Link>
         <span>마이로</span>
         <span>이용방법</span>
         {user && (

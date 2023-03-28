@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import NcImage from '~/components/NcImage/NcImage';
 import { PostCardMeta } from '~/components/Shared/PostCardMeta';
 import { post } from '~/types/sharedTypes';
+import { htmlToPlainText } from '~/utils/htmlToPlainText';
 
 export interface Card12Props {
   post?: post;
@@ -27,7 +28,7 @@ const Card12 = ({ post }: Card12Props) => {
         </h2>
         <span className='hidden mt-4 sm:block text-neutral-500 dark:text-neutral-400'>
           <Link to={`/post/${id}`} className='line-clamp-2' title={title}>
-            {content}
+            {htmlToPlainText(content)}
           </Link>
         </span>
         <span className='block mt-4 text-sm sm:hidden text-neutral-500 '>2022.12.12</span>

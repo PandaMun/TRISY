@@ -1,6 +1,6 @@
 // src/components/TextEditor.tsx
 import { RangeStatic } from 'quill';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -12,17 +12,20 @@ interface TextEditorProps {
 const toolbarOptions = [
   ['image'], // image upload button
   [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+
   ['bold', 'italic', 'underline', 'strike'], // toggled buttons
 
   [{ header: 1 }, { header: 2 }], // custom button values
   [
     { list: 'ordered', className: 'custom-ordered-list' },
     { list: 'bullet', className: 'custom-bullet-list' },
-    'list',
   ],
-
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ align: [] }],
+  [
+    { align: '' }, // individual align button
+    { align: 'center' }, // individual align button
+    { align: 'right' }, // individual align button
+    { align: 'justify' }, // individual align button
+  ],
 ];
 
 const CustomList = ReactQuill.Quill.import('formats/list');
@@ -92,6 +95,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
       onChange={onChange}
       modules={modules}
       onChangeSelection={onSelectionChange}
+      className='z-50 border-4'
+      style={{ height: '500px', border: 'none' }}
     />
   );
 };

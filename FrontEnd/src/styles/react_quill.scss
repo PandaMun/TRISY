@@ -2,13 +2,25 @@
   @apply text-center border-0 border-white;
 }
 
-.quill.ql-error {
-  .ql-toolbar {
-    border-bottom: 1px solid red;
-  }
-  .ql-container {
-    border-left: 1px solid red;
-    border-right: 1px solid red;
-    border-bottom: 1px solid red;
-  }
+.ql-toolbar {
+  height: 120px; /* adjust the height as needed */
+  border: 3px solid red;
+  line-height: 0;
+}
+.ql-toolbar.ql-snow {
+  border: none !important;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+}
+
+.ql-picker-options {
+  z-index: 50 !important;
+}
+
+.ql-formats {
+  margin-right: 10px !important;
+  padding-right: 10px !important;
+  border-right: 1px solid #efefef;
 }
