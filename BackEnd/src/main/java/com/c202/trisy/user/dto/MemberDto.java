@@ -29,8 +29,6 @@ public class MemberDto {
 
         String role;
 
-        String content;
-
         String birth;
 
         String phone;
