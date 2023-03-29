@@ -2,12 +2,12 @@ import { getUserApi } from './../api/userApi';
 import { loginApi, signUpApi } from '../api/userApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-const setTokens = (accessToken: string, refreshToken: string) => {
+export const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
 };
 
-const removeTokens = () => {
+export const removeTokens = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 };
@@ -38,8 +38,8 @@ export const useAuth = () => {
       // console.log('onMutate', variable);
     },
     onSuccess: async (data, variables) => {
-      const refreshToken = data['refresh-token'];
-      const accessToken = data['access-token'];
+      const refreshToken = data['refreshToken'];
+      const accessToken = data['accessToken'];
       setTokens(accessToken, refreshToken);
       navigate('/');
       client.invalidateQueries(['user']); // Invalidate user query after login to refetch user data
@@ -69,6 +69,7 @@ export const useAuth = () => {
     },
     onError: (error) => {
       console.log(error);
+      logout();
     },
   });
 

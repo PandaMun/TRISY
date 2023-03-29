@@ -58,7 +58,7 @@ export const SignUpForm = () => {
       email: data.email,
       name: data.name,
       password: data.password,
-      phone: data.phone,
+      phone: data.phone.replace(/-/g, ''),
     };
     console.log(payload);
     useSignUp.mutate(payload);

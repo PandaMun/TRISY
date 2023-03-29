@@ -21,6 +21,7 @@ import { MyPage } from './pages/mypage/MyPage';
 import { MyInfo } from './pages/mypage/MyInfo';
 import { MyReview } from './pages/mypage/MyReview';
 import { MyTrip } from './pages/mypage/MyTrip';
+import { Kakao } from './pages/SignIn/Kakao';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: '/mytrip',
         element: <MyTrip />,
+      },
+      {
+        path: '/kakao',
+        element: <Kakao />,
       },
     ],
   },

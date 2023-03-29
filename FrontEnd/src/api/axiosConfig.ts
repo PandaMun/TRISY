@@ -8,12 +8,22 @@ const MOCK_URL = 'http://localhost:5000';
 
 const mockApi = axios.create({ baseURL: MOCK_URL });
 
+const KAKAO_API_URL = 'https://kauth.kakao.com/';
+
+const kakaoApi = axios.create({
+  baseURL: KAKAO_API_URL,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+  },
+});
+
 // Create an axios instance with the specified configuration
 const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
@@ -24,8 +34,8 @@ const setAuthTokenHeader = (config: AxiosRequestConfig): AxiosRequestConfig => {
   if (accessToken && refreshToken && accessToken !== 'undefined') {
     config.headers = {
       ...config.headers,
-      'access-token': `Bearer ${accessToken}`,
-      'refresh-token': `Bearer ${refreshToken}`,
+      accessToken: `Bearer ${accessToken}`,
+      refreshToken: `Bearer ${refreshToken}`,
     };
   }
   return config;
@@ -58,4 +68,4 @@ api.interceptors.request.use(
 api.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
 // Export the configured axios instance for use in other parts of the application
-export { api, mockApi };
+export { api, mockApi, kakaoApi };
