@@ -4,16 +4,19 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 const hostname = window && window.location && window.location.hostname;
 const BASE_URL =
   hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/api';
+const BOARD_BASE_URL =
+  hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/trisy/api';
+
 const MOCK_URL = 'http://localhost:5000';
 
 const mockApi = axios.create({ baseURL: MOCK_URL });
 
-const KAKAO_API_URL = 'https://kauth.kakao.com/';
-
-const kakaoApi = axios.create({
-  baseURL: KAKAO_API_URL,
+const boardApi = axios.create({
+  baseURL: BOARD_BASE_URL,
+  withCredentials: true,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
@@ -64,8 +67,15 @@ api.interceptors.request.use(
   handleRequestError,
 );
 
+boardApi.interceptors.request.use(
+  (config) => setAuthTokenHeader(config as AxiosRequestConfig) as any,
+  handleRequestError,
+);
+
 // Add the response interceptor for handling successful responses and errors
 api.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
+boardApi.interceptors.response.use(handleResponseSuccess, handleResponseError);
+
 // Export the configured axios instance for use in other parts of the application
-export { api, mockApi, kakaoApi };
+export { api, mockApi, boardApi };

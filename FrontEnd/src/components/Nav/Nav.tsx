@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useAuth } from '~/hooks/useAuth';
 import SwitchDarkMode from '../SwitchDarkMode/SwitchDarkMode';
+import { LoginDropdwon } from './LoginDropdwon';
 import TestDropdown from './TestDropdown';
 
 interface NavSectionProps {
@@ -11,13 +12,12 @@ interface NavSectionProps {
 }
 
 export default function Nav() {
-  const [isScroll, setIsScroll] = useState(false);
-  const { useUser, logout } = useAuth();
+  const [isScroll, setIsScroll] = useState(true);
+  const { useUser } = useAuth();
   const { data: user } = useUser;
-
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      window.pageYOffset > 600 ? setIsScroll(true) : setIsScroll(false);
+      window.pageYOffset < 800 ? setIsScroll(false) : setIsScroll(true);
     });
   }, [isScroll]);
 
@@ -31,19 +31,14 @@ export default function Nav() {
       </S.LeftBox>
       <TestDropdown />
       <S.RightBox>
-        <SwitchDarkMode />
-        <Link to='/survey'>여행시작</Link>
-        <Link to='/blog'>여행후기</Link>
-        <Link to='/howToUse'>이용방법</Link>
-        {user && (
-          <>
-            <span>{user.name}</span>
-            <button type='button' onClick={logout}>
-              로그아웃
-            </button>
-          </>
-        )}
-        {!user && <Link to='/login'>로그인</Link>}
+        <>
+          <SwitchDarkMode />
+          <Link to='/survey'>여행시작</Link>
+          <Link to='/blog'>여행후기</Link>
+          <Link to='/howToUse'>이용방법</Link>
+          {user && <LoginDropdwon />}
+          {!user && <Link to='/login'>로그인</Link>}
+        </>
       </S.RightBox>
     </S.NavSection>
   );
