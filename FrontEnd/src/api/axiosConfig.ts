@@ -1,7 +1,8 @@
 // Import necessary axios types and functions
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api';
+const isProduction = process.env.NODE_ENV === 'production';
+const BASE_URL = isProduction ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/api';
 const MOCK_URL = 'http://localhost:5000';
 
 const mockApi = axios.create({ baseURL: MOCK_URL });
