@@ -10,26 +10,31 @@ interface TextEditorProps {
 }
 
 const toolbarOptions = [
+  ['image'], // image upload button
+  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+
   ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-  ['blockquote', 'code-block'],
 
   [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-  [{ direction: 'rtl' }], // text direction
-
-  [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
-  [{ align: [] }],
-
-  ['clean'], // remove formatting button
-
-  ['image'], // image upload button
+  [
+    { list: 'ordered', className: 'custom-ordered-list' },
+    { list: 'bullet', className: 'custom-bullet-list' },
+  ],
+  [
+    { align: '' }, // individual align button
+    { align: 'center' }, // individual align button
+    { align: 'right' }, // individual align button
+    { align: 'justify' }, // individual align button
+  ],
 ];
+
+const CustomList = ReactQuill.Quill.import('formats/list');
+CustomList.className = 'custom-list';
+ReactQuill.Quill.register(CustomList, true);
+
+const CustomListItem = ReactQuill.Quill.import('formats/list/item');
+CustomListItem.className = 'custom-list-item';
+ReactQuill.Quill.register(CustomListItem, true);
 
 const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
   const quillRef = useRef<ReactQuill>(null);
@@ -82,14 +87,16 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
       },
     };
   }, []);
+
   return (
     <ReactQuill
       ref={quillRef}
-      theme='snow'
       value={value}
       onChange={onChange}
       modules={modules}
       onChangeSelection={onSelectionChange}
+      className='z-50 border-4'
+      style={{ height: '500px', border: 'none' }}
     />
   );
 };
