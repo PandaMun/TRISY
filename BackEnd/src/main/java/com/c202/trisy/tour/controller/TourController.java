@@ -68,7 +68,7 @@ public class TourController {
     @GetMapping("/{tourId}")
     public ResponseEntity<?> searchTourScheduleDetails(@PathVariable("tourId") Long tourId){
 
-        List<TourDetailsResponse> tourDetails = tourService.getTourDetails(tourId);
+        TourDetailsResponse tourDetails = tourService.getTourDetails(tourId);
 
         return ResponseEntity.ok(tourDetails);
 
@@ -76,10 +76,10 @@ public class TourController {
 
     //여행 일정 생성(아이디, 선택한 관광정보 리스트, 날짜 + 시간)
     @PostMapping
-    public ResponseEntity<?> createTourSchedule(@RequestBody TourRequest tourRequest, Authentication authentication){
+    public ResponseEntity<?> createTourSchedule(@RequestBody TourRequest tourRequest){
 
-        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        String memberEmail = principal.getMember().getEmail();
+//        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String memberEmail = "miunae@naver.com";  //principal.getMember().getEmail();
         tourService.addTourSchedule(tourRequest,memberEmail);
         return ResponseEntity.ok("Success");
     }
@@ -88,6 +88,7 @@ public class TourController {
     @PutMapping ("/{tourId}")
     public ResponseEntity<?> modifyTourSchedule(@RequestBody TourRequest tourRequest, @PathVariable("tourId") Long tourId){
 
+        System.out.println(tourRequest.getTourName());
         tourService.updateTourSchedule(tourRequest, tourId);
         return ResponseEntity.ok("Success");
     }
