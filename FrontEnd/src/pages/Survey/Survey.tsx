@@ -3,9 +3,13 @@ import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import './components/progressbarStyle.scss';
-import { QuestionList, AList, COLORS } from './components/QList';
+import { QuestionList, AList, SubQlist, SubAlist, COLORS } from './components/QList';
 import tw from 'twin.macro';
+import { useAppDispatch } from '~/app/hooks';
+import { pick } from './SurveySlice';
+
 export const Survey = () => {
+  const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const loadingRef = useRef(null);
   const [step, setStep] = useState(10);
@@ -13,7 +17,7 @@ export const Survey = () => {
   const [color, setBgColor] = useState(0);
   const [visible, setVigible] = useState(true);
   const index = Math.min(Math.round(step / 10) - 1, QuestionList.length - 1);
-  const handleClick = async () => {
+  const handleClick = async (answer: { [key: string]: string | { SubQ: number } }) => {
     setBgColor(color + 1);
     gsap.to(containerRef.current, {
       duration: 0.5,
@@ -21,36 +25,67 @@ export const Survey = () => {
       opacity: 0,
       ease: 'power2.inOut',
       onComplete: () => {
-        setStep(step + 10);
-        if (step < 90) {
-          gsap.to(containerRef.current, {
-            duration: 0.5,
-            y: '0%',
-            opacity: 1,
-            ease: 'power2.inOut',
-          });
+        const firstValue = Object.values(answer)[0];
+        if (typeof firstValue === 'object' && 'SubQ' in firstValue) {
+          setSub(firstValue.SubQ);
+          if (step < 90) {
+            gsap.to(containerRef.current, {
+              duration: 0.5,
+              y: '0%',
+              opacity: 1,
+              ease: 'power2.inOut',
+            });
+          }
         } else {
-          gsap.from(loadingRef.current, {
-            duration: 0.5,
-            y: '-100%',
-            opacity: 0,
-            ease: 'power2.inOut',
-          });
-          setVigible(false);
+          setSub(0);
+          dispatch(pick(firstValue));
+          setStep(step + 10);
+          if (step < 90) {
+            gsap.to(containerRef.current, {
+              duration: 0.5,
+              y: '0%',
+              opacity: 1,
+              ease: 'power2.inOut',
+            });
+          } else {
+            gsap.from(loadingRef.current, {
+              duration: 0.5,
+              y: '-100%',
+              opacity: 0,
+              ease: 'power2.inOut',
+            });
+            setVigible(false);
+          }
         }
       },
     });
   };
-  const Answer = () => {
+  const Answer = (sub: { sub: number }) => {
+    if (sub.sub < 1) {
+      return (
+        <>
+          {AList[(step - 10) / 10].map((el: any, index: number) => (
+            <Button
+              key={index}
+              style={{ width: '440px', height: '66px' }}
+              onClick={() => {
+                handleClick(el);
+              }}
+            >
+              {Object.keys(el).toString()}
+            </Button>
+          ))}
+        </>
+      );
+    }
     return (
       <>
-        {AList[(step - 10) / 10].map((el: any) => (
+        {SubAlist[sub.sub - 1].map((el: any, index: number) => (
           <Button
-            key={el}
+            key={index}
             style={{ width: '440px', height: '66px' }}
             onClick={() => {
-              setStep(step + 10);
-              handleClick();
+              handleClick(el);
             }}
           >
             {Object.keys(el).toString()}
@@ -75,8 +110,8 @@ export const Survey = () => {
             />
           </TopDiv>
           <SubDiv ref={containerRef} visible={visible}>
-            <Question>{QuestionList[index]}</Question>
-            {step < 100 && <Answer />}
+            <Question>{sub > 0 ? SubQlist[sub - 1] : QuestionList[index]}</Question>
+            {step < 100 && <Answer sub={sub} />}
           </SubDiv>
           <LoadingDiv ref={loadingRef} visible={visible}>
             <LoadingMessage>현우님의 취향에 맞는 여행지를 찾고있어요.</LoadingMessage>
