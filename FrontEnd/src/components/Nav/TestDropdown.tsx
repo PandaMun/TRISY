@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 const links = [
   { href: '/', label: 'home' },
   { href: '/hello', label: 'hello' },
+  { href: '/blog', label: 'blog' },
+  { href: '/createPost', label: 'createPost' },
 ];
 
 export default function TestDropdown() {
