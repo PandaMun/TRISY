@@ -106,6 +106,7 @@ public class AuthService {
                     .email(profile.getKakao_account().getEmail())
                     .password(bcryptPasswordEncoder.encode("trisy"))
                     .phone("01012345678")
+                    .nickname("닉네임")
                     .provider("kakao")
                     .providerId(profile.getId().toString())
                     .role(Role.USER).build();

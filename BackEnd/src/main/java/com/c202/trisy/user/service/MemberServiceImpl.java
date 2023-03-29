@@ -26,6 +26,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(memberDto.getEmail())
                 .password(passwordEncoder.encode(memberDto.getPassword()))
                 .name(memberDto.getName())
+                .nickname(memberDto.getNickname())
                 .role(Role.USER)
                 .birth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE))
                 .phone(memberDto.getPhone())
@@ -52,6 +53,7 @@ public class MemberServiceImpl implements MemberService {
         authUser.changeName(memberDto.getName());
         authUser.changeBirth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE));
         authUser.changePhone(memberDto.getPhone());
+        authUser.changeNickname(memberDto.getNickname());
 
         Member save = memberRepository.save(authUser);
 

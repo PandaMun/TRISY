@@ -30,6 +30,7 @@ public class MemberController {
                 .role(member.getRole().toString())
                 .email(member.getEmail())
                 .name(member.getName())
+                .nickname(member.getNickname())
                 .birth(member.getBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .phone(member.getPhone())
                 .build();

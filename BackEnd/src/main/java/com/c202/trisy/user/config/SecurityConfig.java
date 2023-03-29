@@ -73,32 +73,5 @@ public class SecurityConfig {
         }
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager(), refreshTokenRepository);
-//        jwtAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
-//
-//        http
-//                .addFilter(corsConfig.corsFilter()) // cors 처리
-//                .csrf().disable() // csrf 처리
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session 사용 x
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .addFilter(jwtAuthenticationFilter)
-//                .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository, refreshTokenRepository))
-//                .authorizeRequests()
-//                .antMatchers("/")
-//                .authenticated()
-//                .antMatchers("/api/v1/user/**")
-//                .hasAnyAuthority("admin","user")
-//                .antMatchers("/api/v1/admin/**")
-//                .hasAuthority("admin")
-//                .anyRequest().permitAll();
-//
-//    }
-
-
 }
 
