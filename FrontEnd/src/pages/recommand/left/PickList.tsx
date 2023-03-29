@@ -18,14 +18,21 @@ export const PickList = () => {
     return (
       <>
         <OptionBox>
-          <OptionTitle>선택 목록</OptionTitle>
-          {pickList.length > 0 && (
-            <div>
-              {pickList.map((pick: Recommand) => (
-                <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
-              ))}
-            </div>
-          )}
+          <TopSection>
+            <CityTitle>도시이름</CityTitle>
+            <CityTitle>2박 3일</CityTitle>
+            <Day>2023.04.01 - 2023.04.01</Day>
+          </TopSection>
+          <MidSection>
+            <OptionTitle>선택 목록</OptionTitle>
+            {pickList.length > 0 && (
+              <div>
+                {pickList.map((pick: Recommand) => (
+                  <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
+                ))}
+              </div>
+            )}
+          </MidSection>
         </OptionBox>
       </>
     );
@@ -34,10 +41,25 @@ export const PickList = () => {
 };
 
 const OptionBox = styled.section`
+  ${tw`flex flex-col `}
+  width: 300px;
+  height: 80vh;
+`;
+const TopSection = styled.div`
   ${tw`flex flex-col justify-center items-center`}
-  min-width: 280px;
   width: 300px;
 `;
-const OptionTitle = styled.span`
+const MidSection = styled.div`
+  ${tw`flex flex-col justify-center items-center`}
+  flex-grow: 1;
+`;
+const OptionTitle = styled.div`
   ${tw`text-xl font-bold`}
+`;
+
+const CityTitle = styled.div`
+  ${tw`font-bold text-3xl `}
+`;
+const Day = styled.div`
+  ${tw`font-normal text-2xl text-slate-600 `}
 `;

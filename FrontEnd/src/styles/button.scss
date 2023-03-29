@@ -1,0 +1,7 @@
+.more-dropdown-button {
+  @apply flex items-center w-full focus:outline-none hover:bg-slate-300 rounded-xl justify-center font-semibold uppercase text-neutral-700;
+}
+
+.create-post-button {
+  @apply px-4 py-1.5 font-bold text-white border-black rounded-2xl hover:bg-red-400;
+}

@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '~/hooks/useAuth';
 import { userSignUp } from '~/types/sharedTypes';
+import { handleDate } from '~/utils/Shared';
 
 const schema = yup
   .object({
@@ -26,7 +27,7 @@ const schema = yup
       .string()
       .matches(/^[0-9-]+$/, '유효한 전화번호를 입력해주세요.')
       .required('전화번호를 입력해주세요.'),
-    birthday: yup.date().required('생일을 입력해주세요.'),
+    birth: yup.date().required('생일을 입력해주세요.'),
   })
   .required();
 
@@ -52,8 +53,15 @@ export const SignUpForm = () => {
   });
 
   const onSignUp: SubmitHandler<userSignUp> = (data) => {
-    console.log(data);
-    useSignUp.mutate(data);
+    const payload = {
+      birth: handleDate(data.birth),
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      phone: data.phone,
+    };
+    console.log(payload);
+    useSignUp.mutate(payload);
   };
 
   return (
@@ -82,8 +90,8 @@ export const SignUpForm = () => {
       </S.PhoneLabel>
       <S.BirthdayLabel>
         <span>생년월일</span>
-        <S.Input type='date' max='9999-12-31' {...register('birthday')}></S.Input>
-        <S.ErrorMsg>{errors.birthday?.message}</S.ErrorMsg>
+        <S.Input type='date' max='9999-12-31' {...register('birth')}></S.Input>
+        <S.ErrorMsg>{errors.birth?.message}</S.ErrorMsg>
       </S.BirthdayLabel>
       <S.PasswordLabel>
         <span>비밀번호</span>

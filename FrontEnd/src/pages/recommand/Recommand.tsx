@@ -11,7 +11,6 @@ export const Recommand = () => {
   return (
     <>
       {showModal && <ExitModal />}
-      <Temporarydiv />
       <MainContainer>
         <PickList />
         <KakaoMap />
@@ -20,10 +19,6 @@ export const Recommand = () => {
     </>
   );
 };
-
-const Temporarydiv = styled.div`
-  ${tw`w-screen h-32`}
-`;
 
 const MainContainer = styled.div`
   ${tw`flex justify-between items-center`}

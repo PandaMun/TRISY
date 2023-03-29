@@ -15,7 +15,7 @@ export const SectionMagazine5 = ({ posts }: SectionMagazine5Props) => {
           {posts
             .filter((_, i) => i < 4 && i > 0)
             .map((item, index) => (
-              <Card13 key={index} post={item} />
+              <Card13 key={index} post={item} className='card13-small' />
             ))}
         </div>
       </div>
