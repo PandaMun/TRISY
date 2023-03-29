@@ -7,7 +7,6 @@ import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.tour.dto.TourDetailsResponse;
 import com.c202.trisy.tour.dto.TourRequest;
 import com.c202.trisy.tour.dto.TourResponse;
-import com.c202.trisy.tour.repository.TourDetailsRepository;
 import com.c202.trisy.tour.repository.TourRepository;
 import com.c202.trisy.tour.repository.TourSpotRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ import java.util.List;
 public class TourServiceImpl implements TourService{
 
     private final TourRepository tourRepository;
-    private final TourDetailsRepository tourDetailsRepository;
     private final MemberRepository memberRepository;
     private final TourSpotRepository tourSpotRepository;
 
