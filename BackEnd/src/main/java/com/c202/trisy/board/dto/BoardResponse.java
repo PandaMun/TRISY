@@ -27,6 +27,8 @@ public class BoardResponse {
 
     private LocalDateTime updatedTime;
 
+    private String thumbnailUrl;
+
     private Long tourId;
 
     public Page<BoardResponse> toDtoList(Page<Board> faqPage){
@@ -35,7 +37,9 @@ public class BoardResponse {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .createdTime(board.getCreatedTime())
+                .tourId(board.getTourSchedule().getId())
                 .updatedTime(board.getUpdatedTime())
+                .thumbnailUrl(board.getThumbnailUrl())
                 .memberId(board.getMember().getEmail())
                 .build());
 
