@@ -1,6 +1,6 @@
 import React from 'react';
 import FacebookSvg from '/snsImages/Facebook.svg';
-import TwitterSvg from '/snsImages/Twitter.svg';
+import KakaoTalgSvg from '/snsImages/KakaoTalk.svg';
 import GoogleSvg from '/snsImages/Google.svg';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -11,14 +11,9 @@ export interface PageLoginProps {
 
 const loginSocials = [
   {
-    name: 'Continue with Facebook',
+    name: 'Continue with Kakao',
     href: '#',
-    icon: FacebookSvg,
-  },
-  {
-    name: 'Continue with Twitter',
-    href: '#',
-    icon: TwitterSvg,
+    icon: KakaoTalgSvg,
   },
   {
     name: 'Continue with Google',
