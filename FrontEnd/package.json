@@ -44,13 +44,11 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-share": "^4.4.1",
-    "react-slick": "^0.29.0",
     "sass": "^1.59.3",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.8",
     "tailwind-scrollbar-hide": "^1.1.7",
     "twin.macro": "^3.1.0",
-    "vite-plugin-svgr": "^2.4.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {

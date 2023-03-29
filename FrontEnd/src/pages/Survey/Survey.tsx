@@ -3,15 +3,16 @@ import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import './components/progressbarStyle.scss';
-import { QuestionList, COLORS } from './components/QList';
+import { QuestionList, AList, COLORS } from './components/QList';
 import tw from 'twin.macro';
 export const Survey = () => {
   const containerRef = useRef(null);
   const loadingRef = useRef(null);
-  const [step, setStep] = useState(20);
+  const [step, setStep] = useState(10);
+  const [sub, setSub] = useState(0);
   const [color, setBgColor] = useState(0);
   const [visible, setVigible] = useState(true);
-  const index = Math.min(Math.round(step / 20), QuestionList.length - 1);
+  const index = Math.min(Math.round(step / 10) - 1, QuestionList.length - 1);
   const handleClick = async () => {
     setBgColor(color + 1);
     gsap.to(containerRef.current, {
@@ -21,7 +22,7 @@ export const Survey = () => {
       ease: 'power2.inOut',
       onComplete: () => {
         setStep(step + 10);
-        if (step < 30) {
+        if (step < 90) {
           gsap.to(containerRef.current, {
             duration: 0.5,
             y: '0%',
@@ -40,6 +41,24 @@ export const Survey = () => {
       },
     });
   };
+  const Answer = () => {
+    return (
+      <>
+        {AList[(step - 10) / 10].map((el: any) => (
+          <Button
+            key={el}
+            style={{ width: '440px', height: '66px' }}
+            onClick={() => {
+              setStep(step + 10);
+              handleClick();
+            }}
+          >
+            {Object.keys(el).toString()}
+          </Button>
+        ))}
+      </>
+    );
+  };
   return (
     <>
       <Container color={COLORS[color]}>
@@ -57,24 +76,7 @@ export const Survey = () => {
           </TopDiv>
           <SubDiv ref={containerRef} visible={visible}>
             <Question>{QuestionList[index]}</Question>
-            <Button
-              style={{ width: '440px', height: '66px' }}
-              onClick={() => {
-                setStep(step + 10);
-                handleClick();
-              }}
-            >
-              산으로 떠나요
-            </Button>
-            <Button
-              style={{ width: '440px', height: '66px' }}
-              onClick={() => {
-                setStep(step + 10);
-                handleClick();
-              }}
-            >
-              바다로 떠나요
-            </Button>
+            {step < 100 && <Answer />}
           </SubDiv>
           <LoadingDiv ref={loadingRef} visible={visible}>
             <LoadingMessage>현우님의 취향에 맞는 여행지를 찾고있어요.</LoadingMessage>
