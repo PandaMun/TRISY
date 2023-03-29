@@ -24,9 +24,7 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println("컨트롤러에는 들어온다.");
         Member member = principalDetails.getMember();
-        System.out.println("member: "+member);
         MemberDto.Basic ud = MemberDto.Basic.builder()
                 .id(member.getId())
                 .role(member.getRole().toString())
