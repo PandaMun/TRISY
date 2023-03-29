@@ -10,7 +10,7 @@ public interface TourService {
 
     List<TourResponse> getTourSchedule(String memberId);
 
-    List<TourDetailsResponse> getTourDetails(Long tourId);
+    TourDetailsResponse getTourDetails(Long tourId);
 
     void addTourSchedule(TourRequest tourRequest,String memberId);
 

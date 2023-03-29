@@ -1,12 +1,13 @@
 package com.c202.trisy.tour.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -14,12 +15,26 @@ import java.time.LocalDateTime;
 @Getter
 public class TourDetailsResponse {
 
-    private String spotName;
-    private String description;
-    private String imageUrl;
+    private Long id;
+    private String tourName;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    private LocalDateTime planDateTime;
-    private double lng;
-    private double lat;
+
+    @Getter
+    @Builder
+    public static class TourScheduleDetail {
+
+        private String spotName;
+        private String description;
+        private String imageUrl;
+
+        private LocalDateTime planDateTime;
+        private double lng;
+        private double lat;
+    }
+
+
+    private List<TourScheduleDetail> tourDetailsResponseList = new ArrayList<>();
 
 }
