@@ -57,10 +57,10 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/auth/**")
                 .permitAll()
-                .antMatchers("/api/user")
-                .hasAuthority("USER")
-                .antMatchers("/api/user/**")
-                .hasAuthority("USER")
+//                .antMatchers("/api/user")
+//                .hasAuthority("USER")
+//                .antMatchers("/api/user/**")
+//                .hasAuthority("USER")
                 .anyRequest().permitAll();
 
 

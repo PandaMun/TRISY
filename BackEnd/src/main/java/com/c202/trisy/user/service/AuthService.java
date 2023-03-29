@@ -109,11 +109,10 @@ public class AuthService {
                     .provider("kakao")
                     .providerId(profile.getId().toString())
                     .role(Role.USER).build();
-
             memberRepository.save(member);
+            isNew = "true";
         } else {
             member = optionalMember.get();
-            isNew = "true";
         }
         Map<String,String> jwtToken = new HashMap<>();
         jwtToken.put("accessToken",jwtUtil.createAccessToken(member));

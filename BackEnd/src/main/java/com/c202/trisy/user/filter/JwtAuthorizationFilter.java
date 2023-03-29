@@ -48,6 +48,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final RefreshTokenRepository refreshTokenRepository;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository
     ,JwtUtil jwtUtil) {
         super(authenticationManager);
@@ -141,9 +143,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                             .withClaim("email", member.getEmail()) // 비공개 claim
                             .sign(Algorithm.HMAC512(JwtProperties.SECRET_KEY));
                     response.setHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_HEADER_PREFIX+accessToken);
-
                 }
-                chain.doFilter(request,response);
+                try {
+                    chain.doFilter(request, response);
+                } catch (Exception ex) {
+                    log.info(ex.getMessage());
+                    setErrorResponse(HttpStatus.UNAUTHORIZED,response, ex);
+                }
 
             } catch(Exception e) {
                 logger.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : " + e.getMessage());
@@ -154,4 +160,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
     }
+
+    public void setErrorResponse(HttpStatus status, HttpServletResponse res, Throwable ex) throws IOException {
+        res.setStatus(status.value());
+        res.setContentType("application/json; charset=UTF-8");
+        HttpStatus.UNAUTHORIZED.value();
+        res.getWriter().write(objectMapper.writeValueAsString("issue new accessToken"));
+    }
+
 }
