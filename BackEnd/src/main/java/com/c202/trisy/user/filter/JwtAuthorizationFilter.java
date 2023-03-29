@@ -62,22 +62,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         log.info("JwtAuthorization 시작");
-        String servletPath = request.getServletPath();
         String header = request.getHeader(JwtProperties.ACCESS_HEADER_STRING);
-        log.debug(servletPath);
         String email = " ";
-
-        // header가 있는지 확인
-//        if (servletPath.equals("/api/users/login") || servletPath.equals("/users/token/refresh")) {
-//            chain.doFilter(request, response);
-//        } else
         if(header == null || !header.startsWith(JwtProperties.TOKEN_HEADER_PREFIX)) {
             // 토큰값이 없거나 정상적이지 않다면 400 오류
             chain.doFilter(request, response);
         } else {
             try {
                 log.debug("header : {}", header);
-
                 //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
                 String token = request.getHeader(JwtProperties.ACCESS_HEADER_STRING)
                         .replace("Bearer ", "");
@@ -113,37 +105,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             } catch(TokenExpiredException e) {
                 log.info("CustomAuthorizationFilter : Access Token이 만료되었습니다.");
-                String token = request.getHeader(JwtProperties.REFRESH_HEADER_STRING)
-                        .replace("Bearer ", "");
 
-                try {
-                    //refreshToken 만료
-                    email = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET_KEY)).build().verify(token).getSubject();
-                } catch(TokenExpiredException te) {
-                    logger.info("CustomAuthorizationFilter : Refresh Token이 만료되었습니다.");
-                    response.setContentType(APPLICATION_JSON_VALUE);
-                    response.setCharacterEncoding("utf-8");
-                    new ObjectMapper().writeValue(response.getWriter(), new ResponseEntity<String>("Refresh Token이 만료되었습니다.", HttpStatus.UNAUTHORIZED));
-                }
-
-                Optional<RefreshToken> optMember = refreshTokenRepository.findById(email);
-
-                if(!token.equals(optMember.get().getRefreshToken())) {
-                    logger.info("CustomAuthorizationFilter : Token이 이상합니다.");
-                    response.setContentType(APPLICATION_JSON_VALUE);
-                    response.setCharacterEncoding("utf-8");
-                    new ObjectMapper().writeValue(response.getWriter(), new ResponseEntity<String>("유효하지 않은 Refresh Token입니다.", HttpStatus.UNAUTHORIZED));
-                } else {
-                    Member member = memberRepository.findByEmail(optMember.get().getEmail()).get();
-                    // RSA 방식 아니고 Hash 암호방식
-                    String accessToken = JWT.create()
-                            .withSubject(member.getEmail())
-                            .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXP_TIME))
-                            .withClaim("name", member.getName())
-                            .withClaim("email", member.getEmail()) // 비공개 claim
-                            .sign(Algorithm.HMAC512(JwtProperties.SECRET_KEY));
-                    response.setHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_HEADER_PREFIX+accessToken);
-                }
                 try {
                     chain.doFilter(request, response);
                 } catch (Exception ex) {
@@ -165,7 +127,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         res.setStatus(status.value());
         res.setContentType("application/json; charset=UTF-8");
         HttpStatus.UNAUTHORIZED.value();
-        res.getWriter().write(objectMapper.writeValueAsString("issue new accessToken"));
+        res.getWriter().write(objectMapper.writeValueAsString("accessToken expired"));
     }
 
 }

@@ -4,7 +4,6 @@ import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.user.common.JwtUtil;
 import com.c202.trisy.user.filter.JwtAuthenticationFilter;
 import com.c202.trisy.user.filter.JwtAuthorizationFilter;
-import com.c202.trisy.user.oauth.PrincipalOauth2UserService;
 import com.c202.trisy.user.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,6 @@ public class SecurityConfig {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    private final PrincipalOauth2UserService principalOauth2UserService;
-
-    @Autowired
     private final CorsConfig corsConfig;
 
     @Autowired
@@ -57,13 +53,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/auth/**")
                 .permitAll()
-//                .antMatchers("/api/user")
-//                .hasAuthority("USER")
-//                .antMatchers("/api/user/**")
-//                .hasAuthority("USER")
                 .anyRequest().permitAll();
-
-
         return http.build();
 
     }
