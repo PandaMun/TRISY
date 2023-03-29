@@ -42,3 +42,21 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+/* react-quill */
+
+.ql-align-center {
+  @apply text-center;
+}
+
+.ql-align-right {
+  @apply text-right;
+}
+
+.ql-align-left {
+  @apply text-left;
+}
+
+.nc-card-title {
+  @apply block text-lg font-semibold transition-colors text-neutral-900 dark:text-neutral-100 sm:text-2xl;
+}

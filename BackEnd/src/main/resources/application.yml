@@ -11,15 +11,10 @@ server:
 
 spring:
   datasource:
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mysql://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S08P22C202
-#    username: S08P22C202@stg-yswa-kr-practice-db-master
-#    password: GfNj2advQi
-     driver-class-name: com.mysql.cj.jdbc.Driver
-     url: jdbc:mysql://localhost:3306/trisy?serverTimezone=Asia/Seoul
-     username: c202
-     password: 1234
-
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S08P22C202
+    username: S08P22C202@stg-yswa-kr-practice-db-master
+    password: GfNj2advQi
 
   jpa:
     hibernate:

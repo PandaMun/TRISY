@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface TourRepository extends JpaRepository<TourSchedule, Long> {
 
-    List<TourSchedule> findAllByMember_Id(String memberId);
+    List<TourSchedule> findAllByMember_Email(String memberEmail);
 }

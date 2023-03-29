@@ -4,12 +4,14 @@ import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
 import { usePost } from 'usePost';
 import { SectionPost } from './components/SectionPost';
 import { SectionMagazine5 } from './components/SectionMagazine5';
+import { Spinner } from '~/components/Shared/Spinner';
+import { ErrorPage } from '../Handle/ErrorPage';
 
 export default function BlogPage() {
   const { getPost } = usePost();
   const { data: posts, isLoading, error } = getPost;
-  if (isLoading) return <div>로딩중</div>;
-  if (error) return <div>에러</div>;
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorPage />;
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
@@ -22,6 +24,9 @@ export default function BlogPage() {
             <S.SectionMagazine5>
               <SectionMagazine5 posts={posts.filter((_, i) => i >= 0 && i < 4)} />
             </S.SectionMagazine5>
+            <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
+              TRISY
+            </div>
             <SectionPost posts={posts.filter((_, i) => i >= 4)} />
           </>
         )}

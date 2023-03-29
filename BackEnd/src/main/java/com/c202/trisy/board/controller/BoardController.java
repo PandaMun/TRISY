@@ -8,6 +8,7 @@ import com.c202.trisy.entity.Member;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,17 @@ import java.util.List;
 @RequestMapping("/trisy/api/board")
 public class BoardController {
 
-    private BoardService boardService;
+    private final BoardService boardService;
 
 
 
-    //여행 후기 목록 조회(아이디)
+    //여행 후기 목록 조회
     @GetMapping
     public ResponseEntity<?> searchBoardList(
-            @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
 
 
-        List<BoardResponse> boardList = boardService.getBoardList(pageable);
+        Page<BoardResponse> boardList = boardService.getBoardList(pageable);
 
         return ResponseEntity.ok(boardList);
     }
@@ -54,7 +55,8 @@ public class BoardController {
 
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 
-        boardService.createBoard(principal.getMember().getEmail(), boardRequest);
+        System.out.println(boardRequest.getContent());
+        boardService.createBoard(principal.getMember().getEmail(), boardRequest); //principal.getMember().getEmail(), boardRequest);
 
         return ResponseEntity.ok("success");
     }

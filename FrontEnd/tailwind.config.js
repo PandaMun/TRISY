@@ -35,6 +35,7 @@ module.exports = {
         //   800: '#334155',
         //   900: '#334155',
         // },
+        pink: '#FECACA',
         primary: {
           50: customColors("--c-primary-50"),
           100: customColors("--c-primary-100"),
@@ -74,5 +75,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [require('@tailwindcss/line-clamp'),],
 };

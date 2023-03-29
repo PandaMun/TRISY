@@ -1,20 +1,16 @@
 package com.c202.trisy.user.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.c202.trisy.entity.Member;
 import com.c202.trisy.repository.MemberRepository;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import com.c202.trisy.user.common.JwtProperties;
 import com.c202.trisy.user.common.JwtUtil;
-import com.c202.trisy.user.dto.RefreshToken;
 import com.c202.trisy.user.repository.RefreshTokenRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,20 +20,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {

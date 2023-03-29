@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,21 +25,12 @@ public class BoardServiceImpl implements BoardService {
     private final MemberRepository memberRepository;
     private final TourRepository tourRepository;
     @Override
-    public List<BoardResponse> getBoardList(Pageable pageable) {
+    public Page<BoardResponse> getBoardList(Pageable pageable) {
         Page<Board> boardList = boardRepository.findAll(pageable);
 
-        List<BoardResponse> boardResponseList = new ArrayList<>();
+        Page<BoardResponse> boardResponseList = new BoardResponse().toDtoList(boardList);
 
-        for(Board board:boardList){
-            boardResponseList.add(
-                    BoardResponse.builder()
-                            .content(board.getContent())
-                            .title(board.getTitle())
-                            .tourId(board.getTourSchedule().getId())
-                            .memberId(board.getMember().getEmail())
-                            .build()
-            );
-        }
+
         return boardResponseList;
     }
 
@@ -55,6 +47,8 @@ public class BoardServiceImpl implements BoardService {
         return boardResponse;
     }
 
+
+
     @Override
     public void createBoard(String memberEmail, BoardRequest boardRequest) {
 
@@ -64,6 +58,8 @@ public class BoardServiceImpl implements BoardService {
                 .thumbnailUrl(boardRequest.getThumbnailUrl())
                 .member(memberRepository.findByEmail(memberEmail).get())
                 .tourSchedule(tourRepository.findById(boardRequest.getTourId()).get())
+                .createdTime(LocalDateTime.now())
+                .updatedTime(LocalDateTime.now())
                 .build();
 
         boardRepository.save(board);
@@ -73,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void updateBoard(Long boardId, BoardRequest boardRequest) {
         Board board = boardRepository.findById(boardId).get();
-        board.updateBoard(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getThumbnailUrl());
+        board.updateBoard(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getThumbnailUrl(),LocalDateTime.now());
 
         boardRepository.save(board);
     }

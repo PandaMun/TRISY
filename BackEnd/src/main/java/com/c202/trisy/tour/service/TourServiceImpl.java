@@ -11,6 +11,7 @@ import com.c202.trisy.tour.repository.TourRepository;
 import com.c202.trisy.tour.repository.TourSpotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ public class TourServiceImpl implements TourService{
 
     private final TourRepository tourRepository;
     private final MemberRepository memberRepository;
-
     private final TourSpotRepository tourSpotRepository;
 
     /**
@@ -33,7 +33,7 @@ public class TourServiceImpl implements TourService{
     public List<TourResponse> getTourSchedule(String memberId) {
 
         List<TourResponse> tourResponses = new ArrayList<>();
-        List<TourSchedule> tourScheduleList = tourRepository.findAllByMember_Id(memberId);
+        List<TourSchedule> tourScheduleList = tourRepository.findAllByMember_Email(memberId);
 
         for(TourSchedule tourSchedule : tourScheduleList){
             TourResponse tourResponse = TourResponse.builder()
@@ -54,13 +54,14 @@ public class TourServiceImpl implements TourService{
      * @return List<TourDetailsResponse>
      */
     @Override
-    public List<TourDetailsResponse> getTourDetails(Long tourId) {
+    public TourDetailsResponse getTourDetails(Long tourId) {
 
-        List<TourScheduleDetails> scheduleDetailList = tourRepository.findById(tourId).get().getTourScheduleList();
-        List<TourDetailsResponse> detailsResponseList = new ArrayList<>();
+        TourSchedule tourSchedule = tourRepository.findById(tourId).get();
+        List<TourDetailsResponse.TourScheduleDetail> detailsResponseList = new ArrayList<>();
 
-        for(TourScheduleDetails scheduleDetails : scheduleDetailList){
-            TourDetailsResponse tourDetailsResponse = TourDetailsResponse.builder()
+        for(TourScheduleDetails scheduleDetails : tourSchedule.getTourScheduleList()){
+
+            TourDetailsResponse.TourScheduleDetail tourScheduleDetail = TourDetailsResponse.TourScheduleDetail.builder()
                     .spotName(scheduleDetails.getTourSpot().getSpotName())
                     .imageUrl(scheduleDetails.getTourSpot().getImageUrl())
                     .lat(scheduleDetails.getTourSpot().getLat())
@@ -69,11 +70,16 @@ public class TourServiceImpl implements TourService{
                     .planDateTime(scheduleDetails.getPlanDateTime())
                     .build();
 
-            detailsResponseList.add(tourDetailsResponse);
-
+            detailsResponseList.add(tourScheduleDetail);
         }
 
-        return detailsResponseList;
+        return TourDetailsResponse.builder()
+                .id(tourSchedule.getId())
+                .tourName(tourSchedule.getTourName())
+                .startDate(tourSchedule.getStartDate())
+                .endDate(tourSchedule.getEndDate())
+                .tourDetailsResponseList(detailsResponseList)
+                .build();
     }
 
     /**
@@ -83,32 +89,35 @@ public class TourServiceImpl implements TourService{
      */
 
     @Override
+    @Transactional
     public void addTourSchedule(TourRequest tourRequest,String memberId) {
 
         Member member = memberRepository.findByEmail(memberId).get();
 
-        List<TourScheduleDetails> tourScheduleDetailsList = new ArrayList<>();
+        List<TourScheduleDetails> tourScheduleDetails = new ArrayList<>();
 
-        for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()){
-            tourScheduleDetailsList.add(
-                    TourScheduleDetails.builder()
-                            .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
-                            .planDateTime(spotInfo.getPlanDateTime())
-                            .build()
-            );
-        }
 
         TourSchedule tourSchedule = TourSchedule.builder()
                 .tourName(tourRequest.getTourName())
                 .startDate(tourRequest.getStartDate())
                 .endDate(tourRequest.getEndDate())
+                .tourScheduleList(tourScheduleDetails)
                 .member(member)
-                .tourScheduleList(tourScheduleDetailsList)
                 .build();
 
-        tourRepository.save(tourSchedule);
+        for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()) {
+            TourScheduleDetails details = TourScheduleDetails.builder()
+                    .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
+                    .planDateTime(spotInfo.getPlanDateTime())
+                    .tourSchedule(tourSchedule)
+                    .build();
+            tourScheduleDetails.add(details);
+        }
 
+       tourRepository.save(tourSchedule);
     }
+
+
 
     /**
      * TourSchedule 업데이트
@@ -121,12 +130,12 @@ public class TourServiceImpl implements TourService{
         List<TourScheduleDetails> tourScheduleDetailsList = new ArrayList<>();
 
         for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()){
-            tourScheduleDetailsList.add(
-                    TourScheduleDetails.builder()
-                            .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
-                            .planDateTime(spotInfo.getPlanDateTime())
-                            .build()
-            );
+            TourScheduleDetails tourScheduleDetail = TourScheduleDetails.builder()
+                    .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
+                    .planDateTime(spotInfo.getPlanDateTime())
+                    .build();
+
+            tourScheduleDetailsList.add(tourScheduleDetail);
         }
 
         tourSchedule.updateTourSchedule(tourScheduleDetailsList);
