@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,8 +126,11 @@ public class TourServiceImpl implements TourService{
      * @param tourId
      */
     @Override
-    public void updateTourSchedule(TourRequest tourRequest, Long tourId) {
+    public void updateTourSchedule(TourRequest tourRequest, String memberEmail, Long tourId) throws AuthenticationException {
         TourSchedule tourSchedule = tourRepository.findById(tourId).get();
+        if(!tourSchedule.getMember().getEmail().equals(memberEmail)){
+            throw new AuthenticationException("권한이 없습니다.");
+        }
         List<TourScheduleDetails> tourScheduleDetailsList = new ArrayList<>();
 
         for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()){
@@ -148,7 +152,11 @@ public class TourServiceImpl implements TourService{
      * @param tourId
      */
     @Override
-    public void deleteTourSchedule(Long tourId) {
+    public void deleteTourSchedule(Long tourId, String memberEmail) throws AuthenticationException {
+        TourSchedule tourSchedule = tourRepository.findById(tourId).get();
+        if(!tourSchedule.getMember().getEmail().equals(memberEmail)){
+            throw new AuthenticationException("권한이 없습니다.");
+        }
         tourRepository.deleteById(tourId);
     }
 }
