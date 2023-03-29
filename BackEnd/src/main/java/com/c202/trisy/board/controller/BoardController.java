@@ -54,7 +54,7 @@ public class BoardController {
 
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 
-        boardService.createBoard(principal.getMember().getEmail(), boardRequest);
+        boardService.createBoard("miunae@naver.com", boardRequest); //principal.getMember().getEmail(), boardRequest);
 
         return ResponseEntity.ok("success");
     }
