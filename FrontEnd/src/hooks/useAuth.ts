@@ -29,7 +29,7 @@ export const useAuth = () => {
   const useRefreshToken = useQuery(['ref'], getAccessToken, {
     enabled: !!localStorage.getItem('refreshToken'),
     onSuccess: (data) => {
-      console.log(data);
+      console.log('refresh', data);
     },
     onError: (error) => {
       console.log(error);
@@ -65,9 +65,9 @@ export const useAuth = () => {
   //유저 정보
   const useUser = useQuery(['user'], getUserApi, {
     enabled: !!localStorage.getItem('accessToken'), // Fetch user data only if logged in
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    // onSuccess: (data) => {
+    // console.log(data);
+    // },
     onError: (error) => {
       console.log(error);
       logout();
@@ -76,12 +76,13 @@ export const useAuth = () => {
 
   //마이페이지
   const useMyPage = useQuery(['mypage'], getMyPageApi, {
-    enabled: !!localStorage.getItem('accessToken'), // Fetch user data only if logged in
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    // enabled: !!localStorage.getItem('accessToken'), // Fetch user data only if logged in
+    // onSuccess: (data) => {
+    // console.log(data);
+    // },
     onError: (error) => {
       console.log(error);
+      logout();
     },
   });
 
