@@ -10,7 +10,7 @@ import Hello from './components/Hello';
 import BlogPage from './pages/blog/BlogPage';
 import { SignIn } from './pages/SignIn/SignIn';
 import { SignUp } from './pages/SignUp/SignUp';
-import { CreatePost } from './pages/blog/CreatePost';
+// import { CreatePost } from './pages/blog/CreatePost';
 import { PostDetail } from './pages/blog/PostDetail';
 
 import { Recommand } from './pages/recommand/Recommand';
@@ -56,10 +56,10 @@ const router = createBrowserRouter([
         path: '/post/:id',
         element: <PostDetail />,
       },
-      {
-        path: '/createPost',
-        element: <CreatePost />,
-      },
+      // {
+      //   path: '/createPost',
+      //   element: <CreatePost />,
+      // },
       {
         path: '/login',
         element: <SignIn />,
