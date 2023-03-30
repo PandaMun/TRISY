@@ -55,7 +55,6 @@
     "styled-components": "^5.3.8",
     "tailwind-scrollbar-hide": "^1.1.7",
     "twin.macro": "^3.1.0",
-    "vite-plugin-svgr": "^2.4.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {
