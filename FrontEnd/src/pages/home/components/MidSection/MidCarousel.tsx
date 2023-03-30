@@ -3,9 +3,15 @@ import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { ImgInfo } from './ImgInfo';
+import { useDispatch } from 'react-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { setModalOpen } from './ModalSlice';
 export const MidCarousel = () => {
+  const dispatch = useDispatch();
+  const modalOpen = () => {
+    dispatch(setModalOpen());
+  };
   const settings = {
     dots: false,
     infinite: true,
@@ -51,7 +57,7 @@ export const MidCarousel = () => {
     <>
       <S.StyledSlider {...settings}>
         {ImgInfo.map((el, idx) => (
-          <S.Card key={idx}>
+          <S.Card key={idx} onClick={modalOpen}>
             <S.CardBox>
               <S.ImageBox>
                 <img
