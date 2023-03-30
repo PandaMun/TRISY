@@ -35,6 +35,10 @@ public class Member extends BaseTimeEntity{
     private String provider;
     private String providerId;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "survey_id")
+    private Survey survey;
+
     public void setUserPassword(String password) {
         this.password = password;
     }

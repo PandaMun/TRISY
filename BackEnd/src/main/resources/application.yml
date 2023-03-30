@@ -11,15 +11,14 @@ server:
 
 spring:
   datasource:
-    password: 'ssafyssafy'
+#    password: 'ssafyssafy'
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    url: jdbc:mysql://localhost:3306/trisy?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://j8c202.p.ssafy.io:3306/s08p22c202
     username: root
-    url: jdbc:mysql://localhost:3306/trisy?serverTimezone=Asia/Seoul
-
-  #    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mysql://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S08P22C202
-#    username: S08P22C202@stg-yswa-kr-practice-db-master
-#    password: GfNj2advQi
+    password: 12345678
   jpa:
     hibernate:
       ddl-auto: update
@@ -39,3 +38,15 @@ spring:
     include: oauth
 jwt:
   secret: asdfa1!r1rf#6zcwmo&1072%4r624rfja;awef24rq][.vrkafr!*ja$2j#via;erfmcqjedzdfq$
+
+cloud:
+  aws:
+    credentials:
+      accessKey :
+      secretKey :
+    s3:
+      bucket: trisy
+    region:
+      static: ap-northeast
+    stack:
+      auto: false
