@@ -1,32 +1,42 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import React, { useState } from 'react';
-import axios from 'axios';
 import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createBoard, getTourListApi } from '~/api/boardApi';
+import { board } from '~/types/sharedTypes';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+
+  const { data: tours, error } = useQuery<board[]>(['tours'], getTourListApi);
+  console.log(tours);
+
   const handleTextChange = (value: string) => {
     setContent(value);
   };
-  const createPost = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/posts', {
-        title: title,
-        content: content,
-        image:
-          'https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80',
-      });
-      console.log('Post created:', response.data);
+  const { mutate, isLoading } = useMutation(createBoard, {
+    onSuccess: (data) => {
+      console.log('Post created:', data);
       setTitle('');
       setContent('');
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Error creating post:', error);
-    }
+    },
+  });
+  const handleCreatePost = () => {
+    mutate({
+      title: title,
+      content: content,
+      tourId: '1',
+      thumbnailUrl,
+    });
   };
   return (
     <S.Box>
@@ -38,7 +48,7 @@ export const CreatePost = () => {
           <Line />
         </S.GridLeft>
         <S.GridCenter>
-          <TextEditor value={content} onChange={handleTextChange} />
+          <TextEditor value={content} onChange={handleTextChange} setThumbnail={setThumbnailUrl} />
           <input
             type='text'
             value={title}
@@ -52,7 +62,7 @@ export const CreatePost = () => {
             type='button'
             className='create-post-button bg-black mr-5'
             text='완료'
-            onClick={createPost}
+            onClick={handleCreatePost}
           />
           <Line />
         </S.GridRight>

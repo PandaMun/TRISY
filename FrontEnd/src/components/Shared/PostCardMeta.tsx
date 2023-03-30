@@ -1,10 +1,10 @@
 import React from 'react';
-import { post } from '~/types/sharedTypes';
+import { board, post } from '~/types/sharedTypes';
 import { Avatar } from './Avatar';
 
 export interface PostCardMetaProps {
   className?: string;
-  meta: post;
+  meta: board;
   hiddenAvatar?: boolean;
   size?: 'large' | 'normal';
 }

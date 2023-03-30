@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/display-name */
+import React, { forwardRef } from 'react';
 
 type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
@@ -7,10 +8,12 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-export const Button = ({ className, type = 'button', text, onClick }: ButtonProps) => {
-  return (
-    <button type={type} className={`${className}`} onClick={onClick}>
-      {text}
-    </button>
-  );
-};
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, type = 'button', text, onClick }, ref) => {
+    return (
+      <button type={type} className={`${className}`} onClick={onClick}>
+        {text}
+      </button>
+    );
+  },
+);
