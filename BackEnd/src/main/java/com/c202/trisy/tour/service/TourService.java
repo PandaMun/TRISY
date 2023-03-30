@@ -18,4 +18,8 @@ public interface TourService {
     void updateTourSchedule(TourRequest tourRequest,String memberEmail, Long tourId) throws AuthenticationException;
 
     void deleteTourSchedule(Long tourId, String memberEmail) throws AuthenticationException;
+
+    boolean existSurvey(String memberEmail);
+
+    void addSurvey(String memberEmail, String survey);
 }

@@ -15,7 +15,6 @@ spring:
     url: jdbc:mysql://j8c202.p.ssafy.io:3306/s08p22c202
     username: root
     password: 12345678
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -35,3 +34,15 @@ spring:
     include: oauth
 jwt:
   secret: asdfa1!r1rf#6zcwmo&1072%4r624rfja;awef24rq][.vrkafr!*ja$2j#via;erfmcqjedzdfq$
+
+cloud:
+  aws:
+    credentials:
+      accessKey :
+      secretKey :
+    s3:
+      bucket: trisy
+    region:
+      static: ap-northeast
+    stack:
+      auto: false
