@@ -32,22 +32,10 @@ public class JwtUtil {
     @Autowired
     public JwtUtil(@Value("${jwt.secret}") String secretKey) {
         this.secretKey = secretKey;
-        this.ACCESS_EXP_TIME = 1000 * 60;
+        this.ACCESS_EXP_TIME = 1000 * 60 * 5;
         this.REFRESH_EXP_TIME = 1000 * 60 * 60 * 3;
     }
 
-    //토큰 생성
-//    public TokenInfo generateToken(String userId, String accessToken, String refreshToken){
-//
-//        return TokenInfo.builder()
-//                .userId(userId)
-//                .grantType(TOKEN_PREFIX)
-//                .authorization(accessToken)
-//                .refreshToken(refreshToken)
-//                .accessTokenExpirationTime(ACCESS_TOKEN_EXPIRE_TIME)
-//                .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
-//                .build();
-//    }
 
     //accessToken 생성
     public  String createAccessToken(Member member) {
@@ -84,11 +72,5 @@ public class JwtUtil {
         return expiration.after(new Date());
     }
 
-    // accessToken HEADER 체크
-    public String resolveAccessToken(HttpServletRequest request) {
-        if(request.getHeader("accessToken") != null )
-            return request.getHeader("accessToken");
-        return null;
-    }
 
 }
