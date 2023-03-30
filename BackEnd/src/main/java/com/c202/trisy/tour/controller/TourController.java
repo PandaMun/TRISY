@@ -38,6 +38,34 @@ public class TourController {
 
         return null;
     }
+    //회원 설문조사 존재 확인 
+    @GetMapping("/survey")
+    public ResponseEntity<?> existSurvey(Authentication authentication){
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String memberEmail = principal.getMember().getEmail();
+        boolean check = tourService.existSurvey(memberEmail);
+        if(check){
+            return ResponseEntity.ok("exist");
+        }else{
+            return new ResponseEntity("not exist", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    //회원 설문조사 등록
+    @PostMapping("/survey")
+    public ResponseEntity<?> addSurvey(Authentication authentication, @RequestBody String survey){
+        try {
+            PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+            String memberEmail = principal.getMember().getEmail();
+
+            tourService.addSurvey(memberEmail, survey);
+            return ResponseEntity.ok("설문이 성공적으로 저장되었습니다.");
+        }catch (Exception e){
+            return new ResponseEntity("설문 저장에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
     //추천 여행지 조회(지역, 날짜, 카테고리)
@@ -58,11 +86,10 @@ public class TourController {
 
             return ResponseEntity.ok(tourResponseList);
         }catch (AuthenticationException e){
-
+            return new ResponseEntity("인증에 실패하셨습니다.", HttpStatus.UNAUTHORIZED);
         }catch (NoSuchElementException e){
-
+            return new ResponseEntity("일정이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-        return null;
     }
 
     //여행 세부일정 상세정보 조회(여행 아이디)
@@ -76,9 +103,9 @@ public class TourController {
             return ResponseEntity.ok(tourDetails);
 
         }catch (NullPointerException e){
-            return new ResponseEntity("회원을 찾을수 없습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("회원을 찾을수 없습니다.", HttpStatus.UNAUTHORIZED);
         }catch (Exception e){
-            return new ResponseEntity("응답에 실패하였습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("응답에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 

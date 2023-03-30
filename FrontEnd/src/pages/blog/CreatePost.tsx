@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import React, { useState } from 'react';
+import { useState } from 'react';
 // import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { Line } from '~/components/Shared/Line';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createBoard, getTourListApi } from '~/api/boardApi';
 import { board } from '~/types/sharedTypes';
+import { TextEditor } from './components/TextEditor';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -16,6 +17,9 @@ export const CreatePost = () => {
 
   const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
   console.log(tours);
+  // const handleTextChange = (value: string) => {
+  //   setContent(value);
+  // };
 
   const { mutate } = useMutation(createBoard, {
     onSuccess: (data) => {
@@ -45,7 +49,8 @@ export const CreatePost = () => {
           <Line />
         </S.GridLeft>
         <S.GridCenter>
-          {/* <TextEditor value={content} onChange={handleTextChange} setThumbnail={setThumbnailUrl} /> */}
+          {/* <TextEditor value={content} onChange={handleTextChange} /> */}
+          <TextEditor />
           <input
             type='text'
             value={title}

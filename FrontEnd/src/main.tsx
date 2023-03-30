@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/Home';
 import App from './App';
 
@@ -22,8 +22,9 @@ import { MyInfo } from './pages/mypage/MyInfo';
 import { MyReview } from './pages/mypage/MyReview';
 import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
+import { CreatePost } from './pages/blog/CreatePost';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -54,10 +55,10 @@ const router = createBrowserRouter([
         path: '/post/:id',
         element: <PostDetail />,
       },
-      // {
-      //   path: '/createPost',
-      //   element: <CreatePost />,
-      // },
+      {
+        path: '/createPost',
+        element: <CreatePost />,
+      },
       {
         path: '/login',
         element: <SignIn />,
