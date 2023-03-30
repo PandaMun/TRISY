@@ -1,9 +1,9 @@
-import { post } from '~/types/sharedTypes';
+import { board } from '~/types/sharedTypes';
 import Card12 from './Card12';
 import Card13 from './Card13';
 
 export interface SectionMagazine5Props {
-  posts: post[];
+  posts: board[];
 }
 
 export const SectionMagazine5 = ({ posts }: SectionMagazine5Props) => {
@@ -15,7 +15,7 @@ export const SectionMagazine5 = ({ posts }: SectionMagazine5Props) => {
           {posts
             .filter((_, i) => i < 4 && i > 0)
             .map((item, index) => (
-              <Card13 key={index} post={item} />
+              <Card13 key={index} post={item} className='card13-small' />
             ))}
         </div>
       </div>

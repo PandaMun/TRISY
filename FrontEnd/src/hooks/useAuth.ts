@@ -1,45 +1,48 @@
-import { getUserApi } from './../api/userApi';
+import { getUserApi, getMyPageApi, getAccessToken } from './../api/userApi';
 import { loginApi, signUpApi } from '../api/userApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-const setTokens = (accessToken: string, refreshToken: string) => {
+import { useState } from 'react';
+export const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
 };
 
-const removeTokens = () => {
+export const removeTokens = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 };
 
 export const useAuth = () => {
+  const [, setIsLogin] = useState(false);
+
   const client = useQueryClient();
   const navigate = useNavigate();
 
   //회원가입
   const useSignUp = useMutation(signUpApi, {
-    onMutate: (variable) => {
-      // console.log('onMutate', variable);
-    },
-    onSuccess: async (data, variables) => {
+    onSuccess: async () => {
       navigate('/login');
     },
-    onError: (error, variable, context) => {
-      // console.log(error);
+  });
+  // 토큰 갱신
+  const useRefreshToken = useQuery(['ref'], getAccessToken, {
+    enabled: !!localStorage.getItem('refreshToken'),
+    onSuccess: (data) => {
+      console.log(data);
     },
-    onSettled: () => {
-      // console.log('end');
+    onError: (error) => {
+      console.log(error);
     },
+    refetchInterval: 30000, // 30초마다 Query를 다시 실행합니다.
   });
 
   //로그인
   const useLogin = useMutation(loginApi, {
-    onMutate: (variable) => {
-      // console.log('onMutate', variable);
-    },
-    onSuccess: async (data, variables) => {
-      const refreshToken = data['refresh-token'];
-      const accessToken = data['access-token'];
+    onSuccess: async (data) => {
+      const refreshToken = data['refreshToken'];
+      const accessToken = data['accessToken'];
+      setIsLogin(true);
       setTokens(accessToken, refreshToken);
       navigate('/');
       client.invalidateQueries(['user']); // Invalidate user query after login to refetch user data
@@ -49,15 +52,13 @@ export const useAuth = () => {
       console.log(variable);
       console.log(context);
     },
-    onSettled: () => {
-      // console.log('end');
-    },
   });
 
   //로그아웃
   const logout = () => {
     removeTokens();
     navigate('/');
+    setIsLogin(false);
     client.setQueryData(['user'], null);
   };
 
@@ -69,8 +70,20 @@ export const useAuth = () => {
     },
     onError: (error) => {
       console.log(error);
+      logout();
     },
   });
 
-  return { useSignUp, useLogin, logout, useUser };
+  //마이페이지
+  const useMyPage = useQuery(['mypage'], getMyPageApi, {
+    enabled: !!localStorage.getItem('accessToken'), // Fetch user data only if logged in
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  return { useSignUp, useLogin, logout, useUser, useMyPage, useRefreshToken };
 };

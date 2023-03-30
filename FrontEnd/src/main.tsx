@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/Home';
-import 'react-quill/dist/quill.snow.css';
 import App from './App';
 
 // styles
@@ -11,15 +10,25 @@ import Hello from './components/Hello';
 import BlogPage from './pages/blog/BlogPage';
 import { SignIn } from './pages/SignIn/SignIn';
 import { SignUp } from './pages/SignUp/SignUp';
-import { CreatePost } from './pages/blog/CreatePost';
+// import { CreatePost } from './pages/blog/CreatePost';
 import { PostDetail } from './pages/blog/PostDetail';
 
 import { Recommand } from './pages/recommand/Recommand';
 import { Survey } from './pages/Survey/Survey';
-const router = createBrowserRouter([
+import { NotFound } from './pages/Handle/NotFound';
+import { HowToUse } from './pages/HowToUse/HowToUse';
+import { MyPage } from './pages/mypage/MyPage';
+import { MyInfo } from './pages/mypage/MyInfo';
+import { MyReview } from './pages/mypage/MyReview';
+import { MyTrip } from './pages/mypage/MyTrip';
+import { Kakao } from './pages/SignIn/Kakao';
+import { CreatePost } from './pages/blog/CreatePost';
+
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -57,6 +66,30 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+      },
+      {
+        path: '/howToUse',
+        element: <HowToUse />,
+      },
+      {
+        path: '/mypage',
+        element: <MyPage />,
+      },
+      {
+        path: '/myinfo',
+        element: <MyInfo />,
+      },
+      {
+        path: '/myreview',
+        element: <MyReview />,
+      },
+      {
+        path: '/mytrip',
+        element: <MyTrip />,
+      },
+      {
+        path: '/kakao',
+        element: <Kakao />,
       },
     ],
   },

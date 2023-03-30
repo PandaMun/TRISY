@@ -32,5 +32,7 @@ public class MemberDto {
         String birth;
 
         String phone;
+
+        String nickname;
     }
 }

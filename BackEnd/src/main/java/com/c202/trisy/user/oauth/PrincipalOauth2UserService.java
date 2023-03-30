@@ -63,6 +63,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .name(oAuth2UserInfo.getName())
                     .password(bcryptPasswordEncoder.encode("trisy"))
                     .phone("01012345678")
+                    .nickname("닉네임")
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
                     .build();
@@ -75,6 +76,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .name(oAuth2UserInfo.getName())
                     .password(bcryptPasswordEncoder.encode("trisy"))
                     .phone("01012345678")
+                    .nickname("닉네임")
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
                     .build();

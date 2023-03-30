@@ -85,6 +85,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refreshToken = JWT.create()
                 .withSubject(principalDetails.getMember().getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXP_TIME))
+                .withClaim("email", principalDetails.getMember().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET_KEY));
 
         RefreshToken redisToken = new RefreshToken(email, refreshToken);

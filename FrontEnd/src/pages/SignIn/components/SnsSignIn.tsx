@@ -1,6 +1,4 @@
-import React from 'react';
-import FacebookSvg from '/snsImages/Facebook.svg';
-import TwitterSvg from '/snsImages/Twitter.svg';
+import KakaoTalgSvg from '/snsImages/KakaoTalk.svg';
 import GoogleSvg from '/snsImages/Google.svg';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -11,14 +9,9 @@ export interface PageLoginProps {
 
 const loginSocials = [
   {
-    name: 'Continue with Facebook',
+    name: 'Continue with Kakao',
     href: '#',
-    icon: FacebookSvg,
-  },
-  {
-    name: 'Continue with Twitter',
-    href: '#',
-    icon: TwitterSvg,
+    icon: KakaoTalgSvg,
   },
   {
     name: 'Continue with Google',
@@ -28,10 +21,26 @@ const loginSocials = [
 ];
 
 export const SnsSignIn = () => {
+  const kakaoApi = import.meta.env.VITE_KAKAO_API_KEY;
+  const kakaoRedirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  // console.log(kakaoApi, kakaoRedirectUri);
+  const kakao = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoApi}&redirect_uri=${kakaoRedirectUri}`;
+  const handleSuccess = (response: string) => {
+    if (response === 'Continue with Kakao') {
+      window.location.href = kakao;
+    }
+  };
+
   return (
     <S.GridBox>
       {loginSocials.map((item, index) => (
-        <S.Button key={index} type='button'>
+        <S.Button
+          key={index}
+          type='button'
+          onClick={() => {
+            handleSuccess(item.name);
+          }}
+        >
           <img src={item.icon} alt={item.name} />
           <h3>{item.name}</h3>
         </S.Button>

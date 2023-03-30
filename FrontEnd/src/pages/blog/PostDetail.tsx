@@ -1,16 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { getPostById } from '~/api/postApi';
 import { PostTitle } from './components/PostTitle';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { PostWriter } from './components/PostWriter';
 import { Line } from '~/components/Shared/Line';
-import { post } from '~/types/sharedTypes';
-
-interface PostDetailProps {
-  content: string;
-}
+import { Spinner } from '~/components/Shared/Spinner';
+import { ErrorPage } from '../Handle/ErrorPage';
+import { getBoardById } from '~/api/boardApi';
 
 export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,20 +15,10 @@ export const PostDetail = () => {
     data: postDetails,
     isLoading,
     isError,
-  } = useQuery(['post', id], () => getPostById(id as string));
+  } = useQuery(['post', id], () => getBoardById(id as string));
 
-  function convertHtmlToPlainText(html: PostDetailProps['content']) {
-    const dom = new DOMParser().parseFromString(html, 'text/html');
-    return dom.body.textContent || '';
-  }
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>Error loading post</p>;
-  }
+  if (isLoading) return <Spinner />;
+  if (isError) return <ErrorPage />;
 
   return (
     <div>
@@ -41,8 +28,11 @@ export const PostDetail = () => {
           <PostTitle title={postDetails.title} />
           <PostWriter />
           <Line />
-          <p>내용 : {convertHtmlToPlainText(postDetails.content)}</p>
-          <img src={postDetails.image} alt={postDetails.title} />
+          <S.Viewer
+            className='react-quill-viewer'
+            dangerouslySetInnerHTML={{ __html: postDetails.content }}
+          />
+          {/* <img src={postDetails.image} alt={postDetails.title} /> */}
         </S.Box>
       )}
     </div>
@@ -58,5 +48,13 @@ const S = {
   `,
   SectionMagazine5: styled.div`
     ${tw`pt-12 pb-16 lg:pb-28`}
+  `,
+  Viewer: styled.div`
+    ol {
+      ${tw`list-decimal list-inside`}
+    }
+    ul {
+      ${tw`list-disc list-inside`}
+    }
   `,
 };

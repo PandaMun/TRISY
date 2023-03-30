@@ -4,13 +4,12 @@ import com.c202.trisy.entity.Member;
 import com.c202.trisy.user.dto.OAuthToken;
 import com.c202.trisy.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -33,9 +32,21 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("accessToken", "Bearer " + jwtTokens.get("accessToken"));
         headers.add("refreshToken", "Bearer " + jwtTokens.get("refreshToken"));
+        headers.add("isNew",jwtTokens.get("isNew"));
 
         //(4)
         return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @GetMapping("/token/refresh")
+    public ResponseEntity<String> validRefresh(HttpServletRequest request) {
+        String accessToken = authService.validRefreshToken(request);
+        if(accessToken.equals("invalid refreshToken")) {
+            return ResponseEntity.ok().body("invalid");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("accessToken", "Bearer " + accessToken);
+        return ResponseEntity.ok().headers(headers).body("issue new accessToken");
     }
 
 }

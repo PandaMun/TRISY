@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { selectRecommand } from '../recommandSlice';
 import { useAppSelector } from '~/app/hooks';
+
 type MarkerType = {
   title: string;
   lat: string;

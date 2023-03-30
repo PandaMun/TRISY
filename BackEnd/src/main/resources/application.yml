@@ -11,10 +11,6 @@ server:
 
 spring:
   datasource:
-#    password: 'ssafyssafy'
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: root
-#    url: jdbc:mysql://localhost:3306/trisy?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://j8c202.p.ssafy.io:3306/s08p22c202
     username: root

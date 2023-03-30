@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -6,10 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '~/hooks/useAuth';
 import { userSignUp } from '~/types/sharedTypes';
+import { handleDate } from '~/utils/Shared';
 
 const schema = yup
   .object({
     name: yup.string().required('이름을 입력해주세요.'),
+    nickname: yup.string().required('닉네임을 입력해주세요.'),
     email: yup.string().email('이메일 형식으로 입력해주세요.').required('이메일을 입력해주세요.'),
     password: yup
       .string()
@@ -26,22 +27,22 @@ const schema = yup
       .string()
       .matches(/^[0-9-]+$/, '유효한 전화번호를 입력해주세요.')
       .required('전화번호를 입력해주세요.'),
-    birthday: yup.date().required('생일을 입력해주세요.'),
+    birth: yup.date().required('생일을 입력해주세요.'),
   })
   .required();
 
 export const SignUpForm = () => {
-  const [phone, setPhone] = useState('');
+  // const [phone, setPhone] = useState('');
   const { useSignUp } = useAuth();
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '');
-    setPhone(
-      value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (match, p1, p2, p3) =>
-        p2 ? `${p1}-${p2}${p3 ? `-${p3}` : ''}` : `${p1}${p3 ? `-${p3}` : ''}`,
-      ),
-    );
-  };
+  // const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value.replace(/\D/g, '');
+  //   setPhone(
+  //     value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (p1, p2, p3) =>
+  //       p2 ? `${p1}-${p2}${p3 ? `-${p3}` : ''}` : `${p1}${p3 ? `-${p3}` : ''}`,
+  //     ),
+  //   );
+  // };
 
   const {
     register,
@@ -52,8 +53,16 @@ export const SignUpForm = () => {
   });
 
   const onSignUp: SubmitHandler<userSignUp> = (data) => {
-    console.log(data);
-    useSignUp.mutate(data);
+    const payload = {
+      birth: handleDate(data.birth),
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      nickname: data.nickname,
+      phone: data.phone.replace(/-/g, ''),
+    };
+    console.log(payload);
+    useSignUp.mutate(payload);
   };
 
   return (
@@ -62,6 +71,11 @@ export const SignUpForm = () => {
         <span>이름</span>
         <S.Input type='text' placeholder='이름을 입력해주세요' {...register('name')}></S.Input>
         <S.ErrorMsg>{errors.name?.message}</S.ErrorMsg>
+      </S.NameLabel>
+      <S.NameLabel>
+        <span>닉네임</span>
+        <S.Input type='text' placeholder='닉네임 입력해주세요' {...register('nickname')}></S.Input>
+        <S.ErrorMsg>{errors.nickname?.message}</S.ErrorMsg>
       </S.NameLabel>
       <S.EmailLabel>
         <span>이메일</span>
@@ -74,16 +88,16 @@ export const SignUpForm = () => {
           type='text'
           placeholder='전화번호를 입력해주세요'
           {...register('phone')}
-          value={phone}
-          maxLength={13}
-          onChange={handlePhoneChange}
+          // value={phone}
+          maxLength={11}
+          // onChange={handlePhoneChange}
         ></S.Input>
         <S.ErrorMsg>{errors.phone?.message}</S.ErrorMsg>
       </S.PhoneLabel>
       <S.BirthdayLabel>
         <span>생년월일</span>
-        <S.Input type='date' max='9999-12-31' {...register('birthday')}></S.Input>
-        <S.ErrorMsg>{errors.birthday?.message}</S.ErrorMsg>
+        <S.Input type='date' max='9999-12-31' {...register('birth')}></S.Input>
+        <S.ErrorMsg>{errors.birth?.message}</S.ErrorMsg>
       </S.BirthdayLabel>
       <S.PasswordLabel>
         <span>비밀번호</span>
