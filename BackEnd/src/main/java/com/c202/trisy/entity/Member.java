@@ -32,6 +32,9 @@ public class Member extends BaseTimeEntity{
     @Column(nullable = false,length = 11)
     private String phone;
 
+    @Column(nullable = false, length = 30)
+    private String nickname;
+
     private String provider;
     private String providerId;
 
@@ -39,6 +42,7 @@ public class Member extends BaseTimeEntity{
         this.password = password;
     }
 
+    public void changeNickname(String nickname) {this.nickname = nickname;}
     public void changeName(String name){
         this.name = name;
     }

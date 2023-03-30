@@ -1,8 +1,10 @@
 package com.c202.trisy.user.service;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.c202.trisy.entity.Member;
 import com.c202.trisy.entity.Role;
 import com.c202.trisy.repository.MemberRepository;
+import com.c202.trisy.user.common.JwtProperties;
 import com.c202.trisy.user.common.JwtUtil;
 import com.c202.trisy.user.dto.OAuthToken;
 import com.c202.trisy.user.dto.RefreshToken;
@@ -10,23 +12,28 @@ import com.c202.trisy.user.model.oauth.KakaoProfile;
 import com.c202.trisy.user.repository.RefreshTokenRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Ref;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AuthService {
 
     @Value("${kakao.service.key}")
@@ -90,7 +97,7 @@ public class AuthService {
 
     public Map<String,String> saveUserAndGetToken(String token) { //(1)
         KakaoProfile profile = findProfile(token);
-
+        String isNew = "false";
         Optional<Member> optionalMember = memberRepository.findByEmail(profile.getKakao_account().getEmail());
         Member member = null;
         if(!optionalMember.isPresent()) { //회원가입한 적이 없다면
@@ -99,11 +106,12 @@ public class AuthService {
                     .email(profile.getKakao_account().getEmail())
                     .password(bcryptPasswordEncoder.encode("trisy"))
                     .phone("01012345678")
+                    .nickname("닉네임")
                     .provider("kakao")
                     .providerId(profile.getId().toString())
                     .role(Role.USER).build();
-
             memberRepository.save(member);
+            isNew = "true";
         } else {
             member = optionalMember.get();
         }
@@ -113,6 +121,7 @@ public class AuthService {
         RefreshToken redisToken = new RefreshToken(member.getEmail(), refreshToken);
         refreshTokenRepository.save(redisToken);
         jwtToken.put("refreshToken",refreshToken);
+        jwtToken.put("isNew",isNew);
         return jwtToken;
     }
 
@@ -152,5 +161,35 @@ public class AuthService {
 
         return kakaoProfile;
     }
+
+    public String validRefreshToken(HttpServletRequest request) {
+        log.info("refresh 요청 시작");
+        String header = request.getHeader(JwtProperties.REFRESH_HEADER_STRING);
+        String email = "";
+        if(header == null || !header.startsWith(JwtProperties.TOKEN_HEADER_PREFIX)) {
+            log.info("이상한 refreshToken");
+        } else {
+            String token = request.getHeader(JwtProperties.REFRESH_HEADER_STRING)
+                    .replace("Bearer ", "");
+            log.info("token: {}",token);
+            try {
+                email = jwtUtil.getUserEmail(token);
+                log.info("email: {}",email);
+                Optional<RefreshToken> optMember = refreshTokenRepository.findById(email);
+                if(!token.equals(optMember.get().getRefreshToken())) {
+                    log.info("Token이 이상합니다.");
+                } else {
+                    Member member = memberRepository.findByEmail(email).get();
+                    String accessToken = jwtUtil.createAccessToken(member);
+                    return accessToken;
+                }
+            } catch(TokenExpiredException e) {
+                log.info("RefreshToken이 만료되었습니다.");
+            }
+
+        }
+        return "invalid refreshToken";
+    }
+
 
 }
