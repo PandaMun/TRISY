@@ -1,7 +1,7 @@
 // Import necessary axios types and functions
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-const hostname = window && window.location && window.location.hostname;
+// const hostname = window && window.location && window.location.hostname;
 // const BASE_URL =
 //   hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io:8080/api' : 'http://localhost:8080/api';
 const BASE_URL = 'http://j8c202.p.ssafy.io:8080/api';

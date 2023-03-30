@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
