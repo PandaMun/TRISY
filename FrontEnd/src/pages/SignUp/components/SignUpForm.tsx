@@ -33,17 +33,17 @@ const schema = yup
   .required();
 
 export const SignUpForm = () => {
-  const [phone, setPhone] = useState('');
+  // const [phone, setPhone] = useState('');
   const { useSignUp } = useAuth();
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '');
-    setPhone(
-      value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (p1, p2, p3) =>
-        p2 ? `${p1}-${p2}${p3 ? `-${p3}` : ''}` : `${p1}${p3 ? `-${p3}` : ''}`,
-      ),
-    );
-  };
+  // const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value.replace(/\D/g, '');
+  //   setPhone(
+  //     value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (p1, p2, p3) =>
+  //       p2 ? `${p1}-${p2}${p3 ? `-${p3}` : ''}` : `${p1}${p3 ? `-${p3}` : ''}`,
+  //     ),
+  //   );
+  // };
 
   const {
     register,
@@ -89,9 +89,9 @@ export const SignUpForm = () => {
           type='text'
           placeholder='전화번호를 입력해주세요'
           {...register('phone')}
-          value={phone}
-          maxLength={13}
-          onChange={handlePhoneChange}
+          // value={phone}
+          maxLength={11}
+          // onChange={handlePhoneChange}
         ></S.Input>
         <S.ErrorMsg>{errors.phone?.message}</S.ErrorMsg>
       </S.PhoneLabel>
