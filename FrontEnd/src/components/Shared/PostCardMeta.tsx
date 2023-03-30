@@ -1,4 +1,3 @@
-import React from 'react';
 import { board } from '~/types/sharedTypes';
 import { Avatar } from './Avatar';
 

@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
