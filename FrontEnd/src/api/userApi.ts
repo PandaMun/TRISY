@@ -3,6 +3,7 @@ import { userLogin } from './../types/sharedTypes';
 import { userSignUp } from '~/types/sharedTypes';
 import { api } from './axiosConfig';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 // 회원가입
 export const signUpApi = async (payload: userSignUp) => {
   const response = await api.post('/user', payload);
@@ -22,6 +23,31 @@ export const getUserApi = async () => {
   const token = localStorage.getItem('accessToken') as string;
   const decoded = jwt_decode(token);
   return decoded;
+};
+
+// 마이페이지
+export const getMyPageApi = async () => {
+  const response = await api.get('/user/mypage');
+  return response.data;
+};
+
+// accesStoken 재발급
+export const getAccessToken = async () => {
+  const refreshToken = localStorage.getItem('refreshToken') as string;
+  const response = await axios.get('http://localhost:8080/api/token/refresh', {
+    headers: {
+      // Authorization: `Bearer ${refreshToken}`,
+      refreshToken: `Bearer ${refreshToken}`,
+    },
+  });
+  console.log(response);
+  const headers = response.headers;
+  const accessToken = headers['accesstoken'];
+  const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
+  // console.log(accTokenWithoutBearer);
+  setTokens(accTokenWithoutBearer, refreshToken);
+  return response.data;
+  // return accessToken;
 };
 
 //카카오

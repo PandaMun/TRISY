@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
-import { usePost } from 'usePost';
 import { SectionPost } from './components/SectionPost';
 import { SectionMagazine5 } from './components/SectionMagazine5';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
+import { useQuery } from '@tanstack/react-query';
+import { board } from '~/types/sharedTypes';
+import { getBoardListApi } from '~/api/boardApi';
 
 export default function BlogPage() {
-  const { getPost } = usePost();
-  const { data: posts, isLoading, error } = getPost;
+  const { data: posts, isLoading, error } = useQuery<board[]>(['posts'], getBoardListApi);
+  console.log(posts);
   if (isLoading) return <Spinner />;
   if (error) return <ErrorPage />;
+  if (posts?.length === 0) return <div>게시글이 없습니다.</div>;
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
@@ -22,12 +25,12 @@ export default function BlogPage() {
         {posts && (
           <>
             <S.SectionMagazine5>
-              <SectionMagazine5 posts={posts.filter((_, i) => i >= 0 && i < 4)} />
+              {/* <SectionMagazine5 posts={posts.filter((_, i) => i >= 0 && i < 4)} /> */}
             </S.SectionMagazine5>
             <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
               TRISY
             </div>
-            <SectionPost posts={posts.filter((_, i) => i >= 4)} />
+            <SectionPost posts={posts} />
           </>
         )}
       </S.Container>

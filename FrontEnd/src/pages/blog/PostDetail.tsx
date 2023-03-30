@@ -8,6 +8,7 @@ import { PostWriter } from './components/PostWriter';
 import { Line } from '~/components/Shared/Line';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
+import { getBoardById } from '~/api/boardApi';
 
 export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +16,7 @@ export const PostDetail = () => {
     data: postDetails,
     isLoading,
     isError,
-  } = useQuery(['post', id], () => getPostById(id as string));
+  } = useQuery(['post', id], () => getBoardById(id as string));
 
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorPage />;

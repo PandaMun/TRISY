@@ -11,6 +11,7 @@ import { handleDate } from '~/utils/Shared';
 const schema = yup
   .object({
     name: yup.string().required('이름을 입력해주세요.'),
+    nickname: yup.string().required('닉네임을 입력해주세요.'),
     email: yup.string().email('이메일 형식으로 입력해주세요.').required('이메일을 입력해주세요.'),
     password: yup
       .string()
@@ -58,6 +59,7 @@ export const SignUpForm = () => {
       email: data.email,
       name: data.name,
       password: data.password,
+      nickname: data.nickname,
       phone: data.phone.replace(/-/g, ''),
     };
     console.log(payload);
@@ -70,6 +72,11 @@ export const SignUpForm = () => {
         <span>이름</span>
         <S.Input type='text' placeholder='이름을 입력해주세요' {...register('name')}></S.Input>
         <S.ErrorMsg>{errors.name?.message}</S.ErrorMsg>
+      </S.NameLabel>
+      <S.NameLabel>
+        <span>닉네임</span>
+        <S.Input type='text' placeholder='닉네임 입력해주세요' {...register('nickname')}></S.Input>
+        <S.ErrorMsg>{errors.nickname?.message}</S.ErrorMsg>
       </S.NameLabel>
       <S.EmailLabel>
         <span>이메일</span>

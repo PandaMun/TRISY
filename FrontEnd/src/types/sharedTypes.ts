@@ -1,6 +1,7 @@
 // 회원가입
 export interface userSignUp {
   name: string;
+  nickname: string;
   email: string;
   password: string;
   confirmPassword?: string;
@@ -25,5 +26,5 @@ export interface board {
   title: string;
   content: string;
   tourId: string;
-  thumbnailUrl: string | null;
+  thumbnailUrl: string | undefined;
 }

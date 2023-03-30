@@ -5,13 +5,18 @@ import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
-import { useMutation } from '@tanstack/react-query';
-import { createBoard } from '~/api/boardApi';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createBoard, getTourListApi } from '~/api/boardApi';
+import { board } from '~/types/sharedTypes';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+
+  const { data: tours, error } = useQuery<board[]>(['tours'], getTourListApi);
+  console.log(tours);
+
   const handleTextChange = (value: string) => {
     setContent(value);
   };

@@ -38,7 +38,7 @@ const setAuthTokenHeader = (config: AxiosRequestConfig): AxiosRequestConfig => {
     config.headers = {
       ...config.headers,
       accessToken: `Bearer ${accessToken}`,
-      refreshToken: `Bearer ${refreshToken}`,
+      // refreshToken: `Bearer ${refreshToken}`,
     };
   }
   return config;
