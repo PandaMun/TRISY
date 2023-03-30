@@ -8,6 +8,7 @@ import { Line } from '~/components/Shared/Line';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createBoard, getTourListApi } from '~/api/boardApi';
 import { board } from '~/types/sharedTypes';
+import { TextEditor } from './components/TextEditor';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -49,6 +50,7 @@ export const CreatePost = () => {
         </S.GridLeft>
         <S.GridCenter>
           {/* <TextEditor value={content} onChange={handleTextChange} /> */}
+          <TextEditor />
           <input
             type='text'
             value={title}
