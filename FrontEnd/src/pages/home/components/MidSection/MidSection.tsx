@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { ImgInfo } from './ImgInfo';
+import { MidCarousel } from './MidCarousel';
 interface Item {
   imageUrl: string;
   title: string;
@@ -10,31 +11,15 @@ interface Item {
 export default function MidSection() {
   return (
     <S.Section>
-      <S.SectionContent>
-        {ImgInfo.map((item: Item, index: number) => (
-          <S.Card key={index}>
-            <S.CardBox>
-              <S.ImageBox>
-                <img
-                  src={item.imageUrl}
-                  alt=''
-                  className='transition-all duration-300 hover:scale-125'
-                />
-              </S.ImageBox>
-              <S.ContentBox>
-                <div className=''>{item.title}</div>
-              </S.ContentBox>
-            </S.CardBox>
-          </S.Card>
-        ))}
-      </S.SectionContent>
+      <MidCarousel />
     </S.Section>
   );
 }
 
 const S = {
   Section: styled.div`
-    ${tw`min-h-screen mx-auto max-w-7xl`}
+    ${tw`min-h-screen mx-auto`}
+    width: 70vw;
   `,
   SectionTitle: styled.div`
     ${tw`text-3xl font-bold text-center`}

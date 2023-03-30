@@ -111,7 +111,7 @@ export const Survey = () => {
           </TopDiv>
           <SubDiv ref={containerRef} visible={visible}>
             <Question>{sub > 0 ? SubQlist[sub - 1] : QuestionList[index]}</Question>
-            {step < 100 && <Answer sub={sub} />}
+            <ADiv>{step < 100 && <Answer sub={sub} />}</ADiv>
           </SubDiv>
           <LoadingDiv ref={loadingRef} visible={visible}>
             <LoadingMessage>현우님의 취향에 맞는 여행지를 찾고있어요.</LoadingMessage>
@@ -140,11 +140,25 @@ const MainDiv = styled.section`
   margin: 5vh 0;
   height: 80vh;
 `;
+const TopDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 const SubDiv = styled.div<{ visible: boolean }>`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 580px;
+`;
+const ADiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
 `;
 const LoadingDiv = styled.div<{ visible: boolean }>`
   display: ${(props) => (props.visible ? 'none' : 'flex')};
@@ -155,12 +169,6 @@ const LoadingDiv = styled.div<{ visible: boolean }>`
   z-index: 2;
 `;
 
-const TopDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const Question = styled.div`
   ${tw`font-bold text-4xl mb-[150px]`}
 `;
