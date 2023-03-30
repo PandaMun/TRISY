@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useState } from 'react';
-import TextEditor from './components/PostEditor';
+// import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
@@ -16,9 +16,9 @@ export const CreatePost = () => {
 
   const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
   console.log(tours);
-  const handleTextChange = (value: string) => {
-    setContent(value);
-  };
+  // const handleTextChange = (value: string) => {
+  //   setContent(value);
+  // };
 
   const { mutate } = useMutation(createBoard, {
     onSuccess: (data) => {
@@ -48,7 +48,7 @@ export const CreatePost = () => {
           <Line />
         </S.GridLeft>
         <S.GridCenter>
-          <TextEditor value={content} onChange={handleTextChange} />
+          {/* <TextEditor value={content} onChange={handleTextChange} /> */}
           <input
             type='text'
             value={title}
