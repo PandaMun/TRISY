@@ -38,8 +38,8 @@ jwt:
 cloud:
   aws:
     credentials:
-      accessKey :
-      secretKey :
+      accessKey : AKIA5TYLFPVAN2E7ZAGC
+      secretKey : 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
     s3:
       bucket: trisy
     region:
