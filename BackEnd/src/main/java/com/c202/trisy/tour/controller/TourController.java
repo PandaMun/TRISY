@@ -53,8 +53,8 @@ public class TourController {
     }
 
     //회원 설문조사 등록
-    @GetMapping("/survey")
-    public ResponseEntity<?> existSurvey(Authentication authentication, @RequestBody String survey){
+    @PostMapping("/survey")
+    public ResponseEntity<?> addSurvey(Authentication authentication, @RequestBody String survey){
         try {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String memberEmail = principal.getMember().getEmail();
