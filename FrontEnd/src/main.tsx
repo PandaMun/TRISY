@@ -22,6 +22,9 @@ import { MyInfo } from './pages/mypage/MyInfo';
 import { MyReview } from './pages/mypage/MyReview';
 import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
+import dotenv from 'dotenv';
+
+dotenv.config();
 const router = createBrowserRouter([
   {
     path: '/',
