@@ -34,7 +34,7 @@ export const getMyPageApi = async () => {
 // accesStoken 재발급
 export const getAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken') as string;
-  const response = await axios.get('http://localhost:8080/api/token/refresh', {
+  const response = await axios.get('http://j8c202.p.ssafy.io:8080/api/token/refresh', {
     headers: {
       // Authorization: `Bearer ${refreshToken}`,
       refreshToken: `Bearer ${refreshToken}`,
