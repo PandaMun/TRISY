@@ -1,9 +1,9 @@
-import { post } from '~/types/sharedTypes';
+import { board, post } from '~/types/sharedTypes';
 import Card12 from './Card12';
 import Card13 from './Card13';
 
 export interface SectionMagazine5Props {
-  posts: post[];
+  posts: board[];
 }
 
 export const SectionMagazine5 = ({ posts }: SectionMagazine5Props) => {

@@ -1,11 +1,24 @@
 // Import necessary axios types and functions
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const BASE_URL = isProduction ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/api';
+const hostname = window && window.location && window.location.hostname;
+const BASE_URL =
+  hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/api';
+const BOARD_BASE_URL =
+  hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/trisy/api';
+
 const MOCK_URL = 'http://localhost:5000';
 
 const mockApi = axios.create({ baseURL: MOCK_URL });
+
+const boardApi = axios.create({
+  baseURL: BOARD_BASE_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
+});
 
 // Create an axios instance with the specified configuration
 const api = axios.create({
@@ -13,6 +26,7 @@ const api = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
@@ -23,8 +37,8 @@ const setAuthTokenHeader = (config: AxiosRequestConfig): AxiosRequestConfig => {
   if (accessToken && refreshToken && accessToken !== 'undefined') {
     config.headers = {
       ...config.headers,
-      'access-token': `Bearer ${accessToken}`,
-      'refresh-token': `Bearer ${refreshToken}`,
+      accessToken: `Bearer ${accessToken}`,
+      // refreshToken: `Bearer ${refreshToken}`,
     };
   }
   return config;
@@ -53,8 +67,15 @@ api.interceptors.request.use(
   handleRequestError,
 );
 
+boardApi.interceptors.request.use(
+  (config) => setAuthTokenHeader(config as AxiosRequestConfig) as any,
+  handleRequestError,
+);
+
 // Add the response interceptor for handling successful responses and errors
 api.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
+boardApi.interceptors.response.use(handleResponseSuccess, handleResponseError);
+
 // Export the configured axios instance for use in other parts of the application
-export { api, mockApi };
+export { api, mockApi, boardApi };

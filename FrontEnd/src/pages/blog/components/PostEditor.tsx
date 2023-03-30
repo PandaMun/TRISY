@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 interface TextEditorProps {
   value: string;
   onChange: (value: string) => void;
+  setThumbnail: (value: string) => void;
 }
 
 const toolbarOptions = [
@@ -59,7 +60,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
 
       reader.onload = () => {
         const imageURL = reader.result as string;
-
+        console.log(imageURL);
         // TODO: Upload the image to your server and get the image URL
         // You can replace the imageURL with the actual uploaded image URL after uploading it to your server
 

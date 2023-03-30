@@ -2,27 +2,27 @@ import { Link } from 'react-router-dom';
 import NcImage from '~/components/NcImage/NcImage';
 import PostTypeFeaturedIcon from '~/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon';
 import { PostCardMeta } from '~/components/Shared/PostCardMeta';
-import { post } from '~/types/sharedTypes';
+import { board, post } from '~/types/sharedTypes';
 import { htmlToPlainText } from '~/utils/htmlToPlainText';
 
 export interface Card13Props {
-  post: post;
+  post: board;
   className?: string;
 }
 
 export const Card13 = ({ post, className = '' }: Card13Props) => {
-  const { id, title, content, image } = post;
+  const { tourId, title, content, thumbnailUrl } = post;
 
   return (
     <div className={`nc-Card13 relative flex`} data-nc-id='Card13'>
       <div className='flex flex-col w-4/5 h-full py-2'>
         <h2 className={`nc-card-title block font-semibold text-base`}>
-          <Link to={`/post/${id}`} className='line-clamp-1' title={title}>
+          <Link to={`/post/${tourId}`} className='line-clamp-1' title={title}>
             {title}
           </Link>
         </h2>
         <span className='hidden my-3 sm:block text-neutral-500 dark:text-neutral-400 min-h-[32px]'>
-          <Link to={`/post/${id}`} className='line-clamp-2'>
+          <Link to={`/post/${tourId}`} className='line-clamp-2'>
             {htmlToPlainText(content)}
           </Link>
         </span>
@@ -32,11 +32,11 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
         </div>
       </div>
 
-      <Link to={`/post/${id}`} className={`${className}`}>
+      <Link to={`/post/${tourId}`} className={`${className}`}>
         <NcImage
           containerClassName='absolute inset-0 '
           className='object-cover w-full h-full rounded-3xl'
-          src={image}
+          src={thumbnailUrl}
           alt={title}
         />
         <PostTypeFeaturedIcon

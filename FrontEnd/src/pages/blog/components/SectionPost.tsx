@@ -1,10 +1,10 @@
-import { post } from '~/types/sharedTypes';
+import { board, post } from '~/types/sharedTypes';
 import Card13 from './Card13';
 import Pagination from 'react-js-pagination';
 import { useState } from 'react';
 
 export interface SectionMagazine5Props {
-  posts: post[];
+  posts: board[];
 }
 
 export const SectionPost = ({ posts }: SectionMagazine5Props) => {
