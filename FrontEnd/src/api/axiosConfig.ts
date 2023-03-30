@@ -3,10 +3,11 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const hostname = window && window.location && window.location.hostname;
 const BASE_URL =
-  hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io/api' : 'http://localhost:8080/api';
+  hostname !== 'localhost' ? 'http://j8c202.p.ssafy.io:8080/api' : 'http://localhost:8080/api';
+
 const BOARD_BASE_URL =
   hostname !== 'localhost'
-    ? 'http://j8c202.p.ssafy.io/trisy/api'
+    ? 'http://j8c202.p.ssafy.io:8080/trisy/api'
     : 'http://localhost:8080/trisy/api';
 
 const MOCK_URL = 'http://localhost:5000';
