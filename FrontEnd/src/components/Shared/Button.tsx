@@ -9,7 +9,7 @@ type ButtonProps = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, type = 'button', text, onClick }, ref) => {
+  ({ className, type = 'button', text, onClick }) => {
     return (
       <button type={type} className={`${className}`} onClick={onClick}>
         {text}

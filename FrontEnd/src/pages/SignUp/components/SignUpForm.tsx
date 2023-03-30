@@ -39,7 +39,7 @@ export const SignUpForm = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
     setPhone(
-      value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (match, p1, p2, p3) =>
+      value.replace(/(\d{3})(\d{0,4})(\d{0,4})/, (p1, p2, p3) =>
         p2 ? `${p1}-${p2}${p3 ? `-${p3}` : ''}` : `${p1}${p3 ? `-${p3}` : ''}`,
       ),
     );

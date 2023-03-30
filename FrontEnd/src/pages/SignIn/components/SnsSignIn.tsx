@@ -1,4 +1,3 @@
-import React from 'react';
 import KakaoTalgSvg from '/snsImages/KakaoTalk.svg';
 import GoogleSvg from '/snsImages/Google.svg';
 import styled from 'styled-components';
@@ -32,9 +31,6 @@ export const SnsSignIn = () => {
     }
   };
 
-  const handleFailure = (error: any) => {
-    console.error(error);
-  };
   return (
     <S.GridBox>
       {loginSocials.map((item, index) => (

@@ -1,4 +1,4 @@
-import { board, post } from '~/types/sharedTypes';
+import { board } from '~/types/sharedTypes';
 import Card12 from './Card12';
 import Card13 from './Card13';
 

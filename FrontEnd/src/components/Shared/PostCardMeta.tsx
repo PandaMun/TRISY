@@ -1,5 +1,5 @@
 import React from 'react';
-import { board, post } from '~/types/sharedTypes';
+import { board } from '~/types/sharedTypes';
 import { Avatar } from './Avatar';
 
 export interface PostCardMetaProps {
@@ -11,7 +11,7 @@ export interface PostCardMetaProps {
 
 export const PostCardMeta = ({
   className,
-  meta,
+
   size = 'normal',
   hiddenAvatar = false,
 }: PostCardMetaProps) => {

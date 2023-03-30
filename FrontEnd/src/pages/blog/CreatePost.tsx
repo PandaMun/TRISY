@@ -14,13 +14,13 @@ export const CreatePost = () => {
   const [content, setContent] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
 
-  const { data: tours, error } = useQuery<board[]>(['tours'], getTourListApi);
+  const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
   console.log(tours);
 
   const handleTextChange = (value: string) => {
     setContent(value);
   };
-  const { mutate, isLoading } = useMutation(createBoard, {
+  const { mutate } = useMutation(createBoard, {
     onSuccess: (data) => {
       console.log('Post created:', data);
       setTitle('');

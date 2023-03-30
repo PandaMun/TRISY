@@ -1,11 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { MidCarousel } from './MidCarousel';
-interface Item {
-  imageUrl: string;
-  title: string;
-}
 
 export default function MidSection() {
   return (

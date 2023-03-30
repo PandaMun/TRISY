@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import NcImage from '~/components/NcImage/NcImage';
 import PostTypeFeaturedIcon from '~/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon';
 import { PostCardMeta } from '~/components/Shared/PostCardMeta';
-import { board, post } from '~/types/sharedTypes';
+import { board } from '~/types/sharedTypes';
 import { htmlToPlainText } from '~/utils/htmlToPlainText';
 
 export interface Card13Props {

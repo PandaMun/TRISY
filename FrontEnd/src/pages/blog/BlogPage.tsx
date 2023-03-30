@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
 import { SectionPost } from './components/SectionPost';
-import { SectionMagazine5 } from './components/SectionMagazine5';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
 import { useQuery } from '@tanstack/react-query';

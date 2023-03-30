@@ -1,4 +1,4 @@
-import { board, post } from '~/types/sharedTypes';
+import { board } from '~/types/sharedTypes';
 import Card13 from './Card13';
 import Pagination from 'react-js-pagination';
 import { useState } from 'react';

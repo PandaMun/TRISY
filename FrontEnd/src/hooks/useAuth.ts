@@ -14,24 +14,15 @@ export const removeTokens = () => {
 };
 
 export const useAuth = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [, setIsLogin] = useState(false);
 
   const client = useQueryClient();
   const navigate = useNavigate();
 
   //회원가입
   const useSignUp = useMutation(signUpApi, {
-    onMutate: (variable) => {
-      // console.log('onMutate', variable);
-    },
-    onSuccess: async (data, variables) => {
+    onSuccess: async () => {
       navigate('/login');
-    },
-    onError: (error, variable, context) => {
-      // console.log(error);
-    },
-    onSettled: () => {
-      // console.log('end');
     },
   });
   // 토큰 갱신
@@ -48,10 +39,7 @@ export const useAuth = () => {
 
   //로그인
   const useLogin = useMutation(loginApi, {
-    onMutate: (variable) => {
-      // console.log('onMutate', variable);
-    },
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       const refreshToken = data['refreshToken'];
       const accessToken = data['accessToken'];
       setIsLogin(true);
@@ -63,9 +51,6 @@ export const useAuth = () => {
       console.log(error);
       console.log(variable);
       console.log(context);
-    },
-    onSettled: () => {
-      // console.log('end');
     },
   });
 
