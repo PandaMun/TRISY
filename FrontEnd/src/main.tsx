@@ -22,6 +22,7 @@ import { MyInfo } from './pages/mypage/MyInfo';
 import { MyReview } from './pages/mypage/MyReview';
 import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
+import { CreatePost } from './pages/blog/CreatePost';
 
 const router = createBrowserRouter([
   {
@@ -54,10 +55,10 @@ const router = createBrowserRouter([
         path: '/post/:id',
         element: <PostDetail />,
       },
-      // {
-      //   path: '/createPost',
-      //   element: <CreatePost />,
-      // },
+      {
+        path: '/createPost',
+        element: <CreatePost />,
+      },
       {
         path: '/login',
         element: <SignIn />,
