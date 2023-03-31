@@ -1,6 +1,7 @@
 package com.c202.trisy.tour.service;
 
 import com.c202.trisy.entity.Member;
+import com.c202.trisy.entity.Survey;
 import com.c202.trisy.entity.TourSchedule;
 import com.c202.trisy.entity.TourScheduleDetails;
 import com.c202.trisy.repository.MemberRepository;
@@ -180,9 +181,15 @@ public class TourServiceImpl implements TourService{
      * @param survey
      */
     @Override
-    public void addSurvey(String memberEmail, String survey) {
+    public void addSurvey(String memberEmail, String surveyResult) {
         Member member = memberRepository.findByEmail(memberEmail).get();
-        member.getSurvey().addSurvey(survey);
+
+        Survey survey = Survey.builder()
+                .survey(surveyResult)
+                .build();
+        member.updateSurvey(survey);
+
+        System.out.println("test");
         memberRepository.save(member);
     }
 }

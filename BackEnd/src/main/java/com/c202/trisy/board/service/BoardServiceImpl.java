@@ -12,10 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.print.attribute.IntegerSyntax;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -47,6 +49,31 @@ public class BoardServiceImpl implements BoardService {
         return boardResponse;
     }
 
+    @Override
+    public List<BoardResponse> getRandomBoard() {
+        List<Board> boardList = boardRepository.findAll();
+        List<BoardResponse> boardResponseList = new ArrayList<>();
+        List<Integer> randomList = new ArrayList<>();
+        for(int i = 1; i <= boardList.size() || i<=4; i++){ // i가 4보다 작을때 or i가 boardList의 사이즈보다 작거나 같을때
+            randomList.add(new Random().nextInt(boardList.size()));
+            for(int j = 0; j < i; j++){
+                if(randomList.get(j) == randomList.get(i)){
+                    i--;
+                }
+            }
+        }
+        for(int i : randomList){
+            BoardResponse boardResponse = BoardResponse.builder()
+                    .content(boardList.get(i).getContent())
+                    .title(boardList.get(i).getTitle())
+                    .tourId(boardList.get(i).getTourSchedule().getId())
+                    .memberId(boardList.get(i).getMember().getEmail())
+                    .build();
+            boardResponseList.add(boardResponse);
+        }
+
+        return boardResponseList;
+    }
 
 
     @Override

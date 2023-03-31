@@ -1,8 +1,6 @@
 package com.c202.trisy.board.service;
 
 public class CommonUtils {
-
-    private static final String CATEGORY_PREFIX = "/";
     private static final String TIME_SEPARATOR = "_";
 
     private static final String FILE_EXTENSION_SEPARATOR = ".";
