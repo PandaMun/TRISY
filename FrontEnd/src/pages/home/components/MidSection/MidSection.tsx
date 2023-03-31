@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { MidCarousel } from './MidCarousel';
+import { Modal } from './Modal';
 
 export default function MidSection() {
   return (
-    <S.Section>
-      <MidCarousel />
-    </S.Section>
+    <>
+      <S.Section>
+        <MidCarousel />
+      </S.Section>
+      <Modal
+        onConfirm={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    </>
   );
 }
 

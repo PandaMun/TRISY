@@ -35,6 +35,7 @@ export const KakaoMap = () => {
           content: content,
         });
         customOverlay.setMap(map);
+        return Promise.resolve();
       });
       map.setBounds(bounds);
     }

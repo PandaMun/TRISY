@@ -1,5 +1,9 @@
-import React from 'react';
+import { TourList } from './components/TourList';
 
 export const MyTrip = () => {
-  return <div>MyTrip</div>;
+  return (
+    <div>
+      <TourList />
+    </div>
+  );
 };
