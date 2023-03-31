@@ -52,7 +52,7 @@ const router = createHashRouter([
         element: <Survey />,
       },
       {
-        path: '/post/:id',
+        path: '/post/:createdTime/:id',
         element: <PostDetail />,
       },
       {

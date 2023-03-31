@@ -14,7 +14,8 @@ export default function BlogPage() {
   if (isLoading) return <Spinner />;
   if (error) return <ErrorPage />;
   if (posts?.length === 0) return <div>게시글이 없습니다.</div>;
-  // posts?.sort((a, b) => a.id - b.id);
+  const sorted = posts?.sort((a, b) => Number(b.id) - Number(a.id));
+  console.log(sorted);
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
@@ -30,7 +31,7 @@ export default function BlogPage() {
             <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
               TRISY
             </div>
-            <SectionPost posts={posts} />
+            <SectionPost posts={sorted as board[]} />
           </>
         )}
       </S.Container>

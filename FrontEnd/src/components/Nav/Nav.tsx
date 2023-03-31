@@ -29,7 +29,6 @@ export default function Nav() {
         </Link>
         <span>TRIP EASY</span>
       </S.LeftBox>
-      <TestDropdown />
       <S.RightBox>
         <>
           <SwitchDarkMode />

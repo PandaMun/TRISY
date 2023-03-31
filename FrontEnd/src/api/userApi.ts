@@ -17,6 +17,12 @@ export const loginApi = async (payload: userLogin) => {
   return response.data;
 };
 
+// 이메일  중복 확인
+export const emailCheckApi = async (email: string) => {
+  const response = await api.get(`/user/email/${email}`);
+  return response.data;
+};
+
 // get user
 export const getUserApi = async () => {
   // const response = await api.get('/user/mypage');

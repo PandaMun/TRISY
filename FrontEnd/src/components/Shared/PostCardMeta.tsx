@@ -10,11 +10,14 @@ export interface PostCardMetaProps {
 
 export const PostCardMeta = ({
   className,
-
+  meta,
   size = 'normal',
   hiddenAvatar = false,
 }: PostCardMetaProps) => {
   // const { date, author } = meta;
+  const date = new Date(meta.createdTime as string);
+  const formattedDate = date.toISOString().slice(0, 10);
+  console.log(meta);
   return (
     <div
       className={`inline-flex items-center fledx-wrap text-neutral-800 dark:text-neutral-200 ${
@@ -29,13 +32,13 @@ export const PostCardMeta = ({
           />
         )}
         <span className='block font-medium text-neutral-6000 hover:text-black dark:text-neutral-300 dark:hover:text-white'>
-          John Doe
+          {meta.memberId}
         </span>
       </span>
       <>
         <span className='text-neutral-500 dark:text-neutral-400 mx-[6px] font-medium'>·</span>
         <span className='font-normal text-neutral-500 dark:text-neutral-400 line-clamp-1'>
-          2023.03.27
+          {formattedDate}
         </span>
       </>
     </div>
