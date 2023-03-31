@@ -11,6 +11,11 @@ interface IEditor {
   setHtmlStr: React.Dispatch<React.SetStateAction<string>>;
 }
 
+interface MyObject {
+  [key: string]: any;
+  // add other properties and methods as needed
+}
+
 export const TextEditor = ({ htmlStr, setHtmlStr }: IEditor) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -18,9 +23,9 @@ export const TextEditor = ({ htmlStr, setHtmlStr }: IEditor) => {
     const blocksFromHtml = htmlToDraft(htmlStr);
     if (blocksFromHtml) {
       const { contentBlocks, entityMap } = blocksFromHtml;
-      const filteredEntityMap = Object.keys(entityMap)
+      const filteredEntityMap: MyObject = Object.keys(entityMap)
         .filter((key) => entityMap[key] !== null) // filter out null keys
-        .reduce((obj, key) => {
+        .reduce<MyObject>((obj, key) => {
           obj[key] = entityMap[key];
           return obj;
         }, {});
