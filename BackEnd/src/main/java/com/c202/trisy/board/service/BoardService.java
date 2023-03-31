@@ -13,6 +13,8 @@ public interface BoardService {
 
     BoardResponse getBoard(Long boardId);
 
+    List<BoardResponse> getRandomBoard();
+
     void createBoard(String memberEmail, BoardRequest boardRequest);
 
     void updateBoard(Long boardId, BoardRequest boardRequest);

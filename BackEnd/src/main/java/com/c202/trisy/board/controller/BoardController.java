@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class BoardController {
     /**
      * 여행 후기 목록 조회
      * @param pageable
-     * @return
+     * @return ResponseEntity<Page<BoardResponse>>
      */
     @GetMapping
     public ResponseEntity<?> searchBoardList(
@@ -50,7 +52,7 @@ public class BoardController {
     /**
      * 여행 후기 상세 조회
      * @param boardId
-     * @return
+     * @return ResponseEntity<String, HttpCode>
      */
     @GetMapping("/{boardId}")
     public ResponseEntity<?> searchBoardDetails(@PathVariable String boardId){
@@ -61,10 +63,27 @@ public class BoardController {
     }
 
     /**
+     * 랜덤 여행 후기 조회
+     * @return ResponseEntity<List<BoardResponse>>
+     */
+
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomBoard(){
+
+        try {
+            List<BoardResponse> randomBoard = boardService.getRandomBoard();
+            return ResponseEntity.ok(randomBoard);
+        }catch (NoSuchElementException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    /**
      * 여행 후기 작성
      * @param boardRequest
      * @param authentication
-     * @return
+     * @return ResponseEntity<String, HttpCode>
      */
     @PostMapping
     public ResponseEntity<?> createBoard(@RequestBody BoardRequest boardRequest, Authentication authentication){
@@ -80,7 +99,7 @@ public class BoardController {
     /**
      * 이미지 등록
      * @param multipartFile
-     * @return
+     * @return ResponseEntity<String, HttpCode>
      */
     @PostMapping("/image")
     public ResponseEntity<?> uploadFile(
@@ -99,7 +118,7 @@ public class BoardController {
      * @param boardId
      * @param boardRequest
      * @param authentication
-     * @return
+     * @return ResponseEntity<String, HttpCode>
      */
     @PutMapping("/{boardId}")
     public ResponseEntity<?> updateBoard(@PathVariable String boardId, @RequestBody BoardRequest boardRequest, Authentication authentication){
@@ -116,7 +135,7 @@ public class BoardController {
      * 여행 후기 삭제
      * @param boardId
      * @param authentication
-     * @return
+     * @return ResponseEntity<String, HttpCode>
      */
     @DeleteMapping("/{boardId}")
     public ResponseEntity<?> deleteBoard(@PathVariable String boardId, Authentication authentication){

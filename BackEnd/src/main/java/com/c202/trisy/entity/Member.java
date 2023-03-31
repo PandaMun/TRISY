@@ -56,4 +56,8 @@ public class Member extends BaseTimeEntity{
     public void changePhone(String phone){
         this.phone=phone;
     }
+
+    public void updateSurvey(Survey survey){
+        this.survey = survey;
+    }
 }
