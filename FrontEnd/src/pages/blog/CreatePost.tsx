@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { Button } from '~/components/Shared/Button';
 import { Link } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { createBoard, getTourListApi } from '~/api/boardApi';
-import { board } from '~/types/sharedTypes';
+import { useMutation } from '@tanstack/react-query';
+import { createBoard } from '~/api/boardApi';
+// import { board } from '~/types/sharedTypes';
 import { TextEditor } from './components/TextEditor';
 
 export const CreatePost = () => {
@@ -15,8 +15,8 @@ export const CreatePost = () => {
   const [content, setContent] = useState('');
   const [thumbnailUrl] = useState('');
 
-  const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
-  console.log(tours);
+  // const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
+  // console.log(tours);
   // const handleTextChange = (value: string) => {
   //   setContent(value);
   // };

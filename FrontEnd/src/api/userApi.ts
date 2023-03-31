@@ -40,12 +40,15 @@ export const getAccessToken = async () => {
       refreshToken: `Bearer ${refreshToken}`,
     },
   });
-  console.log(response);
+  // console.log(response);
+  // console.log(response.config.headers);
+  const newRefreshToken = response.config.headers.refreshToken;
   const headers = response.headers;
   const accessToken = headers['accesstoken'];
   const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
+  const refTokenWithoutBearer = newRefreshToken.replace('Bearer ', '');
   // console.log(accTokenWithoutBearer);
-  setTokens(accTokenWithoutBearer, refreshToken);
+  setTokens(accTokenWithoutBearer, refTokenWithoutBearer);
   return response.data;
   // return accessToken;
 };
@@ -53,8 +56,8 @@ export const getAccessToken = async () => {
 //카카오
 export const kakaoLoginCheck = async (code: string) => {
   const response = await api.get(`/oauth/token?code=${code}`);
-  console.log(response);
-  console.log(response.headers);
+  // console.log(response);
+  // console.log(response.headers);
   const headers = response.headers;
   const accessToken = headers['accesstoken'];
   const refreshToken = headers['refreshtoken'];
