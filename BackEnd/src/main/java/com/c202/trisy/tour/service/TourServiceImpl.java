@@ -189,7 +189,6 @@ public class TourServiceImpl implements TourService{
                 .build();
         member.updateSurvey(survey);
 
-        System.out.println("test");
         memberRepository.save(member);
     }
 }
