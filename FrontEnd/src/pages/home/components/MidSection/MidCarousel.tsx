@@ -12,6 +12,7 @@ export const MidCarousel = () => {
   const modalOpen = (imgUrl: string, title: string, body: string) => {
     dispatch(setModalOpen({ imgUrl, title, body }));
   };
+  const GRAY_COLOR = '#888888';
   const settings = {
     dots: false,
     infinite: true,
@@ -44,12 +45,31 @@ export const MidCarousel = () => {
     ],
     nextArrow: (
       <S.Next>
-        <GrFormNext className='text-6xl absolute left-12 top-6' />
+        <svg
+          fill='none'
+          stroke={GRAY_COLOR}
+          strokeWidth='1.5'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+          aria-hidden='true'
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5'></path>
+        </svg>
+        {/* <GrFormNext className='text-6xl absolute left-12 top-6 color-white' /> */}
       </S.Next>
     ),
     prevArrow: (
       <S.Prev>
-        <GrFormPrevious className='text-6xl absolute right-12 top-6' />
+        <svg
+          fill='none'
+          stroke={GRAY_COLOR}
+          strokeWidth='1.5'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+          aria-hidden='true'
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5L8.25 12l7.5-7.5'></path>
+        </svg>
       </S.Prev>
     ),
   };
@@ -116,9 +136,9 @@ const S = {
     }
   `,
   Next: styled.div`
-    ${tw`w-20 h-20 text-black`}
+    ${tw`w-20 h-10 transform scale-75 text-black z-10`}
   `,
   Prev: styled.div`
-    ${tw`w-20 h-20 text-black`}
+    ${tw`w-20 h-10 text-black scale-75 dark:text-white z-10`}
   `,
 };
