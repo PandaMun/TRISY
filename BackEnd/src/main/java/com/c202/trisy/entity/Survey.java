@@ -15,9 +15,5 @@ import javax.persistence.Entity;
 public class Survey extends BaseEntity{
 
     private String survey;
-
-
-    public void addSurvey(String survey){
-        this.survey = survey;
-    }
+    
 }
