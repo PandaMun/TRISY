@@ -18,7 +18,7 @@ export const Modal = () => {
   const gotoMap = () => {
     if (user) {
       onClose();
-      navigate(`/map/${ModalSlice.spotTitle}/${user.nickName}`);
+      navigate(`/map/${ModalSlice.spotTitle}/${user.nickname}`);
     } else {
       onClose();
       navigate(`/login`);

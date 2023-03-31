@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 import { RecommandCard } from '../components/RecommandCard';
 import { useAppSelector } from '~/app/hooks';
 import { selectRecommand } from '../recommandSlice';
-
+import { useParams } from 'react-router-dom';
+import { DateRange } from 'react-date-range';
+import { useState } from 'react';
+import { ko } from 'date-fns/locale';
 interface Recommand {
   title: string;
   lat: string;
@@ -13,16 +18,42 @@ interface Recommand {
 
 export const PickList = () => {
   const currentState = useAppSelector(selectRecommand);
+  const { id } = useParams<{ id: string }>();
+  const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
+  const [state, setState] = useState<any>([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
   if (pickList) {
     return (
       <>
         <OptionBox>
           <TopSection>
-            <CityTitle>도시이름</CityTitle>
+            <CityTitle>{location}</CityTitle>
             <CityTitle>2박 3일</CityTitle>
-            <Day>2023.04.01 - 2023.04.01</Day>
+            <DateRange
+              editableDateInputs={true}
+              onChange={async (item) => {
+                setState([item.selection]);
+                console.log(state[0].endDate);
+              }}
+              moveRangeOnFirstSelection={false}
+              ranges={state}
+              locale={ko}
+            />
           </TopSection>
+          <button
+            onClick={() => {
+              console.log(state[0].startDate);
+              console.log(state[0].endDate);
+            }}
+          >
+            ssssssssssssssss
+          </button>
           <MidSection>
             <OptionTitle>선택 목록</OptionTitle>
             {pickList.length > 0 && (
@@ -59,7 +90,4 @@ const OptionTitle = styled.div`
 
 const CityTitle = styled.div`
   ${tw`font-bold text-3xl `}
-`;
-const Day = styled.div`
-  ${tw`font-normal text-2xl text-slate-600 `}
 `;

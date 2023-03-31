@@ -5,12 +5,15 @@ import { Options } from './right/Options';
 import { PickList } from './left/PickList';
 import { useState } from 'react';
 import { ExitModal } from './components/ExitModal';
+import { SurveyModal } from './components/SurveyModal';
 export const Recommand = () => {
   const [showModal] = useState(false);
+  const [showSurveyModal, setShowSurveyModal] = useState(true);
 
   return (
     <>
       {showModal && <ExitModal />}
+      {showSurveyModal && <SurveyModal />}
       <MainContainer>
         <PickList />
         <KakaoMap />

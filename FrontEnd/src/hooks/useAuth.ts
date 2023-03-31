@@ -29,8 +29,8 @@ export const useAuth = () => {
       console.log('refresh', data);
     },
     onError: () => {
-      alert('로그인 세션이 만료되었습니다.');
-      logout();
+      // alert('로그인 세션이 만료되었습니다.');
+      // logout();
     },
     refetchInterval: 60000 * 60, // 30초마다 Query를 다시 실행합니다.
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
