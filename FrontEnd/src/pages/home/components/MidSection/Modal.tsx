@@ -4,15 +4,25 @@ import { useAppSelector } from '~/app/hooks';
 import { ModalState, setModalClose } from './ModalSlice';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useAppDispatch } from '~/app/hooks';
-interface Props {
-  onConfirm: () => void;
-}
-
-export const Modal = ({ onConfirm }: Props) => {
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '~/hooks/useAuth';
+export const Modal = () => {
+  const { useMyPage } = useAuth();
+  const { data: user } = useMyPage;
+  const navigate = useNavigate();
   const ModalSlice = useAppSelector(ModalState);
   const dispatch = useAppDispatch();
   const onClose = () => {
     dispatch(setModalClose());
+  };
+  const gotoMap = () => {
+    if (user) {
+      onClose();
+      navigate(`/map/${ModalSlice.spotTitle}/${user.nickName}`);
+    } else {
+      onClose();
+      navigate(`/login`);
+    }
   };
   return (
     <>
@@ -25,13 +35,8 @@ export const Modal = ({ onConfirm }: Props) => {
             <ModalImage src={ModalSlice.imgUrl} alt='Modal Image' />
             <ModalHeader>{ModalSlice.spotTitle}</ModalHeader>
             <ModalDescription>{ModalSlice.body}</ModalDescription>
-            <ModalButtons>
-              <button type='button' onClick={onClose}>
-                Cancel
-              </button>
-              <button type='button' onClick={onConfirm}>
-                Confirm
-              </button>
+            <ModalButtons onClick={gotoMap}>
+              <button type='button'>여행 일정 만들기</button>
             </ModalButtons>
           </ModalWrapper>
         </ModalOverlay>
@@ -59,7 +64,7 @@ const ModalDescription = styled.p`
   ${tw` text-sm mb-3 ml-5 mr-5`}
 `;
 const ModalButtons = styled.div`
-  ${tw` flex justify-end gap-2`}
+  ${tw`text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 ml-4 mb-2`}
 `;
 
 const CloseButton = styled.button`
@@ -68,8 +73,4 @@ const CloseButton = styled.button`
   &:hover {
     color: rgba(255, 255, 255, 1);
   }
-`;
-
-const ModalContentDiv = styled.div`
-  ${tw` m-5`}
 `;

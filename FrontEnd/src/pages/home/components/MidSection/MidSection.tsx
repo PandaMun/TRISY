@@ -9,11 +9,7 @@ export default function MidSection() {
       <S.Section>
         <MidCarousel />
       </S.Section>
-      <Modal
-        onConfirm={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      <Modal />
     </>
   );
 }

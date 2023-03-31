@@ -44,7 +44,7 @@ const router = createHashRouter([
         element: <BlogPage />,
       },
       {
-        path: '/recommand',
+        path: '/map/:location/:id',
         element: <Recommand />,
       },
       {
