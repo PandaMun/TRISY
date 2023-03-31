@@ -50,7 +50,7 @@ const S = {
       props.isScroll
         ? tw`bg-white shadow-sm dark:bg-neutral-700 text-neutral-900 dark:text-neutral-200`
         : tw`backdrop-blur-2xl backdrop-filter bg-white/30`};
-    ${tw`fixed left-0 right-0 flex justify-between items-center h-[100px] z-20 border-b-2 px-14 min-w-[810px]`}
+    ${tw`fixed left-0 right-0 flex justify-between items-center h-[100px] z-20 border-b-2 px-14 min-w-[850px]`}
   `,
   LeftBox: styled.div`
     ${tw`space-x-7`}

@@ -25,6 +25,13 @@ export interface post {
 export interface board {
   title: string;
   content: string;
+  id: string;
+  thumbnailUrl: string | undefined;
+}
+
+export interface createBoard {
+  title: string;
+  content: string;
   tourId: string;
   thumbnailUrl: string | undefined;
 }
