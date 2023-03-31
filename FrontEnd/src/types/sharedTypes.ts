@@ -28,3 +28,11 @@ export interface board {
   tourId: string;
   thumbnailUrl: string | undefined;
 }
+
+// 내 여행 리스트
+export interface tourList {
+  id: string;
+  tourName: string;
+  startDate: string;
+  endDate: string;
+}

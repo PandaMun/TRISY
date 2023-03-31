@@ -1,4 +1,4 @@
-import { board } from '~/types/sharedTypes';
+import { board, tourList } from '~/types/sharedTypes';
 import { boardApi } from './axiosConfig';
 
 export const getBoardListApi = async (): Promise<board[]> => {
@@ -18,7 +18,7 @@ export const createBoard = async (payload: board): Promise<board> => {
   return response.data;
 };
 
-export const getTourListApi = async (): Promise<board[]> => {
+export const getTourListApi = async (): Promise<tourList[]> => {
   const response = await boardApi.get('/tour');
   return response.data;
 };
