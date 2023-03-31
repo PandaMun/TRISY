@@ -25,8 +25,10 @@ export interface post {
 export interface board {
   title: string;
   content: string;
-  id: string;
-  thumbnailUrl: string | undefined;
+  id?: string;
+  thumbnailUrl?: string | undefined;
+  memberId?: string;
+  createdTime?: string;
 }
 
 export interface createBoard {
