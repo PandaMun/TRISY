@@ -33,6 +33,7 @@ export const useAuth = () => {
       logout();
     },
     refetchInterval: 30000, // 30초마다 Query를 다시 실행합니다.
+    refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
   });
 
   //로그인
