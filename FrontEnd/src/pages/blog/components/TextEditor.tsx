@@ -37,7 +37,7 @@ export const TextEditor = ({ htmlStr, setHtmlStr }: IEditor) => {
   };
 
   const uploadCallback = (file: Blob) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const reader = new FileReader();
       console.log(file);
       reader.onloadend = async () => {
