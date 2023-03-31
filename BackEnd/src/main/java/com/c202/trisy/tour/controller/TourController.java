@@ -16,6 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -54,12 +55,12 @@ public class TourController {
 
     //회원 설문조사 등록
     @PostMapping("/survey")
-    public ResponseEntity<?> addSurvey(Authentication authentication, @RequestBody String survey){
+    public ResponseEntity<?> addSurvey(Authentication authentication, @RequestBody Map<String,String> map){
         try {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String memberEmail = principal.getMember().getEmail();
 
-            tourService.addSurvey(memberEmail, survey);
+            tourService.addSurvey(memberEmail, map.get("survey"));
             return ResponseEntity.ok("설문이 성공적으로 저장되었습니다.");
         }catch (Exception e){
             return new ResponseEntity("설문 저장에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
