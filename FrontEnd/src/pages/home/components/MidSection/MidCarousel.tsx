@@ -9,8 +9,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import { setModalOpen } from './ModalSlice';
 export const MidCarousel = () => {
   const dispatch = useDispatch();
-  const modalOpen = () => {
-    dispatch(setModalOpen());
+  const modalOpen = (imgUrl: string, title: string, body: string) => {
+    dispatch(setModalOpen({ imgUrl, title, body }));
   };
   const settings = {
     dots: false,
@@ -57,7 +57,7 @@ export const MidCarousel = () => {
     <>
       <S.StyledSlider {...settings}>
         {ImgInfo.map((el, idx) => (
-          <S.Card key={idx} onClick={modalOpen}>
+          <S.Card key={idx} onClick={modalOpen.bind(null, el.imageUrl, el.desc, el.body)}>
             <S.CardBox>
               <S.ImageBox>
                 <img
