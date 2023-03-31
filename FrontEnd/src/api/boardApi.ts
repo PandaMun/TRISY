@@ -23,3 +23,8 @@ export const getTourListApi = async (): Promise<tourList[]> => {
   const response = await boardApi.get('/tour');
   return response.data;
 };
+
+export const delBoardApi = async (id: string): Promise<board> => {
+  const response = await boardApi.delete(`/board/${id}`);
+  return response.data;
+};

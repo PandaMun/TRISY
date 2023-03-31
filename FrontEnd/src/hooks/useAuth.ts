@@ -32,7 +32,7 @@ export const useAuth = () => {
       // alert('로그인 세션이 만료되었습니다.');
       // logout();
     },
-    refetchInterval: 60000 * 60, // 30초마다 Query를 다시 실행합니다.
+    refetchInterval: 60000 * 60, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
   });
 
@@ -49,6 +49,7 @@ export const useAuth = () => {
       console.log(error);
       console.log(variable);
       console.log(context);
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     },
   });
 

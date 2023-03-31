@@ -11,18 +11,20 @@ export interface Card13Props {
 }
 
 export const Card13 = ({ post, className = '' }: Card13Props) => {
-  const { id, title, content, thumbnailUrl } = post;
+  const { id, title, content, thumbnailUrl, createdTime } = post;
+  const date = new Date(createdTime as string);
+  const formattedDate = date.toISOString().slice(0, 10);
 
   return (
     <div className={`nc-Card13 relative flex`} data-nc-id='Card13'>
       <div className='flex flex-col w-4/5 h-full py-2'>
         <h2 className={`nc-card-title block font-semibold text-base`}>
-          <Link to={`/post/${id}`} className='line-clamp-1' title={title}>
+          <Link to={`/post/${formattedDate}/${id}`} className='line-clamp-1' title={title}>
             {title}
           </Link>
         </h2>
         <span className='hidden my-3 sm:block text-neutral-500 dark:text-neutral-400 min-h-[32px]'>
-          <Link to={`/post/${id}`} className='line-clamp-2'>
+          <Link to={`/post/${formattedDate}/${id}`} className='line-clamp-2'>
             {htmlToPlainText(content)}
           </Link>
         </span>
@@ -32,7 +34,7 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
         </div>
       </div>
 
-      <Link to={`/post/${id}`} className={`${className}`}>
+      <Link to={`/post/${formattedDate}/${id}`} className={`${className}`}>
         <NcImage
           containerClassName='absolute inset-0 '
           className='object-cover w-full h-full rounded-3xl'

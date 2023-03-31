@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 import { useEffect, useRef, useState } from 'react';
 // import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
 import { useMutation } from '@tanstack/react-query';
 import { createBoardApi } from '~/api/boardApi';
@@ -11,6 +11,7 @@ import { createBoardApi } from '~/api/boardApi';
 import { TextEditor } from './components/TextEditor';
 
 export const CreatePost = () => {
+  const navigate = useNavigate();
   // state
   const [htmlStr, setHtmlStr] = useState<string>('');
 
@@ -38,15 +39,16 @@ export const CreatePost = () => {
       console.log('Post created:', data);
       setTitle('');
       setHtmlStr('');
+      navigate(`/blog`);
     },
     onError: (error) => {
       console.error('Error creating post:', error);
     },
   });
   const handleCreatePost = () => {
-    console.log(htmlStr);
-    const cleanedHtml = htmlStr.replace(/<p><\/p>/g, '');
-    console.log(cleanedHtml);
+    // console.log(htmlStr);
+    // const cleanedHtml = htmlStr.replace(/<p><\/p>/g, '');
+    // console.log(cleanedHtml);
 
     mutate({
       title: title,

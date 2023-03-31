@@ -1,7 +1,16 @@
 import { AiOutlineMore } from 'react-icons/ai';
 import { Menu, Transition } from '@headlessui/react';
 import { Button } from '~/components/Shared/Button';
+import { useNavigate, useParams } from 'react-router-dom';
+import { delBoardApi } from '~/api/boardApi';
 export const MoreDropdown = () => {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const handleDelete = () => {
+    delBoardApi(id as string);
+    alert('삭제되었습니다.');
+    navigate(`/blog`);
+  };
   return (
     <Menu as='span'>
       <Menu.Button className=''>
@@ -20,7 +29,12 @@ export const MoreDropdown = () => {
             <Button type='button' className='more-dropdown-button' text='수정하기' />
           </Menu.Item>
           <Menu.Item>
-            <Button type='button' className='more-dropdown-button' text='삭제하기' />
+            <Button
+              type='button'
+              className='more-dropdown-button'
+              text='삭제하기'
+              onClick={handleDelete}
+            />
           </Menu.Item>
         </Menu.Items>
       </Transition>
