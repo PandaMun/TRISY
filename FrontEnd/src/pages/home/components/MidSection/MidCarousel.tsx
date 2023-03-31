@@ -1,5 +1,4 @@
 import Slider from 'react-slick';
-import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { ImgInfo } from './ImgInfo';
