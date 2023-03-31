@@ -48,7 +48,7 @@ public class TourController {
         if(check){
             return ResponseEntity.ok("exist");
         }else{
-            return new ResponseEntity("not exist", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.ok("not exist");
         }
 
     }
