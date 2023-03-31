@@ -56,7 +56,7 @@ const router = createHashRouter([
         element: <PostDetail />,
       },
       {
-        path: '/createPost',
+        path: '/createPost/:id',
         element: <CreatePost />,
       },
       {

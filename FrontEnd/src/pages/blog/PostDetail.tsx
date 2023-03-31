@@ -16,6 +16,11 @@ export const PostDetail = () => {
     isLoading,
     isError,
   } = useQuery(['post', id], () => getBoardById(id as string));
+  console.log(postDetails);
+  // console.log(postDetails);
+
+  const cleanedHtml = postDetails?.content.replace(/<p><\/p>/g, '');
+  console.log(cleanedHtml);
 
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorPage />;

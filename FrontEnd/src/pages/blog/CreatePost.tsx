@@ -1,41 +1,57 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import TextEditor from './components/PostEditor';
 import { Button } from '~/components/Shared/Button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
 import { useMutation } from '@tanstack/react-query';
-import { createBoard } from '~/api/boardApi';
+import { createBoardApi } from '~/api/boardApi';
 // import { board } from '~/types/sharedTypes';
 import { TextEditor } from './components/TextEditor';
 
 export const CreatePost = () => {
+  // state
+  const [htmlStr, setHtmlStr] = useState<string>('');
+
+  // ref
+  const viewContainerRef = useRef<HTMLDivElement>(null);
+
+  // useEffect
+  useEffect(() => {
+    if (viewContainerRef.current) {
+      viewContainerRef.current.innerHTML = '<h2>html 코드를 이용하여 만들어지는 View입니다.</h2>';
+      viewContainerRef.current.innerHTML += htmlStr;
+    }
+  }, [htmlStr]);
+
+  const { id } = useParams<{ id: string }>();
+
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [thumbnailUrl] = useState('');
 
   // const { data: tours } = useQuery<board[]>(['tours'], getTourListApi);
   // console.log(tours);
-  // const handleTextChange = (value: string) => {
-  //   setContent(value);
-  // };
 
-  const { mutate } = useMutation(createBoard, {
+  const { mutate } = useMutation(createBoardApi, {
     onSuccess: (data) => {
       console.log('Post created:', data);
       setTitle('');
-      setContent('');
+      setHtmlStr('');
     },
     onError: (error) => {
       console.error('Error creating post:', error);
     },
   });
   const handleCreatePost = () => {
+    console.log(htmlStr);
+    const cleanedHtml = htmlStr.replace(/<p><\/p>/g, '');
+    console.log(cleanedHtml);
+
     mutate({
       title: title,
-      content: content,
-      tourId: '1',
+      content: htmlStr,
+      tourId: id as string,
       thumbnailUrl,
     });
   };
@@ -50,7 +66,11 @@ export const CreatePost = () => {
         </S.GridLeft>
         <S.GridCenter>
           {/* <TextEditor value={content} onChange={handleTextChange} /> */}
-          <TextEditor />
+          <TextEditor htmlStr={htmlStr} setHtmlStr={setHtmlStr} />
+          <div>
+            <h2>Editor를 통해 만들어진 html 코드입니다.</h2>
+            {htmlStr}
+          </div>
           <input
             type='text'
             value={title}

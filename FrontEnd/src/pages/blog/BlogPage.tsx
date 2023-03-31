@@ -14,6 +14,7 @@ export default function BlogPage() {
   if (isLoading) return <Spinner />;
   if (error) return <ErrorPage />;
   if (posts?.length === 0) return <div>게시글이 없습니다.</div>;
+  // posts?.sort((a, b) => a.id - b.id);
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
