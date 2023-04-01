@@ -43,7 +43,9 @@ public class BoardServiceImpl implements BoardService {
                 .content(board.getContent())
                 .title(board.getTitle())
                 .tourId(board.getTourSchedule().getId())
-                .memberId(board.getMember().getEmail())
+                .memberEmail(board.getMember().getEmail())
+                .memberId(board.getMember().getId())
+                .nickname(board.getMember().getNickname())
                 .build();
 
         return boardResponse;
@@ -67,7 +69,9 @@ public class BoardServiceImpl implements BoardService {
                     .content(boardList.get(i).getContent())
                     .title(boardList.get(i).getTitle())
                     .tourId(boardList.get(i).getTourSchedule().getId())
-                    .memberId(boardList.get(i).getMember().getEmail())
+                    .memberId(boardList.get(i).getMember().getId())
+                    .memberEmail(boardList.get(i).getMember().getEmail())
+                    .nickname(boardList.get(i).getMember().getNickname())
                     .build();
             boardResponseList.add(boardResponse);
         }
