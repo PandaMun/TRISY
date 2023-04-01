@@ -21,7 +21,11 @@ public class BoardResponse {
 
     private String content;
 
-    private String memberId;
+    private Long memberId;
+
+    private String memberEmail;
+
+    private String nickname;
 
     private LocalDateTime createdTime;
 
@@ -40,7 +44,9 @@ public class BoardResponse {
                 .tourId(board.getTourSchedule().getId())
                 .updatedTime(board.getUpdatedTime())
                 .thumbnailUrl(board.getThumbnailUrl())
-                .memberId(board.getMember().getEmail())
+                .memberEmail(board.getMember().getEmail())
+                .memberId(board.getMember().getId())
+                .nickname(board.getMember().getNickname())
                 .build());
 
         return boardResponsePage;
