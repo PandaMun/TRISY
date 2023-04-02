@@ -1,15 +1,26 @@
 import { AiOutlineMore } from 'react-icons/ai';
 import { Menu, Transition } from '@headlessui/react';
 import { Button } from '~/components/Shared/Button';
-import { useNavigate, useParams } from 'react-router-dom';
-import { delBoardApi } from '~/api/boardApi';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useBoard } from '~/hooks/useBoard';
+
 export const MoreDropdown = () => {
-  const navigate = useNavigate();
+  const { delBoard } = useBoard();
   const { id } = useParams<{ id: string }>();
-  const handleDelete = () => {
-    delBoardApi(id as string);
-    alert('삭제되었습니다.');
-    navigate(`/blog`);
+  const location = useLocation();
+  const url = location.state.url;
+  const navigate = useNavigate();
+
+  const handleUpadte = () => {
+    navigate(`/blog/update/${id}`, { state: { url } });
+  };
+
+  const handleDelete = async () => {
+    try {
+      await delBoard.mutateAsync(id as string);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Menu as='span'>
@@ -26,7 +37,12 @@ export const MoreDropdown = () => {
       >
         <Menu.Items className='absolute space-y-3 right-0 py-5 px-2 z-10 mt-2 w-[100px] rounded-md shadow-lg ring-1 bg-white ring-black ring-opacity-5'>
           <Menu.Item>
-            <Button type='button' className='more-dropdown-button' text='수정하기' />
+            <Button
+              type='button'
+              className='more-dropdown-button'
+              text='수정하기'
+              onClick={handleUpadte}
+            />
           </Menu.Item>
           <Menu.Item>
             <Button

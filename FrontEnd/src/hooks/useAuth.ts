@@ -28,11 +28,13 @@ export const useAuth = () => {
     onSuccess: (data) => {
       console.log('refresh', data);
     },
-    onError: () => {
-      alert('로그인 세션이 만료되었습니다.');
-      logout();
+    onError: (error) => {
+      console.log('err', error);
+      // alert('로그인 세션이 만료되었습니다.');
+      // logout();
     },
-    refetchInterval: 60000 * 60, // 1시간마다 갱신
+    retry: 1, // 3번 재시도
+    refetchInterval: 50000 * 60, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
   });
 

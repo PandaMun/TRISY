@@ -29,6 +29,7 @@ export interface board {
   thumbnailUrl?: string | undefined;
   memberId?: string;
   createdTime?: string;
+  nickname?: string;
 }
 
 export interface createBoard {
@@ -36,6 +37,18 @@ export interface createBoard {
   content: string;
   tourId: string;
   thumbnailUrl: string | undefined;
+}
+
+export interface BoardResponse {
+  content: board[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
 }
 
 // 내 여행 리스트

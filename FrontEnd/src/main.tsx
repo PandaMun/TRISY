@@ -23,6 +23,7 @@ import { MyReview } from './pages/mypage/MyReview';
 import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
 import { CreatePost } from './pages/blog/CreatePost';
+import { UpdatePost } from './pages/blog/UpdatePost';
 
 const router = createHashRouter([
   {
@@ -58,6 +59,10 @@ const router = createHashRouter([
       {
         path: '/createPost/:id',
         element: <CreatePost />,
+      },
+      {
+        path: 'blog/update/:id',
+        element: <UpdatePost />,
       },
       {
         path: '/login',

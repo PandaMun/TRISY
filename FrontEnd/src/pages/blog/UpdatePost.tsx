@@ -1,19 +1,43 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { useEffect, useRef, useState } from 'react';
-// import TextEditor from './components/PostEditor';
-import { Button } from '~/components/Shared/Button';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getBoardById, updateBoardApi } from '~/api/boardApi';
+import { Spinner } from '~/components/Shared/Spinner';
+import { ErrorPage } from '../Handle/ErrorPage';
+import { Link } from 'react-router-dom';
 import { Line } from '~/components/Shared/Line';
-import { useMutation } from '@tanstack/react-query';
-import { createBoardApi } from '~/api/boardApi';
-// import { board } from '~/types/sharedTypes';
-import { TextEditor } from './components/TextEditor';
+import { Button } from '~/components/Shared/Button';
+import { UpdateEditor } from './components/UpdateEditor';
 
-export const CreatePost = () => {
+export const UpdatePost = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const {
+    data: postDetails,
+    isLoading,
+    isError,
+  } = useQuery(['post', id], () => getBoardById(id as string));
+  const location = useLocation();
+  const url = location.state.url;
+  console.log(url);
+
   // state
   const [htmlStr, setHtmlStr] = useState<string>('');
+  const [title, setTitle] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+  console.log(postDetails);
+  useEffect(() => {
+    setTitle(postDetails?.title as string);
+    setHtmlStr(postDetails?.content as string);
+  }, [postDetails]);
+
+  useEffect(() => {
+    if (url !== 'noImg') {
+      setThumbnailUrl(url);
+    }
+  }, [url]);
 
   // ref
   const viewContainerRef = useRef<HTMLDivElement>(null);
@@ -26,14 +50,9 @@ export const CreatePost = () => {
     }
   }, [htmlStr]);
 
-  const { id } = useParams<{ id: string }>();
-
-  const [title, setTitle] = useState('');
-  const [thumbnailUrl, setThumbnailUrl] = useState('');
-
-  const { mutate } = useMutation(createBoardApi, {
+  const { mutate } = useMutation(updateBoardApi, {
     onSuccess: (data) => {
-      console.log('Post created:', data);
+      console.log('Post updated:', data);
       setTitle('');
       setHtmlStr('');
       navigate(`/blog`);
@@ -42,7 +61,14 @@ export const CreatePost = () => {
       console.error('Error creating post:', error);
     },
   });
-  const handleCreatePost = () => {
+  const handleUpdatePost = () => {
+    console.log(postDetails?.thumbnailUrl);
+    if (thumbnailUrl === null) {
+      setThumbnailUrl(postDetails?.thumbnailUrl as string);
+      console.log(thumbnailUrl);
+      return;
+    }
+    console.log(thumbnailUrl);
     mutate({
       title: title,
       content: htmlStr,
@@ -50,6 +76,10 @@ export const CreatePost = () => {
       thumbnailUrl,
     });
   };
+
+  if (isLoading) return <Spinner />;
+  if (isError) return <ErrorPage />;
+
   return (
     <S.Box>
       <S.GridContainer>
@@ -61,11 +91,12 @@ export const CreatePost = () => {
         </S.GridLeft>
         <S.GridCenter>
           {/* <TextEditor value={content} onChange={handleTextChange} /> */}
-          <TextEditor htmlStr={htmlStr} setHtmlStr={setHtmlStr} setThumbnailUrl={setThumbnailUrl} />
-          <div>
-            <h2>Editor를 통해 만들어진 html 코드입니다.</h2>
-            {htmlStr}
-          </div>
+          <UpdateEditor
+            htmlStr={htmlStr}
+            setHtmlStr={setHtmlStr}
+            setThumbnailUrl={setThumbnailUrl}
+            initialContent={postDetails?.content as string}
+          />
           <input
             type='text'
             value={title}
@@ -78,8 +109,8 @@ export const CreatePost = () => {
           <Button
             type='button'
             className='create-post-button bg-black mr-5'
-            text='작성'
-            onClick={handleCreatePost}
+            text='수정'
+            onClick={handleUpdatePost}
           />
           <Line />
         </S.GridRight>
