@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { selectRecommand } from '../recommandSlice';
 import { useAppSelector } from '~/app/hooks';
+import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 
 type MarkerType = {
   title: string;
@@ -13,12 +14,17 @@ export const KakaoMap = () => {
   const mapRef = useRef(null);
 
   const currentState = useAppSelector(selectRecommand);
+  const currentLocation = useAppSelector(ModalState);
+  const Lat = currentLocation.lat;
+  const Long = currentLocation.long;
   const pickList = currentState.pickList;
   useEffect(() => {
+    console.log(Lat);
+    console.log(Long);
     const { kakao } = window;
     const container = mapRef.current;
     const options = {
-      center: new kakao.maps.LatLng(37.624562, 127.1512),
+      center: new kakao.maps.LatLng(Lat, Long),
       level: 8,
     };
     const map = new kakao.maps.Map(container, options);

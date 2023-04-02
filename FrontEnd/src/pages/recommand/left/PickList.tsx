@@ -8,6 +8,7 @@ import { selectRecommand } from '../recommandSlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
+import { PickedCard } from '../components/PickedCard';
 interface Recommand {
   title: string;
   lat: string;
@@ -39,7 +40,7 @@ export const PickList = () => {
             {pickList.length > 0 && (
               <div>
                 {pickList.map((pick: Recommand) => (
-                  <RecommandCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
+                  <PickedCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
                 ))}
               </div>
             )}

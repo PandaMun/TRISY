@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { pickPlace, selectRecommand } from '../recommandSlice';
-import { HiPlus } from 'react-icons/hi';
+import { HiX } from 'react-icons/hi';
 interface CardInfo {
   src: string;
   title: string;
   id: number;
 }
-export const RecommandCard = ({ title, src, id }: CardInfo) => {
+export const PickedCard = ({ title, src, id }: CardInfo) => {
   const dispatch = useAppDispatch();
   const currentState = useAppSelector(selectRecommand);
   console.log(currentState);
@@ -22,7 +22,7 @@ export const RecommandCard = ({ title, src, id }: CardInfo) => {
         <Textdiv>
           <RecommandTitle>{title}</RecommandTitle>
           <PlusButton>
-            <HiPlus onClick={() => handleClick(id)} />
+            <HiX onClick={() => handleClick(id)} />
           </PlusButton>
         </Textdiv>
       </CardDiv>

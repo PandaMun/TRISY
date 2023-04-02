@@ -5,11 +5,12 @@ import { ImgInfo } from './ImgInfo';
 import { useDispatch } from 'react-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { setModalOpen } from './ModalSlice';
+import { setLocation, setModalOpen } from './ModalSlice';
 export const MidCarousel = () => {
   const dispatch = useDispatch();
-  const modalOpen = (imgUrl: string, title: string, body: string) => {
+  const modalOpen = (imgUrl: string, title: string, body: string, lat: number, long: number) => {
     dispatch(setModalOpen({ imgUrl, title, body }));
+    dispatch(setLocation({ lat, long }));
   };
   const GRAY_COLOR = '#888888';
   const settings = {
@@ -76,7 +77,12 @@ export const MidCarousel = () => {
     <>
       <S.StyledSlider {...settings}>
         {ImgInfo.map((el, idx) => (
-          <S.Card key={idx} onClick={modalOpen.bind(null, el.imageUrl, el.desc, el.body)}>
+          <S.Card
+            key={idx}
+            onClick={() => {
+              modalOpen(el.imageUrl, el.desc, el.body, el.lat, el.long);
+            }}
+          >
             <S.CardBox>
               <S.ImageBox>
                 <img

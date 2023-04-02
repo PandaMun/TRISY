@@ -10,6 +10,10 @@ interface ModalPayload {
   startDate?: any;
   endDate?: any;
 }
+interface LocationPayload {
+  lat?: number;
+  long?: number;
+}
 const initialState = {
   isOpen: false,
   imgUrl: '/image-coming-soon.png',
@@ -18,6 +22,8 @@ const initialState = {
   range: 2,
   startDate: '',
   endDate: '',
+  lat: 33.4996,
+  long: 126.5312,
 };
 const ModalSlice = createSlice({
   name: 'recommand',
@@ -39,9 +45,14 @@ const ModalSlice = createSlice({
       state.startDate = action.payload.startDate;
       state.endDate = action.payload.endDate;
     },
+    setLocation: (state: any, action: PayloadAction<LocationPayload>) => {
+      state.lat = action.payload.lat;
+      state.long = action.payload.long;
+    },
   },
 });
 
-export const { setModalOpen, setModalClose, setModalRange, setDate } = ModalSlice.actions;
+export const { setModalOpen, setModalClose, setModalRange, setDate, setLocation } =
+  ModalSlice.actions;
 export const ModalState = (state: RootState) => state.modal;
 export default ModalSlice.reducer;
