@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { RecommandCard } from '../components/RecommandCard';
 import { useAppSelector } from '~/app/hooks';
 import { selectRecommand } from '../recommandSlice';
 import { useParams } from 'react-router-dom';
@@ -19,7 +18,7 @@ interface Recommand {
 export const PickList = () => {
   const currentState = useAppSelector(selectRecommand);
   const ModalSlice = useAppSelector(ModalState);
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
   if (pickList) {

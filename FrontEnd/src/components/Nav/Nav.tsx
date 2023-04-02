@@ -5,7 +5,6 @@ import tw from 'twin.macro';
 import { useAuth } from '~/hooks/useAuth';
 import SwitchDarkMode from '../SwitchDarkMode/SwitchDarkMode';
 import { LoginDropdwon } from './LoginDropdwon';
-import TestDropdown from './TestDropdown';
 
 interface NavSectionProps {
   isScroll: boolean;
