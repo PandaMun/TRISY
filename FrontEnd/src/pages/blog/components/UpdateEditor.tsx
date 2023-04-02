@@ -8,13 +8,21 @@ import { useEffect, useRef, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { imageApi } from '~/api/axiosConfig';
+import { useParams } from 'react-router-dom';
+import { getBoardById } from '~/api/boardApi';
+import { useQuery } from '@tanstack/react-query';
+
 interface IEditor {
   htmlStr: string;
   setHtmlStr: React.Dispatch<React.SetStateAction<string>>;
   setThumbnailUrl: React.Dispatch<React.SetStateAction<string>>;
   initialContent?: string;
 }
-export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) => {
+
+export const UpdateEditor = ({ setHtmlStr, setThumbnailUrl }: IEditor) => {
+  const { id } = useParams<{ id: string }>();
+  const { data: postDetails } = useQuery(['post', id], () => getBoardById(id as string));
+
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -24,7 +32,7 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
     rendered.current = true;
     // const contentState = stateFromHTML(htmlStr as string);
     // console.log(contentState);
-    const blocksFromHtml = htmlToDraft(htmlStr);
+    const blocksFromHtml = htmlToDraft(postDetails?.content as string);
     // console.log(blocksFromHtml);
     if (blocksFromHtml) {
       const { contentBlocks, entityMap } = blocksFromHtml;
@@ -32,51 +40,7 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
       const editorState = EditorState.createWithContent(contentState);
       setEditorState(editorState);
     }
-  }, [htmlStr]);
-  // useEffect(() => {
-  //   if (initialContent) {
-  //     const blocksFromHTML = convertFromHTML(initialContent);
-  //     const contentState = ContentState.createFromBlockArray(
-  //       blocksFromHTML.contentBlocks,
-  //       blocksFromHTML.entityMap,
-  //     );
-  //     setEditorState(EditorState.createWithContent(contentState));
-  //   }
-  // }, [initialContent]);
-
-  // const rendered = useRef(false);
-
-  // useEffect(() => {
-  //   const blocksFromHtml = htmlToDraft(htmlStr);
-  //   if (blocksFromHtml) {
-  //     const { contentBlocks, entityMap } = blocksFromHtml;
-  //     const filteredEntityMap = Object.keys(entityMap)
-  //       .filter((key) => entityMap[key] !== null)
-  //       .reduce<MyObject>((newEntityMap, key) => {
-  //         newEntityMap[key] = entityMap[key];
-  //         return newEntityMap;
-  //       }, {});
-  //     const contentState = ContentState.createFromBlockArray(contentBlocks, filteredEntityMap);
-  //     const editorState = EditorState.createWithContent(contentState);
-  //     setEditorState(editorState);
-  //   }
-  // }, [htmlStr]);
-
-  // useEffect(() => {
-  //   const blocksFromHtml = htmlToDraft(htmlStr);
-  //   if (blocksFromHtml) {
-  //     const { contentBlocks, entityMap } = blocksFromHtml;
-  //     const filteredEntityMap: MyObject = Object.keys(entityMap)
-  //       .filter((key) => entityMap[key] !== null) // filter out null keys
-  //       .reduce<MyObject>((obj, key) => {
-  //         obj[key] = entityMap[key];
-  //         return obj;
-  //       }, {});
-  //     const contentState = ContentState.createFromBlockArray(contentBlocks, filteredEntityMap);
-  //     const editorState = EditorState.createWithContent(contentState);
-  //     setEditorState(editorState);
-  //   }
-  // }, []);
+  }, [postDetails]);
 
   // editor 수정 이벤트
   const onEditorStateChange = (editorState: EditorState) => {

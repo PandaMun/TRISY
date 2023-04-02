@@ -6,25 +6,30 @@ import { MoreDropdown } from './MoreDropdown';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '~/hooks/useAuth';
 
-export const PostWriter = () => {
+type PostWriterProps = {
+  nickname: string | undefined;
+  memberId: string | undefined;
+};
+
+export const PostWriter = ({ nickname, memberId }: PostWriterProps) => {
   const { createdTime } = useParams<{ createdTime: string }>();
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
-  console.log(user);
+  // console.log(user);
   return (
     <S.Box>
       <S.Container>
         <Avatar containerClassName='flex-shrink-0' sizeClass='w-5 h-5 sm:h-7 sm:w-7 ' />
         <S.Info>
-          <S.NameBox>펩시제로라임</S.NameBox>
+          <S.NameBox>{nickname}</S.NameBox>
           <S.DateBox>{createdTime}</S.DateBox>
         </S.Info>
       </S.Container>
       <div className='flex items-center justify-center pt-1.5 space-x-3'>
         <SnsShare />
-        {user.id === id && <MoreDropdown />}
-        <MoreDropdown />
+        {user.id === memberId && <MoreDropdown />}
+        {/* <MoreDropdown /> */}
       </div>
     </S.Box>
   );
