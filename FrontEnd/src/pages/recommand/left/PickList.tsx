@@ -6,9 +6,8 @@ import { RecommandCard } from '../components/RecommandCard';
 import { useAppSelector } from '~/app/hooks';
 import { selectRecommand } from '../recommandSlice';
 import { useParams } from 'react-router-dom';
-import { DateRange } from 'react-date-range';
-import { useState } from 'react';
-import { ko } from 'date-fns/locale';
+import { ConvertDate } from '../components/ConvertDate';
+import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 interface Recommand {
   title: string;
   lat: string;
@@ -18,42 +17,23 @@ interface Recommand {
 
 export const PickList = () => {
   const currentState = useAppSelector(selectRecommand);
+  const ModalSlice = useAppSelector(ModalState);
   const { id } = useParams<{ id: string }>();
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
-  const [state, setState] = useState<any>([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    },
-  ]);
   if (pickList) {
     return (
       <>
         <OptionBox>
           <TopSection>
             <CityTitle>{location}</CityTitle>
-            <CityTitle>2박 3일</CityTitle>
-            <DateRange
-              editableDateInputs={true}
-              onChange={async (item) => {
-                setState([item.selection]);
-                console.log(state[0].endDate);
-              }}
-              moveRangeOnFirstSelection={false}
-              ranges={state}
-              locale={ko}
-            />
+            <CityTitle>
+              {ModalSlice.range - 1}박{ModalSlice.range}일
+            </CityTitle>
+            <Datediv>
+              {ConvertDate(ModalSlice.startDate)} ~ {ConvertDate(ModalSlice.endDate)}
+            </Datediv>
           </TopSection>
-          <button
-            onClick={() => {
-              console.log(state[0].startDate);
-              console.log(state[0].endDate);
-            }}
-          >
-            ssssssssssssssss
-          </button>
           <MidSection>
             <OptionTitle>선택 목록</OptionTitle>
             {pickList.length > 0 && (
@@ -64,6 +44,7 @@ export const PickList = () => {
               </div>
             )}
           </MidSection>
+          <ModalButtons>일정 생성</ModalButtons>
         </OptionBox>
       </>
     );
@@ -90,4 +71,11 @@ const OptionTitle = styled.div`
 
 const CityTitle = styled.div`
   ${tw`font-bold text-3xl `}
+`;
+const Datediv = styled.div`
+  ${tw`font-medium text-xl mb-2 mt-2`}
+`;
+
+const ModalButtons = styled.div`
+  ${tw`hover:cursor-pointer text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-2 absolute right-3 bottom-3`}
 `;

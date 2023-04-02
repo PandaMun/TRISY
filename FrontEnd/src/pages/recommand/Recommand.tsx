@@ -15,9 +15,9 @@ export const Recommand = () => {
       {showModal && <ExitModal />}
       {showSurveyModal && <SurveyModal />}
       <MainContainer>
-        <PickList />
-        <KakaoMap />
         <Options />
+        <KakaoMap />
+        <PickList />
       </MainContainer>
     </>
   );
