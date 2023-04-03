@@ -29,7 +29,7 @@ public class TourDetailsResponse {
         private String description;
         private String imageUrl;
 
-        private LocalDateTime planDateTime;
+        private LocalDate planDate;
         private double lng;
         private double lat;
     }

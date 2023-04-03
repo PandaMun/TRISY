@@ -21,8 +21,8 @@ public class TourRequest {
     public static class SpotInfo {
         private Long spotId;
 
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime planDateTime;
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        private LocalDate planDate;
     }
 
     private String tourName;

@@ -40,6 +40,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId).get();
         BoardResponse boardResponse = BoardResponse.builder()
+                .id(board.getId())
                 .content(board.getContent())
                 .title(board.getTitle())
                 .tourId(board.getTourSchedule().getId())
@@ -70,6 +71,7 @@ public class BoardServiceImpl implements BoardService {
         }
         for(int i : randomList){
             BoardResponse boardResponse = BoardResponse.builder()
+                    .id(boardList.get(i).getId())
                     .content(boardList.get(i).getContent())
                     .title(boardList.get(i).getTitle())
                     .tourId(boardList.get(i).getTourSchedule().getId())
