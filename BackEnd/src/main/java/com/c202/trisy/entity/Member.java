@@ -38,6 +38,8 @@ public class Member extends BaseTimeEntity{
     private String provider;
     private String providerId;
 
+    private String profileUrl;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "survey_id")
     private Survey survey;
@@ -59,5 +61,9 @@ public class Member extends BaseTimeEntity{
 
     public void updateSurvey(Survey survey){
         this.survey = survey;
+    }
+
+    public void updateProfile(String profileUrl){
+        this.profileUrl = profileUrl;
     }
 }
