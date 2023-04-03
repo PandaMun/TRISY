@@ -23,6 +23,8 @@ public class BoardResponse {
 
     private Long memberId;
 
+    private int views;
+
     private String memberEmail;
 
     private String nickname;
@@ -41,6 +43,7 @@ public class BoardResponse {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .createdTime(board.getCreatedTime())
+                .views(board.getViews())
                 .tourId(board.getTourSchedule().getId())
                 .updatedTime(board.getUpdatedTime())
                 .thumbnailUrl(board.getThumbnailUrl())

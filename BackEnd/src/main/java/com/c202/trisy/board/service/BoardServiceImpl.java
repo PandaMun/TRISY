@@ -39,10 +39,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId).get();
+
+        board.addViews();
+        boardRepository.save(board);
+
         BoardResponse boardResponse = BoardResponse.builder()
                 .id(board.getId())
                 .content(board.getContent())
                 .title(board.getTitle())
+                .views(board.getViews())
                 .tourId(board.getTourSchedule().getId())
                 .memberEmail(board.getMember().getEmail())
                 .memberId(board.getMember().getId())
@@ -53,39 +58,23 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardResponse> getRandomBoard() {
-        List<Board> boardList = boardRepository.findAll();
+    public List<BoardResponse> getBoardByViews() {
+        List<Board> list = boardRepository.findAllByOrderByViewsDesc();
         List<BoardResponse> boardResponseList = new ArrayList<>();
-        List<Integer> randomList = new ArrayList<>();
-        for(int i = 0; i<4; i++) {
-            if (i < boardList.size()) {// i가 4보다 작을때 or i가 boardList의 사이즈보다 작거나 같을때
-                randomList.add(new Random().nextInt(boardList.size()));
-                for (int j = 0; j < i; j++) {
-                    if (i != j && randomList.get(j) == randomList.get(i)) {
-                        i--;
-                    }
-                }
-            }else{
-                break;
-            }
-        }
-        for(int i : randomList){
-            BoardResponse boardResponse = BoardResponse.builder()
-                    .id(boardList.get(i).getId())
-                    .content(boardList.get(i).getContent())
-                    .title(boardList.get(i).getTitle())
-                    .tourId(boardList.get(i).getTourSchedule().getId())
-                    .memberId(boardList.get(i).getMember().getId())
-                    .memberEmail(boardList.get(i).getMember().getEmail())
-                    .nickname(boardList.get(i).getMember().getNickname())
-                    .thumbnailUrl(boardList.get(i).getThumbnailUrl())
-                    .createdTime(boardList.get(i).getCreatedTime())
-                    .updatedTime(boardList.get(i).getUpdatedTime())
-                    .build();
+        for(int i = 0; i< list.size() && i < 4; i++) {
 
+            BoardResponse boardResponse = BoardResponse.builder()
+                    .id(list.get(i).getId())
+                    .content(list.get(i).getContent())
+                    .title(list.get(i).getTitle())
+                    .views(list.get(i).getViews())
+                    .tourId(list.get(i).getTourSchedule().getId())
+                    .memberEmail(list.get(i).getMember().getEmail())
+                    .memberId(list.get(i).getMember().getId())
+                    .nickname(list.get(i).getMember().getNickname())
+                    .build();
             boardResponseList.add(boardResponse);
         }
-
         return boardResponseList;
     }
 
@@ -101,6 +90,7 @@ public class BoardServiceImpl implements BoardService {
                 .tourSchedule(tourRepository.findById(boardRequest.getTourId()).get())
                 .createdTime(LocalDateTime.now())
                 .updatedTime(LocalDateTime.now())
+                .views(0)
                 .build();
 
         boardRepository.save(board);
