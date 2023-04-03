@@ -40,7 +40,7 @@ public class BoardController {
      */
     @GetMapping
     public ResponseEntity<?> searchBoardList(
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
 
 
         Page<BoardResponse> boardList = boardService.getBoardList(pageable);
