@@ -7,6 +7,7 @@ import com.c202.trisy.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -65,5 +66,12 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.delete(authUser);
         return true;
+    }
+
+    @Override
+    public void saveProfile(String memberEmail, String profileUrl) {
+        Member member = memberRepository.findByEmail(memberEmail).get();
+        member.updateProfile(profileUrl);
+        memberRepository.save(member);
     }
 }
