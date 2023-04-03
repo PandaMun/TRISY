@@ -52,6 +52,9 @@ public class BoardServiceImpl implements BoardService {
                 .memberEmail(board.getMember().getEmail())
                 .memberId(board.getMember().getId())
                 .nickname(board.getMember().getNickname())
+                .thumbnailUrl(board.getThumbnailUrl())
+                .createdTime(board.getCreatedTime())
+                .updatedTime(board.getUpdatedTime())
                 .build();
 
         return boardResponse;
@@ -72,6 +75,9 @@ public class BoardServiceImpl implements BoardService {
                     .memberEmail(list.get(i).getMember().getEmail())
                     .memberId(list.get(i).getMember().getId())
                     .nickname(list.get(i).getMember().getNickname())
+                    .thumbnailUrl(list.get(i).getThumbnailUrl())
+                    .createdTime(list.get(i).getCreatedTime())
+                    .updatedTime(list.get(i).getUpdatedTime())
                     .build();
             boardResponseList.add(boardResponse);
         }
