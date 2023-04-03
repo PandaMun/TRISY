@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { getRandomBoardListApi } from '~/api/boardApi';
+import { Spinner } from '~/components/Shared/Spinner';
 
 interface Item {
   img: string;
@@ -23,6 +24,7 @@ export default function BotSection() {
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
   });
+  if (randomLoading) return <Spinner />;
   console.log(random);
   return (
     <S.Section>
