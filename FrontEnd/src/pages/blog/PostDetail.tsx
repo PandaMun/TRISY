@@ -17,7 +17,7 @@ export const PostDetail = () => {
     isLoading,
     isError,
   } = useQuery(['post', id], () => getBoardById(id as string));
-  // console.log(postDetails);
+  console.log(postDetails);
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorPage />;
 
