@@ -19,11 +19,12 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
   return (
     <div className={`nc-Card13 relative flex`} data-nc-id='Card13'>
       <div className='flex flex-col w-4/5 h-full py-2'>
-        <h2 className={`nc-card-title block font-semibold text-base`}>
+        <h2 className={`nc-card-title block font-semibold text-base `}>
           <Link
             to={`/post/${formattedDate}/${id}`}
             state={{
               url,
+              boardId: id,
             }}
             className='line-clamp-1'
             title={title}

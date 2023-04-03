@@ -28,7 +28,7 @@ export const PostWriter = ({ nickname, memberId }: PostWriterProps) => {
       </S.Container>
       <div className='flex items-center justify-center pt-1.5 space-x-3'>
         <SnsShare />
-        {user.id === memberId && <MoreDropdown />}
+        {user && user.id === memberId && <MoreDropdown />}
         {/* <MoreDropdown /> */}
       </div>
     </S.Box>

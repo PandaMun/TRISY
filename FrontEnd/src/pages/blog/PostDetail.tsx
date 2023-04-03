@@ -11,7 +11,7 @@ import { getBoardById } from '~/api/boardApi';
 import { Link } from 'react-router-dom';
 
 export const PostDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string; formattedDate: string }>();
   const {
     data: postDetails,
     isLoading,

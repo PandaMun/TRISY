@@ -5,13 +5,21 @@ export const getBoardListApi = async (num: string): Promise<BoardResponse> => {
   console.log('qwd', num);
   // console.log(num);
   const response = await boardApi.get('/board?page=' + num);
-  console.log(response.data.content);
+  if (response.status !== 200) {
+    throw new Error('Network response was not ok');
+  }
+  return response.data;
+};
+
+export const getRandomBoardListApi = async (): Promise<board[]> => {
+  const response = await boardApi.get('/board/views');
+  console.log(response);
   return response.data;
 };
 
 export const getBoardById = async (id: string): Promise<board> => {
   const response = await boardApi.get(`/board/${id}`);
-  // console.log(response);
+  console.log(response);
   return response.data;
 };
 
