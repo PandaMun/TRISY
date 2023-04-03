@@ -56,12 +56,16 @@ public class BoardServiceImpl implements BoardService {
         List<Board> boardList = boardRepository.findAll();
         List<BoardResponse> boardResponseList = new ArrayList<>();
         List<Integer> randomList = new ArrayList<>();
-        for(int i = 1; i <= boardList.size() || i<=4; i++){ // i가 4보다 작을때 or i가 boardList의 사이즈보다 작거나 같을때
-            randomList.add(new Random().nextInt(boardList.size()));
-            for(int j = 0; j < i; j++){
-                if(randomList.get(j) == randomList.get(i)){
-                    i--;
+        for(int i = 0; i<4; i++) {
+            if (i < boardList.size()) {// i가 4보다 작을때 or i가 boardList의 사이즈보다 작거나 같을때
+                randomList.add(new Random().nextInt(boardList.size()));
+                for (int j = 0; j < i; j++) {
+                    if (i != j && randomList.get(j) == randomList.get(i)) {
+                        i--;
+                    }
                 }
+            }else{
+                break;
             }
         }
         for(int i : randomList){
@@ -72,7 +76,11 @@ public class BoardServiceImpl implements BoardService {
                     .memberId(boardList.get(i).getMember().getId())
                     .memberEmail(boardList.get(i).getMember().getEmail())
                     .nickname(boardList.get(i).getMember().getNickname())
+                    .thumbnailUrl(boardList.get(i).getThumbnailUrl())
+                    .createdTime(boardList.get(i).getCreatedTime())
+                    .updatedTime(boardList.get(i).getUpdatedTime())
                     .build();
+
             boardResponseList.add(boardResponse);
         }
 
