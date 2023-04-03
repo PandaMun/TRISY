@@ -8,7 +8,7 @@ import { ExitModal } from './components/ExitModal';
 import { SurveyModal } from './components/SurveyModal';
 export const Recommand = () => {
   const [showModal] = useState(false);
-  const [showSurveyModal, setShowSurveyModal] = useState(true);
+  const [showSurveyModal] = useState(true);
 
   return (
     <>

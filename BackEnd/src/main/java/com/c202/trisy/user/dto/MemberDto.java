@@ -31,6 +31,8 @@ public class MemberDto {
 
         String birth;
 
+        String profileUrl;
+
         String phone;
 
         String nickname;

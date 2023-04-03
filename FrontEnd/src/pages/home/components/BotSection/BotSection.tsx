@@ -1,6 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
+import { getRandomBoardListApi } from '~/api/boardApi';
+import { Spinner } from '~/components/Shared/Spinner';
 
 interface Item {
   img: string;
@@ -16,9 +19,16 @@ const arr: Item[] = [
 ];
 
 export default function BotSection() {
+  const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
+    retry: 5,
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+  });
+  if (randomLoading) return <Spinner />;
+  console.log(random);
   return (
     <S.Section>
-      <S.SectionTitle>어디로 여행을 떠나시나요?</S.SectionTitle>
+      <S.SectionTitle>여행기</S.SectionTitle>
       <S.SectionContent>
         {arr.map((item: Item, index: number) => (
           <S.Card key={index}>
@@ -47,7 +57,7 @@ const S = {
     ${tw`min-h-screen mx-auto max-w-7xl`}
   `,
   SectionTitle: styled.div`
-    ${tw`text-3xl font-bold text-center`}
+    ${tw`text-3xl font-bold text-center font-nexon`}
   `,
   SectionContent: styled.div`
     ${tw`flex justify-around`}

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,8 @@ import java.time.LocalDateTime;
 public class TourScheduleDetails extends  BaseEntity{
 
 
-    private LocalDateTime planDateTime;
+    private LocalDate planDate;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_schedule_id")

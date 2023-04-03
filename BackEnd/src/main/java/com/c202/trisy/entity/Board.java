@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
-public class Board extends BaseTimeEntity{
+public class Board extends BaseEntity{
 
     private String title;
 
@@ -25,6 +25,8 @@ public class Board extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    private int views;
 
     private LocalDateTime createdTime;
 
@@ -42,6 +44,10 @@ public class Board extends BaseTimeEntity{
         this.content = content;
         this.thumbnailUrl = thumbnailUrl;
         this.updatedTime = updatedTime;
+    }
+
+    public void addViews(){
+        this.views += 1;
     }
 
 }

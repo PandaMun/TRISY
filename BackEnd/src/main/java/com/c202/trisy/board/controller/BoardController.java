@@ -40,7 +40,7 @@ public class BoardController {
      */
     @GetMapping
     public ResponseEntity<?> searchBoardList(
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
 
 
         Page<BoardResponse> boardList = boardService.getBoardList(pageable);
@@ -67,11 +67,11 @@ public class BoardController {
      * @return ResponseEntity<List<BoardResponse>>
      */
 
-    @GetMapping("/random")
+    @GetMapping("/views")
     public ResponseEntity<?> getRandomBoard(){
 
         try {
-            List<BoardResponse> randomBoard = boardService.getRandomBoard();
+            List<BoardResponse> randomBoard = boardService.getBoardByViews();
             return ResponseEntity.ok(randomBoard);
         }catch (NoSuchElementException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

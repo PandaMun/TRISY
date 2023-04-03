@@ -69,7 +69,7 @@ public class TourServiceImpl implements TourService{
                     .lat(scheduleDetails.getTourSpot().getLat())
                     .lng(scheduleDetails.getTourSpot().getLng())
                     .description(scheduleDetails.getTourSpot().getSpotInfo())
-                    .planDateTime(scheduleDetails.getPlanDateTime())
+                    .planDate(scheduleDetails.getPlanDate())
                     .build();
 
             detailsResponseList.add(tourScheduleDetail);
@@ -97,8 +97,6 @@ public class TourServiceImpl implements TourService{
         Member member = memberRepository.findByEmail(memberId).get();
 
         List<TourScheduleDetails> tourScheduleDetails = new ArrayList<>();
-
-
         TourSchedule tourSchedule = TourSchedule.builder()
                 .tourName(tourRequest.getTourName())
                 .startDate(tourRequest.getStartDate())
@@ -110,8 +108,9 @@ public class TourServiceImpl implements TourService{
         for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()) {
             TourScheduleDetails details = TourScheduleDetails.builder()
                     .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
-                    .planDateTime(spotInfo.getPlanDateTime())
+                    .planDate(spotInfo.getPlanDate())
                     .tourSchedule(tourSchedule)
+
                     .build();
             tourScheduleDetails.add(details);
         }
@@ -133,11 +132,10 @@ public class TourServiceImpl implements TourService{
             throw new AuthenticationException("권한이 없습니다.");
         }
         List<TourScheduleDetails> tourScheduleDetailsList = new ArrayList<>();
-
         for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()){
             TourScheduleDetails tourScheduleDetail = TourScheduleDetails.builder()
                     .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
-                    .planDateTime(spotInfo.getPlanDateTime())
+                    .planDate(spotInfo.getPlanDate())
                     .build();
 
             tourScheduleDetailsList.add(tourScheduleDetail);
@@ -178,7 +176,7 @@ public class TourServiceImpl implements TourService{
     /**
      * 설문 조사 등록
      * @param memberEmail
-     * @param survey
+     * @return
      */
     @Override
     public void addSurvey(String memberEmail, String surveyResult) {

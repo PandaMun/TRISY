@@ -42,32 +42,6 @@ export const PickList = () => {
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
   const [post, setPost] = useState([]);
   //dragEnd
-  const handleChange = (result: any) => {
-    if (!result.destination) return;
-    // const { source, destination } = result;
-    // let items = [...userList.userItems];
-    // let index;
-    // if (source.droppableId !== destination.droppableId) {
-    //   index = items.findIndex((v) => v.id === parseInt(result.draggableId));
-    //   let findObj = items[index];
-    //   findObj.dropId = destination.droppableId;
-    //   items.splice(index, 1);
-    //   items = [...items, findObj];
-    //   setUserList({
-    //     userItems: items,
-    //   });
-    // } else {
-    //   if (source.index !== destination.index) {
-    //     let selectItem = items[result.source.index];
-    //     items.splice(result.source.index, 1);
-    //     items.splice(destination.index, 0, selectItem);
-    //     setUserList({
-    //       userItems: items,
-    //     });
-    //   }
-    // }
-  };
-  //--
   const onDragEnd = (result: any) => {
     console.log(result);
     if (!result.destination) {

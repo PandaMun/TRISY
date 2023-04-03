@@ -1,10 +1,20 @@
-import { board, createBoard, tourList } from '~/types/sharedTypes';
+import { board, createBoard, tourList, BoardResponse } from '~/types/sharedTypes';
 import { boardApi } from './axiosConfig';
 
-export const getBoardListApi = async (): Promise<board[]> => {
-  console.log('qwd');
-  const response = await boardApi.get('/board');
-  return response.data.content;
+export const getBoardListApi = async (num: string): Promise<BoardResponse> => {
+  console.log('qwd', num);
+  // console.log(num);
+  const response = await boardApi.get('/board?page=' + num);
+  if (response.status !== 200) {
+    throw new Error('Network response was not ok');
+  }
+  return response.data;
+};
+
+export const getRandomBoardListApi = async (): Promise<board[]> => {
+  const response = await boardApi.get('/board/views');
+  console.log(response);
+  return response.data;
 };
 
 export const getBoardById = async (id: string): Promise<board> => {
@@ -14,8 +24,13 @@ export const getBoardById = async (id: string): Promise<board> => {
 };
 
 export const createBoardApi = async (payload: createBoard): Promise<createBoard> => {
-  console.log(payload);
+  // console.log(payload);
   const response = await boardApi.post('/board', payload);
+  return response.data;
+};
+
+export const updateBoardApi = async (payload: createBoard): Promise<createBoard> => {
+  const response = await boardApi.put(`/board/${payload.tourId}`, payload);
   return response.data;
 };
 
