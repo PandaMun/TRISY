@@ -24,6 +24,7 @@ import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
 import { CreatePost } from './pages/blog/CreatePost';
 import { UpdatePost } from './pages/blog/UpdatePost';
+import { ProtectedRounte } from './pages/Handle/ProtectedRoute';
 
 const router = createHashRouter([
   {
@@ -53,16 +54,24 @@ const router = createHashRouter([
         element: <Survey />,
       },
       {
-        path: '/post/:createdTime/:id',
+        path: '/post/:formattedDate/:id',
         element: <PostDetail />,
       },
       {
         path: '/createPost/:id',
-        element: <CreatePost />,
+        element: (
+          <ProtectedRounte>
+            <CreatePost />
+          </ProtectedRounte>
+        ),
       },
       {
         path: 'blog/update/:id',
-        element: <UpdatePost />,
+        element: (
+          <ProtectedRounte>
+            <UpdatePost />
+          </ProtectedRounte>
+        ),
       },
       {
         path: '/login',
@@ -78,19 +87,35 @@ const router = createHashRouter([
       },
       {
         path: '/mypage',
-        element: <MyPage />,
+        element: (
+          <ProtectedRounte>
+            <MyPage />
+          </ProtectedRounte>
+        ),
       },
       {
         path: '/myinfo',
-        element: <MyInfo />,
+        element: (
+          <ProtectedRounte>
+            <MyInfo />
+          </ProtectedRounte>
+        ),
       },
       {
         path: '/myreview',
-        element: <MyReview />,
+        element: (
+          <ProtectedRounte>
+            <MyReview />
+          </ProtectedRounte>
+        ),
       },
       {
         path: '/mytrip',
-        element: <MyTrip />,
+        element: (
+          <ProtectedRounte>
+            <MyTrip />
+          </ProtectedRounte>
+        ),
       },
       {
         path: '/kakao',
