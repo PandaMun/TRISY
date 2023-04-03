@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import tw from 'twin.macro';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { RecommandCard } from '../components/RecommandCard';
-import { useAppSelector } from '~/app/hooks';
-import { selectRecommand } from '../recommandSlice';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useAppDispatch, useAppSelector } from '~/app/hooks';
+import recommandSlice, { selectRecommand, setPlace } from '../recommandSlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 interface Recommand {
   title: string;
@@ -17,11 +18,104 @@ interface Recommand {
 }
 
 export const PickList = () => {
+  const dispatch = useAppDispatch();
+  const [spotInfo, setSpotInfo] = useState([]);
+  const [spotList, setSpotList] = useState({ spotInfo: [setSpotInfo] });
+  useEffect(() => {
+    axios.get('http://localhost:3003/markers').then((res) => {
+      dispatch(setPlace({ place: res.data }));
+    });
+    axios.get('http://localhost:3003/spots').then((res: any) => {
+      setSpotInfo(res.data);
+    });
+  }, []);
+  console.log(`spotList`);
+  console.log(spotList);
+  console.log(`spotInfo`);
+  console.log(spotInfo);
   const currentState = useAppSelector(selectRecommand);
   const ModalSlice = useAppSelector(ModalState);
   const { id } = useParams<{ id: string }>();
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
+  const recommandlist = currentState;
+  const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
+  const [post, setPost] = useState([]);
+  //dragEnd
+  const handleChange = (result: any) => {
+    if (!result.destination) return;
+    // const { source, destination } = result;
+    // let items = [...userList.userItems];
+    // let index;
+    // if (source.droppableId !== destination.droppableId) {
+    //   index = items.findIndex((v) => v.id === parseInt(result.draggableId));
+    //   let findObj = items[index];
+    //   findObj.dropId = destination.droppableId;
+    //   items.splice(index, 1);
+    //   items = [...items, findObj];
+    //   setUserList({
+    //     userItems: items,
+    //   });
+    // } else {
+    //   if (source.index !== destination.index) {
+    //     let selectItem = items[result.source.index];
+    //     items.splice(result.source.index, 1);
+    //     items.splice(destination.index, 0, selectItem);
+    //     setUserList({
+    //       userItems: items,
+    //     });
+    //   }
+    // }
+  };
+  //--
+  const onDragEnd = (result: any) => {
+    console.log(result);
+    if (!result.destination) {
+      return;
+    }
+    const { source, destination } = result;
+    let spots: any = [...spotInfo];
+    let index;
+    if (source.droppableId !== destination.droppableId) {
+      index = spots.findIndex((v: any) => v.id === parseInt(result.draggableId));
+      const findObj: any = spots[index];
+      findObj.date = destination.droppableId;
+      spots.splice(index, 1);
+      spots = [...spots, findObj];
+      setSpotInfo(spots);
+    } else {
+      if (source.index !== destination.index) {
+        const selectSpot = spots[result.source.index];
+        spots.splice(result.source.index, 1);
+        spots.splice(destination.index, 0, selectSpot);
+        setSpotInfo(spots);
+      }
+    }
+  };
+  const spotInfoDatas: any = (dropId: string) => {
+    return spotInfo.map((spot: any, idx: any) => {
+      if (spot.date === dropId)
+        return (
+          <Draggable draggableId={spot.id.toString()} index={idx} key={spot.id}>
+            {(provided, snapshot) => {
+              return (
+                <div
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  ref={provided.innerRef}
+                >
+                  <div>
+                    <PickedCard key={spot.lat} title={spot.spot_name} src={spot.lat} id={spot.id} />
+                  </div>
+                  {/* <EditorComponent isDragging={snapshot.isDragging} /> */}
+                </div>
+              );
+            }}
+          </Draggable>
+        );
+    });
+  };
+
   if (pickList) {
     return (
       <>
@@ -36,14 +130,25 @@ export const PickList = () => {
             </Datediv>
           </TopSection>
           <MidSection>
-            <OptionTitle>선택 목록</OptionTitle>
-            {pickList.length > 0 && (
-              <div>
-                {pickList.map((pick: Recommand) => (
-                  <PickedCard key={pick.lat} title={pick.title} src={pick.lat} id={pick.id} />
-                ))}
-              </div>
-            )}
+            <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+              <OptionTitle>선택 목록</OptionTitle>
+              {dateList.map((v, idx) => {
+                return (
+                  <Droppable droppableId={idx.toString()} key={idx.toString()}>
+                    {(provided) => (
+                      <ColoredDiv
+                        className='cardlists'
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {spotInfoDatas(idx.toString())}
+                        {provided.placeholder}
+                      </ColoredDiv>
+                    )}
+                  </Droppable>
+                );
+              })}
+            </DragDropContext>
           </MidSection>
           <ModalButtons>일정 생성</ModalButtons>
         </OptionBox>
@@ -54,29 +159,76 @@ export const PickList = () => {
 };
 
 const OptionBox = styled.section`
-  ${tw`flex flex-col `}
+  display: flex;
+  flex-direction: column;
   width: 300px;
   height: 80vh;
 `;
 const TopSection = styled.div`
-  ${tw`flex flex-col justify-center items-center`}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 300px;
 `;
 const MidSection = styled.div`
-  ${tw`flex flex-col justify-center items-center`}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
 `;
 const OptionTitle = styled.div`
-  ${tw`text-xl font-bold`}
+  font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const CityTitle = styled.div`
-  ${tw`font-bold text-3xl `}
+  font-weight: bold;
+  font-size: 3rem;
 `;
 const Datediv = styled.div`
-  ${tw`font-medium text-xl mb-2 mt-2`}
+  font-weight: medium;
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+  margin-top: 2px;
 `;
 
 const ModalButtons = styled.div`
-  ${tw`hover:cursor-pointer text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-2 absolute right-3 bottom-3`}
+  cursor: pointer;
+  color: #1a202c;
+  background: linear-gradient(to right, #90cdf4, #48bfe3);
+  background-color: #90cdf4;
+  background-image: linear-gradient(to right, #90cdf4, #48bfe3);
+  transition: background-color 0.2s ease-out, background-image 0.2s ease-out;
+  border-radius: 9999px;
+  font-weight: medium;
+  font-size: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  text-align: center;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+
+  &:hover {
+    background-color: #48bfe3;
+    background-image: linear-gradient(to left, #90cdf4, #48bfe3);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #90cdf4, 0 0 0 4px #48bfe3;
+  }
+
+  &.dark:focus {
+    box-shadow: 0 0 0 2px #4fd1c5, 0 0 0 4px #38b2ac;
+  }
+`;
+const ColoredDiv = styled.div`
+  width: 400px;
+  height: 200px;
+  margin: 100px;
+  background-color: #f0f0f0;
 `;
