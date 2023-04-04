@@ -44,12 +44,9 @@ public class TourController {
     public ResponseEntity<?> existSurvey(Authentication authentication){
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String memberEmail = principal.getMember().getEmail();
-        boolean check = tourService.existSurvey(memberEmail);
-        if(check){
-            return ResponseEntity.ok("exist");
-        }else{
-            return ResponseEntity.ok("not exist");
-        }
+        String survey = tourService.existSurvey(memberEmail);
+        return ResponseEntity.ok(survey);
+
 
     }
 

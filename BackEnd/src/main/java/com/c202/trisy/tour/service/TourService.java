@@ -19,7 +19,7 @@ public interface TourService {
 
     void deleteTourSchedule(Long tourId, String memberEmail) throws AuthenticationException;
 
-    boolean existSurvey(String memberEmail);
+    String existSurvey(String memberEmail);
 
     void addSurvey(String memberEmail, String survey);
 }
