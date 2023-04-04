@@ -12,11 +12,10 @@ const surveySlice = createSlice({
   reducers: {
     pick: (state: any, action: PayloadAction<string>) => {
       state.surveyPick += action.payload;
-      console.log(state.surveyPick);
     },
   },
 });
 
 export const { pick } = surveySlice.actions;
-export const selectRecommand = (state: RootState) => state.recommand;
+export const SurveyResult = (state: RootState) => state.survey;
 export default surveySlice.reducer;

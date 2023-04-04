@@ -3,24 +3,17 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import recommandSlice, { selectRecommand, setPlace } from '../recommandSlice';
+import { selectRecommand, setPlace } from '../recommandSlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
-interface Recommand {
-  title: string;
-  lat: string;
-  lng: string;
-  id: number;
-}
 
 export const PickList = () => {
   const dispatch = useAppDispatch();
   const [spotInfo, setSpotInfo] = useState([]);
-  const [spotList, setSpotList] = useState({ spotInfo: [setSpotInfo] });
   useEffect(() => {
     axios.get('http://localhost:3003/markers').then((res) => {
       dispatch(setPlace({ place: res.data }));
@@ -29,18 +22,14 @@ export const PickList = () => {
       setSpotInfo(res.data);
     });
   }, []);
-  console.log(`spotList`);
-  console.log(spotList);
-  console.log(`spotInfo`);
-  console.log(spotInfo);
   const currentState = useAppSelector(selectRecommand);
   const ModalSlice = useAppSelector(ModalState);
-  const { id } = useParams<{ id: string }>();
+
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
-  const recommandlist = currentState;
+
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
-  const [post, setPost] = useState([]);
+
   //dragEnd
   const onDragEnd = (result: any) => {
     console.log(result);
@@ -66,12 +55,13 @@ export const PickList = () => {
       }
     }
   };
+  //DRAGGABLE
   const spotInfoDatas: any = (dropId: string) => {
     return spotInfo.map((spot: any, idx: any) => {
       if (spot.date === dropId)
         return (
           <Draggable draggableId={spot.id.toString()} index={idx} key={spot.id}>
-            {(provided, snapshot) => {
+            {(provided) => {
               return (
                 <div
                   {...provided.draggableProps}
@@ -106,7 +96,7 @@ export const PickList = () => {
           <MidSection>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
               <OptionTitle>선택 목록</OptionTitle>
-              {dateList.map((v, idx) => {
+              {dateList.map((_v, idx) => {
                 return (
                   <Droppable droppableId={idx.toString()} key={idx.toString()}>
                     {(provided) => (

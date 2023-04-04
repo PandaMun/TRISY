@@ -5,11 +5,12 @@ import gsap from 'gsap';
 import './components/progressbarStyle.scss';
 import { QuestionList, AList, SubQlist, SubAlist, COLORS } from './components/QList';
 import tw from 'twin.macro';
-import { useAppDispatch } from '~/app/hooks';
-import { pick } from './SurveySlice';
-
+import { useAppDispatch, useAppSelector } from '~/app/hooks';
+import { SurveyResult, pick } from './SurveySlice';
+import { surveyCheckApi, surveyPushApi } from '~/api/boardApi';
 export const Survey = () => {
   const dispatch = useAppDispatch();
+  const surveyResult = useAppSelector(SurveyResult);
   const containerRef = useRef(null);
   const loadingRef = useRef(null);
   const [step, setStep] = useState(10);
@@ -54,6 +55,10 @@ export const Survey = () => {
               opacity: 0,
               ease: 'power2.inOut',
             });
+            surveyPushApi({ survey: surveyResult.surveyPick });
+            console.log({ survey: surveyResult.surveyPick });
+            console.log('surveyCheckApi');
+            console.log(surveyCheckApi());
             setVigible(false);
           }
         }

@@ -43,3 +43,11 @@ export const delBoardApi = async (id: string): Promise<board> => {
   const response = await boardApi.delete(`/board/${id}`);
   return response.data;
 };
+export const surveyPushApi = async (result: { survey: string }): Promise<board> => {
+  const response = await boardApi.post(`/tour/survey`, result);
+  return response.data;
+};
+export const surveyCheckApi = async (): Promise<board> => {
+  const response = await boardApi.get(`/tour/survey`);
+  return response.data;
+};

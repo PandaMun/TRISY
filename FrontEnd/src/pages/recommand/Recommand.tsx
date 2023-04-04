@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { KakaoMap } from './centermap/KakaoMap';
-import { Options } from './right/Options';
 import { PickList } from './left/PickList';
 import { useState } from 'react';
 import { ExitModal } from './components/ExitModal';
