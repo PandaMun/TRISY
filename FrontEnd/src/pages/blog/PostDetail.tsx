@@ -27,7 +27,11 @@ export const PostDetail = () => {
         <S.Box>
           {/* Render post details here */}
           <PostTitle title={postDetails.title} />
-          <PostWriter memberId={postDetails.memberId} nickname={postDetails.nickname} />
+          <PostWriter
+            memberId={postDetails.memberId}
+            nickname={postDetails.nickname}
+            profileUrl={postDetails.profileUrl}
+          />
           <Line />
           <S.Viewer
             className='react-quill-viewer'

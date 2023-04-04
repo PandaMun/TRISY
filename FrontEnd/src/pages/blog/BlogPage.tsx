@@ -23,8 +23,8 @@ export default function BlogPage() {
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
   });
-  console.log(data);
-  console.log(random);
+  // console.log(data);
+  // console.log(random);
 
   useEffect(() => {
     const response = getBoardListApi(String(activePage - 1));
@@ -37,7 +37,7 @@ export default function BlogPage() {
     setActivePage(pageNumber);
     client.invalidateQueries(['boards']);
   };
-  console.log(isLoading, randomLoading);
+  // console.log(isLoading, randomLoading);
 
   if (isLoading || randomLoading) return <Spinner />;
   if (error) return <ErrorPage />;
@@ -71,9 +71,9 @@ export default function BlogPage() {
           totalItemsCount={data?.totalElements as number}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
-          itemClass='inline-block px-4 py-2 border-2 rounded-full mx-1 hover:bg-blue-100 hover:cursor-pointer hover:border-blue-300' // Customize the pagination item
-          linkClass='text-blue-500 hover:text-blue-700' // Customize the pagination link
-          activeClass='bg-blue-400 hover:bg-blue-400 border-blue-500' // Customize the active pagination item
+          itemClass='inline-block px-4 py-2 border-2 rounded-full mx-1 hover:bg-red-100 hover:cursor-pointer hover:border-red-200' // Customize the pagination item
+          linkClass='' // Customize the pagination link
+          activeClass='bg-red-200 hover:bg-red-200 border-red-200' // Customize the active pagination item
           activeLinkClass='text-white' // Customize the active pagination link
           // disabledClass='text-gray-400 cursor-not-allowed' // Customize the disabled pagination item
         />

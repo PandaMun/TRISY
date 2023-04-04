@@ -9,21 +9,26 @@ import { useAuth } from '~/hooks/useAuth';
 type PostWriterProps = {
   nickname: string | undefined;
   memberId: string | undefined;
+  profileUrl: string | undefined;
 };
 
-export const PostWriter = ({ nickname, memberId }: PostWriterProps) => {
-  const { createdTime } = useParams<{ createdTime: string }>();
+export const PostWriter = ({ nickname, memberId, profileUrl }: PostWriterProps) => {
+  const { formattedDate } = useParams<{ formattedDate: string }>();
   // const { id } = useParams<{ id: string }>();
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
-  // console.log(user);
+  console.log(user);
   return (
     <S.Box>
       <S.Container>
-        <Avatar containerClassName='flex-shrink-0' sizeClass='w-5 h-5 sm:h-7 sm:w-7 ' />
+        <Avatar
+          containerClassName='flex-shrink-0'
+          sizeClass='w-5 h-5 sm:h-7 sm:w-7'
+          imgUrl={profileUrl}
+        />
         <S.Info>
           <S.NameBox>{nickname}</S.NameBox>
-          <S.DateBox>{createdTime}</S.DateBox>
+          <S.DateBox>{formattedDate}</S.DateBox>
         </S.Info>
       </S.Container>
       <div className='flex items-center justify-center pt-1.5 space-x-3'>

@@ -21,9 +21,14 @@ const Card12 = ({ post }: Card12Props) => {
         state={{
           url,
         }}
-        className='relative flex-grow flex-shrink-0 block w-1/3 overflow-hidden lg:w-full aspect-w-4 aspect-h-3 rounded-3xl'
+        className='relative flex-grow flex-shrink-0 block w-1/3 overflow-hidden lg:w-full aspect-w-4 aspect-h-3 rounded-3xl border-2'
       >
-        <NcImage containerClassName='absolute inset-0' src={thumbnailUrl} alt={title} />
+        <NcImage
+          containerClassName='absolute inset-0'
+          className='w-full h-full inset-0'
+          src={thumbnailUrl}
+          alt={title}
+        />
       </Link>
 
       <div className='flex flex-col w-2/3 pr-10 mb-8 lg:mt-8 lg:w-full'>

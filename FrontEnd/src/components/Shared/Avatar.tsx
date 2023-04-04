@@ -19,9 +19,7 @@ export const Avatar = ({
   imgUrl,
   userName,
 }: AvatarProps) => {
-  const url =
-    imgUrl ||
-    'https://images.unsplash.com/photo-1533850595620-7b1711221751?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1545&q=80';
+  const url = imgUrl || './profile.png';
   const name = userName || 'John Doe';
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(name.charCodeAt(0) % avatarColors.length);

@@ -4,10 +4,17 @@ import tw from 'twin.macro';
 import { useAuth } from '~/hooks/useAuth';
 import { UpdateProfileForm } from './components/UpdateProfileForm';
 import { updateProfileImgApi } from '~/api/userApi';
+import { useQueryClient } from '@tanstack/react-query';
+import { Button } from '~/components/Shared/Button';
 
 export const UpdateProfile = () => {
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
+  const client = useQueryClient();
+
+  const handleBack = () => {
+    window.history.back();
+  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -17,18 +24,23 @@ export const UpdateProfile = () => {
     };
     const res = await updateProfileImgApi(paylaod as any);
     console.log(res);
+    await client.invalidateQueries(['mypage']);
+    await alert('프로필 사진이 변경되었습니다.');
   };
   return (
     <S.Box>
       <S.ProfileBox>
+        <Button
+          type='button'
+          text='뒤로'
+          className='absolute top-0 right-0 mypage-button'
+          onClick={handleBack}
+        />
         <S.ImgBox>
           <img src={user?.profileUrl ? user.profileUrl : './profile.png'} alt='img' />
         </S.ImgBox>
-        <label
-          htmlFor='file'
-          className='border-2 p-2 rounded-xl font-nexon text-sm hover:border-red-200 hover:cursor-pointer'
-        >
-          프로필 사진 등록
+        <label htmlFor='file' className='mypage-button'>
+          프로필 사진 변경
         </label>
         <input
           type='file'
@@ -55,10 +67,10 @@ const S = {
     ${tw`min-h-screen p-20 w-[700px] mx-auto`}
   `,
   ProfileBox: styled.div`
-    ${tw`border-2 flex flex-col justify-center items-center space-y-3`}
+    ${tw`flex flex-col justify-center items-center space-y-3 relative`}
   `,
   ImgBox: styled.div`
-    ${tw`w-32 h-32 rounded-full`}
+    ${tw`w-32 h-32 rounded-full border-2`}
     img {
       ${tw`w-full h-full rounded-full`}
     }
