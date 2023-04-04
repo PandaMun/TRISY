@@ -15,6 +15,15 @@ const MOCK_URL = 'http://localhost:5000';
 
 const mockApi = axios.create({ baseURL: MOCK_URL });
 
+const profileApi = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Accept: 'application/json',
+  },
+});
+
 const imageApi = axios.create({
   baseURL: BOARD_BASE_URL,
   withCredentials: true,
@@ -90,12 +99,16 @@ imageApi.interceptors.request.use(
   handleRequestError,
 );
 
+profileApi.interceptors.request.use(
+  (config) => setAuthTokenHeader(config as AxiosRequestConfig) as any,
+  handleRequestError,
+);
+
 // Add the response interceptor for handling successful responses and errors
 api.interceptors.response.use(handleResponseSuccess, handleResponseError);
-
 boardApi.interceptors.response.use(handleResponseSuccess, handleResponseError);
-
 imageApi.interceptors.response.use(handleResponseSuccess, handleResponseError);
+profileApi.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
 // Export the configured axios instance for use in other parts of the application
-export { api, mockApi, boardApi, imageApi };
+export { api, mockApi, boardApi, imageApi, profileApi };

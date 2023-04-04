@@ -3,18 +3,20 @@ import { useAuth } from '~/hooks/useAuth';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { Button } from '~/components/Shared/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const MyInfo = () => {
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
+  const navigate = useNavigate();
   const handleProfile = () => {
-    console.log('프로필 수정');
+    navigate('/updateProfile');
   };
   return (
     <S.Box>
       <S.ProfileBox>
         <S.ImgBox>
-          <img src='./favicon.png' alt='img' />
+          <img src={user?.profileUrl ? user.profileUrl : './profile.png'} alt='img' />
         </S.ImgBox>
         <S.NameBox>{user?.name}</S.NameBox>
         <Button
@@ -35,7 +37,7 @@ const S = {
     ${tw`border-2 flex flex-col justify-center items-center space-y-3`}
   `,
   ImgBox: styled.div`
-    ${tw`w-32 h-32 rounded-full`}
+    ${tw`w-32 h-32 rounded-full border-2`}
     img {
       ${tw`w-full h-full rounded-full`}
     }

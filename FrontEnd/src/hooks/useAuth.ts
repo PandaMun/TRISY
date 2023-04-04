@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
+  console.log('setTokens');
 };
 
 export const removeTokens = () => {

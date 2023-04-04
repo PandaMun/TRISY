@@ -8,6 +8,13 @@ export interface userSignUp {
   phone: string;
   birth: string; // Use string instead of Date to avoid validation errors
 }
+// 정보수정
+export interface userUpdate {
+  name: string;
+  nickname: string;
+  phone: string;
+  birth: string; // Use string instead of Date to avoid validation errors
+}
 // 로그인
 export interface userLogin {
   email: string;
