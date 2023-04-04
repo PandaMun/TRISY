@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { userLogin } from '~/types/sharedTypes';
 import { useAuth } from '~/hooks/useAuth';
-import { surveyCheckApi } from '~/api/boardApi';
+// import { surveyCheckApi } from '~/api/boardApi';
 
 const schema = yup
   .object({

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getTourByIdApi, getTourListApi } from '~/api/boardApi';
+// import { useNavigate } from 'react-router-dom';
+import { getTourListApi } from '~/api/boardApi';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '~/pages/Handle/ErrorPage';
 import { tourList } from '~/types/sharedTypes';
@@ -11,7 +11,7 @@ import { TourItem } from './TourItem';
 import Pagination from 'react-js-pagination';
 
 export const TourList = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { data: tours, isLoading, error } = useQuery<tourList[]>(['tours'], getTourListApi);
   const [activePage, setActivePage] = useState(1);
   const toursPerPage = 1; // 한 페이지당 보여줄 여행 목록 개수
