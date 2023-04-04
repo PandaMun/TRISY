@@ -29,6 +29,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(memberDto.getName())
                 .nickname(memberDto.getNickname())
                 .role(Role.USER)
+                .profileUrl("https://trisy.s3.ap-northeast-2.amazonaws.com/undraw_Profile_pic_re_iwgo_1680569302411.png")
                 .birth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE))
                 .phone(memberDto.getPhone())
                 .build();
