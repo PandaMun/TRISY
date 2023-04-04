@@ -7,18 +7,26 @@ import { QuestionList, AList, SubQlist, SubAlist, COLORS } from './components/QL
 import tw from 'twin.macro';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { SurveyResult, pick } from './SurveySlice';
-import { surveyCheckApi, surveyPushApi } from '~/api/boardApi';
+import { surveyPushApi } from '~/api/boardApi';
+import { useAuth } from '~/hooks/useAuth';
+import { SurveyCarousel } from './components/SurveyCarousel';
+import { Modal } from '../home/components/MidSection/Modal';
 export const Survey = () => {
   const dispatch = useAppDispatch();
+  const { useMyPage } = useAuth();
+  const { data: user } = useMyPage;
   const surveyResult = useAppSelector(SurveyResult);
   const containerRef = useRef(null);
   const loadingRef = useRef(null);
+  const loadingRef2 = useRef(null);
+  const carouselref = useRef(null);
   const [step, setStep] = useState(10);
   const [sub, setSub] = useState(0);
   const [color, setBgColor] = useState(0);
   const [visible, setVigible] = useState(true);
   const index = Math.min(Math.round(step / 10) - 1, QuestionList.length - 1);
   const handleClick = async (answer: { [key: string]: string | { SubQ: number } }) => {
+    const tl = gsap.timeline({ paused: true });
     setBgColor(color + 1);
     gsap.to(containerRef.current, {
       duration: 0.5,
@@ -49,16 +57,26 @@ export const Survey = () => {
               ease: 'power2.inOut',
             });
           } else {
-            gsap.from(loadingRef.current, {
+            tl.from(loadingRef.current, {
               duration: 0.5,
               y: '-100%',
               opacity: 0,
               ease: 'power2.inOut',
-            });
+            })
+              .from(loadingRef2.current, {
+                duration: 0.5,
+                y: '-100%',
+                opacity: 0,
+                ease: 'power2.inOut',
+              })
+              .from(carouselref.current, {
+                duration: 0.5,
+                y: '-100%',
+                opacity: 0,
+                ease: 'power2.inOut',
+              });
+            tl.play();
             surveyPushApi({ survey: surveyResult.surveyPick });
-            console.log({ survey: surveyResult.surveyPick });
-            console.log('surveyCheckApi');
-            console.log(surveyCheckApi());
             setVigible(false);
           }
         }
@@ -103,6 +121,7 @@ export const Survey = () => {
     <>
       <Container color={COLORS[color]}>
         <MainDiv>
+          <Modal />
           <TopDiv>
             <Trisy>TRiSY</Trisy>
             <ProgressBar
@@ -119,7 +138,13 @@ export const Survey = () => {
             <ADiv>{step < 100 && <Answer sub={sub} />}</ADiv>
           </SubDiv>
           <LoadingDiv ref={loadingRef} visible={visible}>
-            <LoadingMessage>현우님의 취향에 맞는 여행지를 찾고있어요.</LoadingMessage>
+            <LoadingMessage ref={loadingRef}>
+              {user?.nickname}님의 취향정보를 확인했습니다.
+            </LoadingMessage>
+            <LoadingMessage2 ref={loadingRef2}>어디로 떠나실 건가요?</LoadingMessage2>
+            <CSection ref={carouselref}>
+              <SurveyCarousel />
+            </CSection>
           </LoadingDiv>
           <Footer>Trip Easy with TRiSY</Footer>
         </MainDiv>
@@ -182,6 +207,9 @@ const Trisy = styled.div`
   ${tw`font-extrabold text-3xl `}
 `;
 const LoadingMessage = styled.div`
+  ${tw`font-extrabold text-3xl mb-3`}
+`;
+const LoadingMessage2 = styled.div`
   ${tw`font-extrabold text-3xl `}
 `;
 const Footer = styled.div`
@@ -189,4 +217,9 @@ const Footer = styled.div`
 `;
 const Button = styled.button`
   ${tw`m-6 inline-block px-6 py-3 rounded-full bg-white text-black font-bold text-lg focus:outline-none transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg`}
+`;
+
+const CSection = styled.div`
+  ${tw`mx-auto`}
+  width: 70vw;
 `;

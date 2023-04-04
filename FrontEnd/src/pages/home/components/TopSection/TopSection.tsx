@@ -5,6 +5,9 @@ import tw from 'twin.macro';
 export default function TopSection() {
   const [shouldLoad, setShouldLoad] = useState(false);
   const videoRef = useRef(null);
+  const viewportDown = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -27,7 +30,9 @@ export default function TopSection() {
       <S.LeftSection>
         <S.SiteIntroduction>AI 여행 스케줄링 플래너</S.SiteIntroduction>
         <S.SiteName>TRISY</S.SiteName>
-        <button type='button'>시작하기</button>
+        <button type='button' onClick={viewportDown}>
+          시작하기
+        </button>
       </S.LeftSection>
       <S.RightSection>
         <div ref={videoRef} className='w-full h-full'>

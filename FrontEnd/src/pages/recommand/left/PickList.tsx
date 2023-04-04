@@ -4,6 +4,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { selectRecommand, setPlace } from '../recommandSlice';
+import { SurveyResult } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
@@ -18,18 +19,27 @@ export const PickList = () => {
     axios.get('http://localhost:3003/markers').then((res) => {
       dispatch(setPlace({ place: res.data }));
     });
-    axios.get('http://localhost:3003/spots').then((res: any) => {
-      setSpotInfo(res.data);
-    });
+    axios
+      .post('http://j8c202.p.ssafy.io:8000/fast/recommendation', {
+        user_test: surveyResult.surveyPick,
+        si_name: location,
+      })
+      .then((res: any) => {
+        console.log('ddd');
+        console.log(res);
+        setSpotInfo(res.data.result);
+      })
+      .catch((e) => console.log(e));
   }, []);
   const currentState = useAppSelector(selectRecommand);
+  const surveyResult = useAppSelector(SurveyResult);
   const ModalSlice = useAppSelector(ModalState);
 
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
 
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
-
+  console.log(dateList);
   //dragEnd
   const onDragEnd = (result: any) => {
     console.log(result);
@@ -69,7 +79,12 @@ export const PickList = () => {
                   ref={provided.innerRef}
                 >
                   <div>
-                    <PickedCard key={spot.lat} title={spot.spot_name} src={spot.lat} id={spot.id} />
+                    <PickedCard
+                      key={spot.lat}
+                      title={spot.spot_name}
+                      src={spot.image_url}
+                      id={spot.id}
+                    />
                   </div>
                   {/* <EditorComponent isDragging={snapshot.isDragging} /> */}
                 </div>
@@ -96,22 +111,29 @@ export const PickList = () => {
           <MidSection>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
               <OptionTitle>선택 목록</OptionTitle>
-              {dateList.map((_v, idx) => {
-                return (
-                  <Droppable droppableId={idx.toString()} key={idx.toString()}>
-                    {(provided) => (
-                      <ColoredDiv
-                        className='cardlists'
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {spotInfoDatas(idx.toString())}
-                        {provided.placeholder}
-                      </ColoredDiv>
-                    )}
-                  </Droppable>
-                );
-              })}
+              <div className={`grid grid-cols-${dateList.length - 1} w-[100%]`}>
+                {dateList.map((_v, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className={`map${idx} ${idx !== 0 ? 'auto-cols' : 'col-span-full'}`}
+                    >
+                      <Droppable droppableId={idx.toString()} key={idx.toString()}>
+                        {(provided) => (
+                          <ColoredDiv
+                            className={`cardlists_${idx}`}
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                          >
+                            {spotInfoDatas(idx.toString())}
+                            {provided.placeholder}
+                          </ColoredDiv>
+                        )}
+                      </Droppable>
+                    </div>
+                  );
+                })}
+              </div>
             </DragDropContext>
           </MidSection>
           <ModalButtons>일정 생성</ModalButtons>
@@ -125,7 +147,7 @@ export const PickList = () => {
 const OptionBox = styled.section`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
   height: 80vh;
 `;
 const TopSection = styled.div`
@@ -191,8 +213,9 @@ const ModalButtons = styled.div`
   }
 `;
 const ColoredDiv = styled.div`
-  width: 400px;
+  width: 100%;
   height: 200px;
-  margin: 100px;
+  margin: 10px;
   background-color: #f0f0f0;
+  flex: 1 0 calc(50% - 5px);
 `;

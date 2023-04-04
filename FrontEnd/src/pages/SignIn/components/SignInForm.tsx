@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { userLogin } from '~/types/sharedTypes';
 import { useAuth } from '~/hooks/useAuth';
+import { surveyCheckApi } from '~/api/boardApi';
 
 const schema = yup
   .object({
@@ -27,8 +28,7 @@ export const SignInForm = () => {
   });
 
   // 로그인
-  const onSignIn: SubmitHandler<userLogin> = (data) => {
-    console.log(data);
+  const onSignIn: SubmitHandler<userLogin> = async (data) => {
     useLogin.mutate(data);
   };
   return (
