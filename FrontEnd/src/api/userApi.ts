@@ -34,46 +34,45 @@ export const getUserApi = async () => {
 // 마이페이지
 export const getMyPageApi = async () => {
   const response = await api.get('/user/mypage');
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
 // 정보수정
 export const updateMyPageApi = async (payload: userUpdate) => {
-  console.log(payload);
+  // console.log(payload);
   const response = await api.put('/user', payload);
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
 // 프로필 이미지 수정
 export const updateProfileImgApi = async (payload: FormData) => {
-  console.log(payload);
+  // console.log(payload);
   const response = await profileApi.post('/user/profile', payload);
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
 // accesStoken 재발급
 export const getAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken') as string;
-  const response = await axios.get('http://j8c202.p.ssafy.io:8080/api/token/refresh', {
-    headers: {
-      // Authorization: `Bearer ${refreshToken}`,
-      refreshToken: `Bearer ${refreshToken}`,
-    },
-  });
-  // console.log(response);
-  // console.log(response.config.headers);
-  const newRefreshToken = response.config.headers.refreshToken;
-  const headers = response.headers;
-  const accessToken = headers['accesstoken'];
-  const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
-  const refTokenWithoutBearer = newRefreshToken.replace('Bearer ', '');
-  // console.log(accTokenWithoutBearer);
-  setTokens(accTokenWithoutBearer, refTokenWithoutBearer);
-  return response.data;
-  // return accessToken;
+  try {
+    const refreshToken = localStorage.getItem('refreshToken') as string;
+    const response = await axios.get('http://j8c202.p.ssafy.io:8080/api/token/refresh', {
+      headers: {
+        // Authorization: `Bearer ${refreshToken}`,
+        refreshToken: `Bearer ${refreshToken}`,
+      },
+    });
+    const headers = response.headers;
+    const accessToken = headers['accesstoken'];
+    const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
+    setTokens(accTokenWithoutBearer, refreshToken);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
 
 //카카오

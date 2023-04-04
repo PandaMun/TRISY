@@ -17,7 +17,7 @@ export const PostCardMeta = ({
   // const { date, author } = meta;
   const date = new Date(meta.createdTime as string);
   const formattedDate = date.toISOString().slice(0, 10);
-  // console.log(meta);
+  console.log(meta);
   return (
     <div
       className={`inline-flex items-center fledx-wrap text-neutral-800 dark:text-neutral-200 ${
@@ -29,6 +29,7 @@ export const PostCardMeta = ({
           <Avatar
             radius='rounded-full'
             sizeClass={size === 'normal' ? 'h-7 w-7 text-sm' : 'h-10 w-10 text-xl'}
+            imgUrl={meta.profileUrl}
           />
         )}
         <span className='block font-medium text-neutral-6000 hover:text-black dark:text-neutral-300 dark:hover:text-white'>

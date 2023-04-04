@@ -17,10 +17,7 @@ import { Recommand } from './pages/recommand/Recommand';
 import { Survey } from './pages/Survey/Survey';
 import { NotFound } from './pages/Handle/NotFound';
 import { HowToUse } from './pages/HowToUse/HowToUse';
-import { MyPage } from './pages/mypage/MyPage';
 import { MyInfo } from './pages/mypage/MyInfo';
-import { MyReview } from './pages/mypage/MyReview';
-import { MyTrip } from './pages/mypage/MyTrip';
 import { Kakao } from './pages/SignIn/Kakao';
 import { CreatePost } from './pages/blog/CreatePost';
 import { UpdatePost } from './pages/blog/UpdatePost';
@@ -87,34 +84,10 @@ const router = createHashRouter([
         element: <HowToUse />,
       },
       {
-        path: '/mypage',
-        element: (
-          <ProtectedRounte>
-            <MyPage />
-          </ProtectedRounte>
-        ),
-      },
-      {
         path: '/myinfo',
         element: (
           <ProtectedRounte>
             <MyInfo />
-          </ProtectedRounte>
-        ),
-      },
-      {
-        path: '/myreview',
-        element: (
-          <ProtectedRounte>
-            <MyReview />
-          </ProtectedRounte>
-        ),
-      },
-      {
-        path: '/mytrip',
-        element: (
-          <ProtectedRounte>
-            <MyTrip />
           </ProtectedRounte>
         ),
       },

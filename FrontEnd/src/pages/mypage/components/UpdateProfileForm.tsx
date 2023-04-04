@@ -26,7 +26,10 @@ export const UpdateProfileForm = () => {
       phone,
     };
     console.log(payload);
-    await updateMyPageApi(payload);
+    if (window.confirm(`정말로 수정하시겠습니까?`)) {
+      await updateMyPageApi(payload);
+      await alert('정보가 수정되었습니다.');
+    }
   };
   return (
     <div>

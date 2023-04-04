@@ -62,10 +62,6 @@ export const CreatePost = () => {
         <S.GridCenter>
           {/* <TextEditor value={content} onChange={handleTextChange} /> */}
           <TextEditor htmlStr={htmlStr} setHtmlStr={setHtmlStr} setThumbnailUrl={setThumbnailUrl} />
-          <div>
-            <h2>Editor를 통해 만들어진 html 코드입니다.</h2>
-            {htmlStr}
-          </div>
           <input
             type='text'
             value={title}

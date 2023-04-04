@@ -17,8 +17,9 @@ interface IEditor {
 export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+  // const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
   const rendered = useRef(false);
+
   useEffect(() => {
     if (rendered.current) return;
     rendered.current = true;
@@ -33,50 +34,6 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
       setEditorState(editorState);
     }
   }, [htmlStr]);
-  // useEffect(() => {
-  //   if (initialContent) {
-  //     const blocksFromHTML = convertFromHTML(initialContent);
-  //     const contentState = ContentState.createFromBlockArray(
-  //       blocksFromHTML.contentBlocks,
-  //       blocksFromHTML.entityMap,
-  //     );
-  //     setEditorState(EditorState.createWithContent(contentState));
-  //   }
-  // }, [initialContent]);
-
-  // const rendered = useRef(false);
-
-  // useEffect(() => {
-  //   const blocksFromHtml = htmlToDraft(htmlStr);
-  //   if (blocksFromHtml) {
-  //     const { contentBlocks, entityMap } = blocksFromHtml;
-  //     const filteredEntityMap = Object.keys(entityMap)
-  //       .filter((key) => entityMap[key] !== null)
-  //       .reduce<MyObject>((newEntityMap, key) => {
-  //         newEntityMap[key] = entityMap[key];
-  //         return newEntityMap;
-  //       }, {});
-  //     const contentState = ContentState.createFromBlockArray(contentBlocks, filteredEntityMap);
-  //     const editorState = EditorState.createWithContent(contentState);
-  //     setEditorState(editorState);
-  //   }
-  // }, [htmlStr]);
-
-  // useEffect(() => {
-  //   const blocksFromHtml = htmlToDraft(htmlStr);
-  //   if (blocksFromHtml) {
-  //     const { contentBlocks, entityMap } = blocksFromHtml;
-  //     const filteredEntityMap: MyObject = Object.keys(entityMap)
-  //       .filter((key) => entityMap[key] !== null) // filter out null keys
-  //       .reduce<MyObject>((obj, key) => {
-  //         obj[key] = entityMap[key];
-  //         return obj;
-  //       }, {});
-  //     const contentState = ContentState.createFromBlockArray(contentBlocks, filteredEntityMap);
-  //     const editorState = EditorState.createWithContent(contentState);
-  //     setEditorState(editorState);
-  //   }
-  // }, []);
 
   // editor 수정 이벤트
   const onEditorStateChange = (editorState: EditorState) => {
@@ -126,7 +83,6 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
         }}
         toolbar={toolbar}
       />
-      <div dangerouslySetInnerHTML={{ __html: editorToHtml }} />
     </div>
   );
 };

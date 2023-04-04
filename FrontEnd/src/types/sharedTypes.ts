@@ -37,6 +37,7 @@ export interface board {
   memberId?: string;
   createdTime?: string;
   nickname?: string;
+  profileUrl?: string;
 }
 
 export interface createBoard {
@@ -64,4 +65,13 @@ export interface tourList {
   tourName: string;
   startDate: string;
   endDate: string;
+}
+
+// 여행 상세
+export interface tourDetail {
+  id: string;
+  tourName: string;
+  startDate: string;
+  endDate: string;
+  tourDetailsResponseList: any;
 }

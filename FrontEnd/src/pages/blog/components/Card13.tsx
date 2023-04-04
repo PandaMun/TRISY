@@ -38,7 +38,7 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
             state={{
               url,
             }}
-            className='line-clamp-2'
+            className='line-clamp-2 text-ellipsis max-w-[300px] overflow-hidden'
           >
             {htmlToPlainText(content)}
           </Link>
@@ -54,11 +54,11 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
         state={{
           url,
         }}
-        className={`${className}`}
+        className={`${className} border-2 rounded-3xl`}
       >
         <NcImage
           containerClassName='absolute inset-0 '
-          className='object-cover w-full h-full rounded-3xl'
+          className='w-full h-full rounded-3xl object-fit'
           src={thumbnailUrl}
           alt={title}
         />
