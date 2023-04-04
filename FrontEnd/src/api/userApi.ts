@@ -1,7 +1,7 @@
 import { setTokens } from './../hooks/useAuth';
-import { userLogin } from './../types/sharedTypes';
+import { userLogin, userUpdate } from './../types/sharedTypes';
 import { userSignUp } from '~/types/sharedTypes';
-import { api } from './axiosConfig';
+import { api, profileApi } from './axiosConfig';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 // 회원가입
@@ -34,6 +34,23 @@ export const getUserApi = async () => {
 // 마이페이지
 export const getMyPageApi = async () => {
   const response = await api.get('/user/mypage');
+  console.log(response);
+  return response.data;
+};
+
+// 정보수정
+export const updateMyPageApi = async (payload: userUpdate) => {
+  console.log(payload);
+  const response = await api.put('/user', payload);
+  console.log(response);
+  return response.data;
+};
+
+// 프로필 이미지 수정
+export const updateProfileImgApi = async (payload: FormData) => {
+  console.log(payload);
+  const response = await profileApi.post('/user/profile', payload);
+  console.log(response);
   return response.data;
 };
 

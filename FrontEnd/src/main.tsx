@@ -25,6 +25,7 @@ import { Kakao } from './pages/SignIn/Kakao';
 import { CreatePost } from './pages/blog/CreatePost';
 import { UpdatePost } from './pages/blog/UpdatePost';
 import { ProtectedRounte } from './pages/Handle/ProtectedRoute';
+import { UpdateProfile } from './pages/mypage/UpdateProfile';
 
 const router = createHashRouter([
   {
@@ -114,6 +115,14 @@ const router = createHashRouter([
         element: (
           <ProtectedRounte>
             <MyTrip />
+          </ProtectedRounte>
+        ),
+      },
+      {
+        path: '/updateProfile',
+        element: (
+          <ProtectedRounte>
+            <UpdateProfile />
           </ProtectedRounte>
         ),
       },
