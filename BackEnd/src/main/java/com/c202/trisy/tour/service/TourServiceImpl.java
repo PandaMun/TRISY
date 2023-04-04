@@ -159,18 +159,12 @@ public class TourServiceImpl implements TourService{
         tourRepository.deleteById(tourId);
     }
 
-    /**
-     * member 설문조사 존재 여부 확인
-     * @param memberEmail
-     * @return
-     */
+
     @Override
-    public boolean existSurvey(String memberEmail) {
+    public String existSurvey(String memberEmail) {
         Member member = memberRepository.findByEmail(memberEmail).get();
-        if(member.getSurvey() != null){
-            return true;
-        }
-        return false;
+        String survey = member.getSurvey().getSurvey();
+        return survey;
     }
 
     /**
