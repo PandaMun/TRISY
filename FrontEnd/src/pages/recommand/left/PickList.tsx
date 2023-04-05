@@ -11,7 +11,8 @@ import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
-
+import { schedule, setLocation, setspotInfoList } from './ScheduleSlice';
+import { createScheduleApi } from '~/api/boardApi';
 export const PickList = () => {
   const dispatch = useAppDispatch();
   const [spotInfo, setSpotInfo] = useState([]);
@@ -25,8 +26,6 @@ export const PickList = () => {
         si_name: location,
       })
       .then((res: any) => {
-        console.log('ddd');
-        console.log(res);
         setSpotInfo(res.data.result);
       })
       .catch((e) => console.log(e));
@@ -34,12 +33,25 @@ export const PickList = () => {
   const currentState = useAppSelector(selectRecommand);
   const surveyResult = useAppSelector(SurveyResult);
   const ModalSlice = useAppSelector(ModalState);
+  const ScheduleSlice = useAppSelector(schedule);
 
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
 
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
   console.log(dateList);
+  const setSchedule = async () => {
+    if (location) dispatch(setLocation(location));
+    spotInfo.map((v: any) => {
+      if (v.date !== '0') {
+        console.log(v);
+        dispatch(
+          setspotInfoList({ spotId: v.id, spotName: v.spot_name, planDate: parseInt(v.date) }),
+        );
+      }
+    });
+    await createScheduleApi(ScheduleSlice);
+  };
   //dragEnd
   const onDragEnd = (result: any) => {
     console.log(result);
@@ -86,7 +98,6 @@ export const PickList = () => {
                       id={spot.id}
                     />
                   </div>
-                  {/* <EditorComponent isDragging={snapshot.isDragging} /> */}
                 </div>
               );
             }}
@@ -136,7 +147,7 @@ export const PickList = () => {
               </div>
             </DragDropContext>
           </MidSection>
-          <ModalButtons>일정 생성</ModalButtons>
+          <ModalButtons onClick={setSchedule}>일정 생성</ModalButtons>
         </OptionBox>
       </>
     );

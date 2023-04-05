@@ -51,3 +51,7 @@ export const surveyCheckApi = async (): Promise<board> => {
   const response = await boardApi.get(`/tour/survey`);
   return response.data;
 };
+export const createScheduleApi = async (v: any): Promise<board> => {
+  const response = await boardApi.post(`/tour`, v);
+  return response.data;
+};
