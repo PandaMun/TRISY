@@ -5,9 +5,8 @@ import { SectionPost } from './components/SectionPost';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
 import { board } from '~/types/sharedTypes';
-import { SectionMagazine5 } from './components/SectionMagazine5';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getBoardListApi, getRandomBoardListApi } from '~/api/boardApi';
+import { getBoardListApi } from '~/api/boardApi';
 import { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
 
@@ -18,13 +17,6 @@ export default function BlogPage() {
   const { isLoading, error, data } = useQuery(['boards'], () => getBoardListApi('0'), {
     retry: 2,
   });
-  const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
-    retry: 5,
-    staleTime: 1000 * 60 * 5,
-    refetchOnMount: false,
-  });
-  // console.log(data);
-  // console.log(random);
 
   useEffect(() => {
     const response = getBoardListApi(String(activePage - 1));
@@ -39,12 +31,11 @@ export default function BlogPage() {
   };
   // console.log(isLoading, randomLoading);
 
-  if (isLoading || randomLoading) return <Spinner />;
+  if (isLoading) return <Spinner />;
   if (error) return <ErrorPage />;
   if (!posts || posts.length === 0) return <div></div>; // <--- check for empty array
 
   const sorted = posts.sort((a, b) => Number(b.id) - Number(a.id));
-
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
@@ -54,12 +45,6 @@ export default function BlogPage() {
         {!posts || (posts.length === 0 && <div>게시글이 없습니다.</div>)}
         {posts && (
           <>
-            <S.SectionMagazine5>
-              <SectionMagazine5 posts={random as board[]} />
-            </S.SectionMagazine5>
-            <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
-              TRISY
-            </div>
             <SectionPost posts={sorted as board[]} />
           </>
         )}

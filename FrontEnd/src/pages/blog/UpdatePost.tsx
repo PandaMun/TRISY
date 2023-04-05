@@ -21,13 +21,13 @@ export const UpdatePost = () => {
   } = useQuery(['post', id], () => getBoardById(id as string));
   const location = useLocation();
   const url = location.state.url;
-  console.log(url);
+  // console.log(url);
 
   // state
   const [htmlStr, setHtmlStr] = useState<string>('');
   const [title, setTitle] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
-  console.log(postDetails);
+  // console.log(postDetails);
   useEffect(() => {
     setTitle(postDetails?.title as string);
     setHtmlStr(postDetails?.content as string);

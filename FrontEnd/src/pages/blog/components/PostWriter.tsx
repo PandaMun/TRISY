@@ -17,7 +17,7 @@ export const PostWriter = ({ nickname, memberId, profileUrl }: PostWriterProps) 
   // const { id } = useParams<{ id: string }>();
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
-  console.log(user);
+  // console.log(user);
   return (
     <S.Box>
       <S.Container>

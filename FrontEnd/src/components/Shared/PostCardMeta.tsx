@@ -17,7 +17,7 @@ export const PostCardMeta = ({
   // const { date, author } = meta;
   const date = new Date(meta.createdTime as string);
   const formattedDate = date.toISOString().slice(0, 10);
-  console.log(meta);
+  // console.log(meta);
   return (
     <div
       className={`inline-flex items-center fledx-wrap text-neutral-800 dark:text-neutral-200 ${

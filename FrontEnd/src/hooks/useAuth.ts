@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
-  console.log('setTokens');
+  // console.log('setTokens', 'access : ', accessToken, 'refresh : ', refreshToken);
 };
 
 export const removeTokens = () => {
@@ -35,7 +35,7 @@ export const useAuth = () => {
       logout();
       alert('로그인 세션이 만료되었습니다.');
     },
-    refetchInterval: 1000 * 60 * 4, // 1시간마다 갱신
+    refetchInterval: 3000, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
   });
 

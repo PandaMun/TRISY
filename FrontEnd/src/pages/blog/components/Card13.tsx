@@ -17,7 +17,7 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
   const url = thumbnailUrl !== null ? thumbnailUrl : 'noImg';
 
   return (
-    <div className={`nc-Card13 relative flex`} data-nc-id='Card13'>
+    <div className={`nc-Card13 relative flex border-b-2`} data-nc-id='Card13'>
       <div className='flex flex-col w-4/5 h-full py-2'>
         <h2 className={`nc-card-title block font-semibold text-base `}>
           <Link
@@ -54,7 +54,7 @@ export const Card13 = ({ post, className = '' }: Card13Props) => {
         state={{
           url,
         }}
-        className={`${className} border-2 rounded-3xl`}
+        className={` ${className} border-2 rounded-3xl`}
       >
         <NcImage
           containerClassName='absolute inset-0 '

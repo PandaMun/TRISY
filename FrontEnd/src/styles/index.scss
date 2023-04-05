@@ -18,3 +18,9 @@
 .mypage-inactive-tab {
   @apply bg-gray-300 text-gray-600 font-bold text-[20px];
 }
+
+.slick-slide {
+  div {
+    @apply flex flex-col justify-center items-center;
+  }
+}
