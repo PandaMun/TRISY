@@ -1,10 +1,7 @@
 package com.c202.trisy.tour.controller;
 
 
-import com.c202.trisy.tour.dto.RecommendRequest;
-import com.c202.trisy.tour.dto.TourDetailsResponse;
-import com.c202.trisy.tour.dto.TourRequest;
-import com.c202.trisy.tour.dto.TourResponse;
+import com.c202.trisy.tour.dto.*;
 import com.c202.trisy.tour.service.TourService;
 import com.c202.trisy.user.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -65,14 +62,6 @@ public class TourController {
     }
 
 
-
-    //추천 여행지 조회(지역, 날짜, 카테고리)
-    @GetMapping("/recommend")
-    public ResponseEntity<?> searchRecommendSpot(@RequestBody RecommendRequest recommendRequest){
-
-        return null;
-    }
-
     //여행 일정 전체 조회(회원 아이디)
     @GetMapping
     public ResponseEntity<?> searchTourSchedules(Authentication authentication) {
@@ -128,14 +117,14 @@ public class TourController {
 
     //여행 일정 수정(아이디, 선택한 관광정보 리스트, 날짜 + 시간)
     @PutMapping ("/{tourId}")
-    public ResponseEntity<?> modifyTourSchedule(@RequestBody TourRequest tourRequest
+    public ResponseEntity<?> modifyTourSchedule(@RequestBody Map<String,String> map
                                                     ,@PathVariable("tourId") Long tourId
                                                         ,Authentication authentication){
 
         try{
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String memberEmail = principal.getMember().getEmail();
-            tourService.updateTourSchedule(tourRequest,memberEmail, tourId);
+            tourService.updateTourName(map.get("tourName"),memberEmail, tourId);
             return ResponseEntity.ok("Success");
 
         }catch (AuthenticationException e){

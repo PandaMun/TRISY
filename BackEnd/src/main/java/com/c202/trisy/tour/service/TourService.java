@@ -15,7 +15,7 @@ public interface TourService {
 
     void addTourSchedule(TourRequest tourRequest,String memberId);
 
-    void updateTourSchedule(TourRequest tourRequest,String memberEmail, Long tourId) throws AuthenticationException;
+    void updateTourName(String tourName,String memberEmail, Long tourId) throws AuthenticationException;
 
     void deleteTourSchedule(Long tourId, String memberEmail) throws AuthenticationException;
 
