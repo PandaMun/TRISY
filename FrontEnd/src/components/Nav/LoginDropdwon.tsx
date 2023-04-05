@@ -21,18 +21,8 @@ export const LoginDropdwon = () => {
       >
         <Menu.Items className='absolute space-y-3 right-0 py-5 px-2 z-10 mt-2 w-[100px] rounded-md shadow-lg ring-1 bg-white ring-black ring-opacity-5'>
           <Menu.Item>
-            <Link className='more-dropdown-button' to='/myreview'>
-              여행 후기
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link className='more-dropdown-button' to='/mytrip'>
-              여행 기록
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
             <Link className='more-dropdown-button' to='/myinfo'>
-              내 정보
+              마이 페이지
             </Link>
           </Menu.Item>
           <Menu.Item>

@@ -26,16 +26,16 @@ export const useAuth = () => {
   // 토큰 갱신
   const useRefreshToken = useQuery(['ref'], getAccessToken, {
     enabled: !!localStorage.getItem('refreshToken'),
-    onSuccess: (data) => {
-      console.log('refresh', data);
+    onSuccess: () => {
+      // console.log('refresh', data);
     },
-    onError: (error) => {
-      console.log('err', error);
-      // alert('로그인 세션이 만료되었습니다.');
-      // logout();
+    onError: () => {
+      console.log('refresh failed');
+      removeTokens();
+      logout();
+      alert('로그인 세션이 만료되었습니다.');
     },
-    retry: 1, // 3번 재시도
-    refetchInterval: 50000 * 60, // 1시간마다 갱신
+    refetchInterval: 1000 * 60 * 4, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
   });
 
@@ -45,6 +45,7 @@ export const useAuth = () => {
       const refreshToken = data['refreshToken'];
       const accessToken = data['accessToken'];
       setTokens(accessToken, refreshToken);
+      console.log('login');
       navigate('/');
       client.invalidateQueries(['user']); // Invalidate user query after login to refetch user data
     },

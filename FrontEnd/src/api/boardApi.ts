@@ -1,8 +1,8 @@
-import { board, createBoard, tourList, BoardResponse } from '~/types/sharedTypes';
+import { board, createBoard, tourList, BoardResponse, tourDetail } from '~/types/sharedTypes';
 import { boardApi } from './axiosConfig';
 
 export const getBoardListApi = async (num: string): Promise<BoardResponse> => {
-  console.log('qwd', num);
+  // console.log('qwd', num);
   // console.log(num);
   const response = await boardApi.get('/board?page=' + num);
   if (response.status !== 200) {
@@ -13,13 +13,13 @@ export const getBoardListApi = async (num: string): Promise<BoardResponse> => {
 
 export const getRandomBoardListApi = async (): Promise<board[]> => {
   const response = await boardApi.get('/board/views');
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
 export const getBoardById = async (id: string): Promise<board> => {
   const response = await boardApi.get(`/board/${id}`);
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
@@ -38,7 +38,14 @@ export const getTourListApi = async (): Promise<tourList[]> => {
   const response = await boardApi.get('/tour');
   return response.data;
 };
-
+export const getTourByIdApi = async (id: string): Promise<tourDetail> => {
+  const response = await boardApi.get(`/tour/${id}`);
+  return response.data;
+};
+export const delTourApi = async (id: string) => {
+  const response = await boardApi.delete(`/tour/${id}`);
+  return response.data;
+};
 export const delBoardApi = async (id: string): Promise<board> => {
   const response = await boardApi.delete(`/board/${id}`);
   return response.data;
