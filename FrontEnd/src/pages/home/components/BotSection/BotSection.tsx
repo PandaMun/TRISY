@@ -1,20 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { getRandomBoardListApi } from '~/api/boardApi';
-import { Spinner } from '~/components/Shared/Spinner';
-import { SectionMagazine5 } from '~/pages/blog/components/SectionMagazine5';
-import { board } from '~/types/sharedTypes';
 import { BotCarousel } from './BotCarousel';
 
 export default function BotSection() {
-  const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
-    retry: 5,
-    staleTime: 1000 * 60 * 5,
-    refetchOnMount: false,
-  });
-  if (randomLoading) return <Spinner />;
   // console.log(random);
   return (
     <S.Section>
