@@ -18,6 +18,8 @@ public class TourResponse {
 
         private Long id;
         private String tourName;
+
+        private String location;
         private LocalDate startDate;
         private LocalDate endDate;
 

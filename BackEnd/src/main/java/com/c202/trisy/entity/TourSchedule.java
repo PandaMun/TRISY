@@ -23,6 +23,8 @@ public class TourSchedule extends BaseEntity{
 
     private LocalDate endDate;
 
+    private String location;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

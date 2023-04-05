@@ -17,6 +17,7 @@ public class TourDetailsResponse {
 
     private Long id;
     private String tourName;
+    private String location;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -29,7 +30,7 @@ public class TourDetailsResponse {
         private String description;
         private String imageUrl;
 
-        private LocalDate planDate;
+        private Long planDate;
         private double lng;
         private double lat;
     }
