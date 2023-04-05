@@ -8,7 +8,7 @@ export const useBoard = () => {
 
   const delBoard = useMutation((id: string) => delBoardApi(id), {
     onSuccess: () => {
-      alert('삭제되었습니다.');
+      alert('삭제되었습니다');
       navigate('/blog');
       client.invalidateQueries(['boards']);
     },
