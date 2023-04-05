@@ -6,6 +6,7 @@ import { getRandomBoardListApi } from '~/api/boardApi';
 import { Spinner } from '~/components/Shared/Spinner';
 import { SectionMagazine5 } from '~/pages/blog/components/SectionMagazine5';
 import { board } from '~/types/sharedTypes';
+import { BotCarousel } from './BotCarousel';
 
 export default function BotSection() {
   const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
@@ -17,16 +18,21 @@ export default function BotSection() {
   // console.log(random);
   return (
     <S.Section>
-      <S.SectionMagazine5>
+      <div className='text-center mt-10 font-nexon text-xl font-bold'>인기 여행기</div>
+      <div className='text-center font-nexon text-base font-bold text-slate-400 mb-2'>
+        POULAR TRAVELOG
+      </div>
+      <BotCarousel />
+      {/* <S.SectionMagazine5>
         <SectionMagazine5 posts={random as board[]} />
-      </S.SectionMagazine5>
+      </S.SectionMagazine5> */}
     </S.Section>
   );
 }
 
 const S = {
   Section: styled.div`
-    ${tw`min-h-screen mx-auto max-w-7xl`}
+    ${tw`min-h-screen mx-auto w-3/4`}
   `,
   SectionTitle: styled.div`
     ${tw`text-3xl font-bold text-center font-nexon`}

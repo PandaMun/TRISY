@@ -11,6 +11,7 @@ import { imageApi } from '~/api/axiosConfig';
 import { useParams } from 'react-router-dom';
 import { getBoardById } from '~/api/boardApi';
 import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '~/components/Shared/Spinner';
 
 interface IEditor {
   htmlStr: string;
@@ -19,33 +20,49 @@ interface IEditor {
   initialContent?: string;
 }
 
-export const UpdateEditor = ({ setHtmlStr, setThumbnailUrl }: IEditor) => {
+export const UpdateEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) => {
   const { id } = useParams<{ id: string }>();
-  const { data: postDetails } = useQuery(['post', id], () => getBoardById(id as string));
-
+  const { data: postDetails, isLoading } = useQuery(['post', id], () => getBoardById(id as string));
+  // console.log(postDetails);
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
   const rendered = useRef(false);
+  const content = postDetails?.content as string;
   useEffect(() => {
-    if (rendered.current) return;
-    rendered.current = true;
-    // const contentState = stateFromHTML(htmlStr as string);
-    // console.log(contentState);
-    const blocksFromHtml = htmlToDraft(postDetails?.content as string);
-    // console.log(blocksFromHtml);
-    if (blocksFromHtml) {
-      const { contentBlocks, entityMap } = blocksFromHtml;
-      const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-      const editorState = EditorState.createWithContent(contentState);
-      setEditorState(editorState);
+    try {
+      if (rendered.current) return;
+      rendered.current = true;
+      console.log(content);
+      const fixedHTML = content.replace(/<img.*?>/gi, '');
+      // const contentState = stateFromHTML(htmlStr as string);
+      // console.log(contentState);
+      console.log(fixedHTML);
+      const blocksFromHtml = htmlToDraft(fixedHTML);
+      // console.log(blocksFromHtml);
+      if (blocksFromHtml && blocksFromHtml.entityMap) {
+        const { contentBlocks, entityMap } = blocksFromHtml;
+        const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+        // const contentState = stateFromHTML(content);
+        const editorState = EditorState.createWithContent(contentState);
+        setEditorState(editorState);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [postDetails]);
 
   // editor 수정 이벤트
   const onEditorStateChange = (editorState: EditorState) => {
-    setEditorState(editorState);
-    setHtmlStr(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    console.log(htmlStr);
+    try {
+      setEditorState(editorState);
+      // setHtmlStr(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+      const rawContentState = convertToRaw(editorState.getCurrentContent());
+      const htmlContent = draftToHtml(rawContentState).replace(/<img.*?>/gi, '<p>$&</p>');
+      setHtmlStr(htmlContent);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const uploadCallback = (file: Blob) => {
@@ -75,7 +92,7 @@ export const UpdateEditor = ({ setHtmlStr, setThumbnailUrl }: IEditor) => {
     list: { inDropdown: true },
     textAlign: { inDropdown: true },
   };
-
+  if (isLoading) return <Spinner />;
   return (
     <div className='' ref={editorRef}>
       <Editor
@@ -90,7 +107,6 @@ export const UpdateEditor = ({ setHtmlStr, setThumbnailUrl }: IEditor) => {
         }}
         toolbar={toolbar}
       />
-      <div dangerouslySetInnerHTML={{ __html: editorToHtml }} />
     </div>
   );
 };

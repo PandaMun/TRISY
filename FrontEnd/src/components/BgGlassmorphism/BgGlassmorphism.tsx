@@ -5,7 +5,7 @@ export interface BgGlassmorphismProps {
 }
 
 const BgGlassmorphism: FC<BgGlassmorphismProps> = ({
-  className = 'absolute inset-x-0 z-0 flex min-h-0 py-64 pl-96 overflow-hidden md:top-0 xl:top-0',
+  className = 'absolute left-0 inset-x-0 z-10 flex overflow-hidden md:top-0 xl:top-0',
 }) => {
   return (
     <div className={`nc-BgGlassmorphism ${className} dark:hidden`} data-nc-id='BgGlassmorphism'>

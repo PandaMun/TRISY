@@ -74,4 +74,5 @@ export interface tourDetail {
   startDate: string;
   endDate: string;
   tourDetailsResponseList: any;
+  location: string;
 }
