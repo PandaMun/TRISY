@@ -14,7 +14,7 @@ export default function TopSection() {
         if (isIntersecting) {
           setTimeout(() => {
             setShouldLoad(true);
-          }, 5000);
+          }, 2000);
           observer.disconnect();
         }
       },

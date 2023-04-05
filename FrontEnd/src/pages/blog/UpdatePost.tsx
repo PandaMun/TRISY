@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getBoardById, updateBoardApi } from '~/api/boardApi';
@@ -14,6 +14,7 @@ import { UpdateEditor } from './components/UpdateEditor';
 export const UpdatePost = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const client = useQueryClient();
   const {
     data: postDetails,
     isLoading,
@@ -62,19 +63,24 @@ export const UpdatePost = () => {
     },
   });
   const handleUpdatePost = () => {
-    console.log(postDetails?.thumbnailUrl);
-    if (thumbnailUrl === null) {
-      setThumbnailUrl(postDetails?.thumbnailUrl as string);
+    try {
+      console.log(postDetails?.thumbnailUrl);
+      if (thumbnailUrl === null) {
+        setThumbnailUrl(postDetails?.thumbnailUrl as string);
+        console.log(thumbnailUrl);
+        return;
+      }
       console.log(thumbnailUrl);
-      return;
+      mutate({
+        title: title,
+        content: htmlStr,
+        tourId: id as string,
+        thumbnailUrl,
+      });
+      client.invalidateQueries(['post', id]);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(thumbnailUrl);
-    mutate({
-      title: title,
-      content: htmlStr,
-      tourId: id as string,
-      thumbnailUrl,
-    });
   };
 
   if (isLoading) return <Spinner />;

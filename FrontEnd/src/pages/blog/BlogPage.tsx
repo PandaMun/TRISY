@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import BgGlassmorphism from '~/components/BgGlassmorphism/BgGlassmorphism';
 import { SectionPost } from './components/SectionPost';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
@@ -39,7 +38,6 @@ export default function BlogPage() {
   return (
     <S.Box>
       {/* ======== BG GLASS ======== */}
-      <BgGlassmorphism />
       <S.Container>
         {/* SECTION1 */}
         {!posts || (posts.length === 0 && <div>게시글이 없습니다.</div>)}
@@ -49,7 +47,7 @@ export default function BlogPage() {
           </>
         )}
       </S.Container>
-      <div className='flex justify-center mt-10'>
+      <div className='flex justify-center mt-10 z-50'>
         <Pagination
           activePage={activePage}
           itemsCountPerPage={data?.numberOfElements}
@@ -63,7 +61,8 @@ export default function BlogPage() {
           // disabledClass='text-gray-400 cursor-not-allowed' // Customize the disabled pagination item
         />
       </div>
-      <div className='h-96'></div>
+      {/* <BgGlassmorphism /> */}
+      <div className='h-16'></div>
     </S.Box>
   );
 }

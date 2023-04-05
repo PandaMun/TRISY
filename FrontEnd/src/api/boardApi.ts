@@ -58,3 +58,8 @@ export const surveyCheckApi = async (): Promise<board> => {
   const response = await boardApi.get(`/tour/survey`);
   return response.data;
 };
+
+export const updateTourNameApi = async (id: string, tourName: string): Promise<tourDetail> => {
+  const response = await boardApi.put(`/tour/${id}`, { tourName: tourName });
+  return response.data;
+};
