@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class TourScheduleDetails extends  BaseEntity{
 
 
-    private LocalDate planDate;
+    private Long planDate;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -40,6 +40,7 @@ public class TourServiceImpl implements TourService{
         for(TourSchedule tourSchedule : tourScheduleList){
             TourResponse tourResponse = TourResponse.builder()
                     .tourName(tourSchedule.getTourName())
+                    .location(tourSchedule.getLocation())
                     .id(tourSchedule.getId())
                     .startDate(tourSchedule.getStartDate())
                     .endDate(tourSchedule.getEndDate())
@@ -78,6 +79,7 @@ public class TourServiceImpl implements TourService{
         return TourDetailsResponse.builder()
                 .id(tourSchedule.getId())
                 .tourName(tourSchedule.getTourName())
+                .location(tourSchedule.getLocation())
                 .startDate(tourSchedule.getStartDate())
                 .endDate(tourSchedule.getEndDate())
                 .tourDetailsResponseList(detailsResponseList)
@@ -99,6 +101,7 @@ public class TourServiceImpl implements TourService{
         List<TourScheduleDetails> tourScheduleDetails = new ArrayList<>();
         TourSchedule tourSchedule = TourSchedule.builder()
                 .tourName(tourRequest.getTourName())
+                .location(tourRequest.getLocation())
                 .startDate(tourRequest.getStartDate())
                 .endDate(tourRequest.getEndDate())
                 .tourScheduleList(tourScheduleDetails)
@@ -110,7 +113,6 @@ public class TourServiceImpl implements TourService{
                     .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
                     .planDate(spotInfo.getPlanDate())
                     .tourSchedule(tourSchedule)
-
                     .build();
             tourScheduleDetails.add(details);
         }
