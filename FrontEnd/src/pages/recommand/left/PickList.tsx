@@ -3,7 +3,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import { selectRecommand, setPlace } from '../recommandSlice';
+import { pickPlace, pickPop, selectRecommand, setPlace } from '../recommandSlice';
 import { SurveyResult } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
@@ -13,22 +13,33 @@ import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi } from '~/api/boardApi';
+interface spot {
+  date?: string;
+  id?: number;
+  image_url?: string;
+  lat?: number;
+  lng?: number;
+  main_address?: string;
+  spot_info?: string;
+  spot_name?: string;
+  thumbnail_url?: string;
+}
 export const PickList = () => {
   const dispatch = useAppDispatch();
-  const [spotInfo, setSpotInfo] = useState([]);
+  const [spotInfo, setSpotInfo] = useState<spot[]>([]);
   useEffect(() => {
-    axios.get('http://localhost:3003/markers').then((res) => {
-      dispatch(setPlace({ place: res.data }));
-    });
     axios
       .post('http://j8c202.p.ssafy.io:8000/fast/recommendation', {
         user_test: surveyResult.surveyPick,
         si_name: location,
       })
       .then((res: any) => {
-        setSpotInfo(res.data.result);
-      })
-      .catch((e) => console.log(e));
+        const result: spot[] = [...res.data.result];
+        console.log(res.data.result);
+        setSpotInfo(result);
+        console.log(spotInfo);
+        dispatch(setPlace(res.data.result));
+      });
   }, []);
   const currentState = useAppSelector(selectRecommand);
   const surveyResult = useAppSelector(SurveyResult);
@@ -44,7 +55,6 @@ export const PickList = () => {
     if (location) dispatch(setLocation(location));
     spotInfo.map((v: any) => {
       if (v.date !== '0') {
-        console.log(v);
         dispatch(
           setspotInfoList({ spotId: v.id, spotName: v.spot_name, planDate: parseInt(v.date) }),
         );
@@ -54,7 +64,6 @@ export const PickList = () => {
   };
   //dragEnd
   const onDragEnd = (result: any) => {
-    console.log(result);
     if (!result.destination) {
       return;
     }
@@ -63,11 +72,14 @@ export const PickList = () => {
     let index;
     if (source.droppableId !== destination.droppableId) {
       index = spots.findIndex((v: any) => v.id === parseInt(result.draggableId));
-      const findObj: any = spots[index];
+      const newSpots = spots.map((o: any) => ({ ...o }));
+      const findObj: any = newSpots[index];
+      console.log(findObj);
       findObj.date = destination.droppableId;
-      spots.splice(index, 1);
-      spots = [...spots, findObj];
+      newSpots.splice(index, 1);
+      spots = [...newSpots, findObj];
       setSpotInfo(spots);
+      dispatch(pickPlace({ id: findObj.id }));
     } else {
       if (source.index !== destination.index) {
         const selectSpot = spots[result.source.index];

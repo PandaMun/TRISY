@@ -10,8 +10,7 @@ interface CardInfo {
 }
 export const PickedCard = ({ title, src, id }: CardInfo) => {
   const dispatch = useAppDispatch();
-  const currentState = useAppSelector(selectRecommand);
-  console.log(currentState);
+
   const handleClick = (id: number): void => {
     dispatch(pickPlace({ id }));
   };

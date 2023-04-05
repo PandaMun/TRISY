@@ -5,7 +5,7 @@ import { useAppSelector } from '~/app/hooks';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 
 type MarkerType = {
-  title: string;
+  spot_name: string;
   lat: string;
   lng: string;
 };
@@ -20,7 +20,7 @@ export const KakaoMap = () => {
   const pickList = currentState.pickList;
   useEffect(() => {
     console.log(Lat);
-    console.log(Long);
+    console.log(pickList);
     const { kakao } = window;
     const container = mapRef.current;
     const options = {
@@ -32,9 +32,9 @@ export const KakaoMap = () => {
     const bounds = new kakao.maps.LatLngBounds();
     if (pickList.length) {
       pickList.forEach((el: MarkerType) => {
-        const content = `<div class ="label" style =" border-radius: 10%; padding: 5px; background-color: rgba(38, 219, 225, .9);  color: white;"><span class="left"></span><span class="center">${el.title}</span><span class="right"></span></div>`;
-
-        const position = new kakao.maps.LatLng(el.lat, el.lng);
+        const content = `<div class ="label" style =" border-radius: 10%; padding: 5px; background-color: rgba(38, 219, 225, .9);  color: white;"><span class="left"></span><span class="center">${el.spot_name}</span><span class="right"></span></div>`;
+        console.log(el);
+        const position = new kakao.maps.LatLng(el.lng, el.lat);
         bounds.extend(position);
         const customOverlay = new kakao.maps.CustomOverlay({
           position: position,
@@ -47,7 +47,7 @@ export const KakaoMap = () => {
     }
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-  }, [pickList]);
+  }, [Lat, Long, pickList]);
   return (
     <MapDiv>
       <MapContainer ref={mapRef} />
