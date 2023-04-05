@@ -34,7 +34,7 @@ public class TourSchedule extends BaseEntity{
     private List<TourScheduleDetails> tourScheduleList = new ArrayList<>();
 
 
-    public void updateTourSchedule(List<TourScheduleDetails> tourScheduleList){
-        this.tourScheduleList = tourScheduleList;
+    public void updateTourName(String tourName){
+        this.tourName = tourName;
     }
 }
