@@ -62,3 +62,8 @@ export const createScheduleApi = async (v: any): Promise<board> => {
   const response = await boardApi.post(`/tour`, v);
   return response.data;
 };
+
+export const updateTourNameApi = async (id: string, tourName: string): Promise<tourDetail> => {
+  const response = await boardApi.put(`/tour/${id}`, { tourName: tourName });
+  return response.data;
+};

@@ -11,6 +11,22 @@
   font-style: normal;
 }
 
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.fade-out {
+  animation-name: fade-out;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
 @layer base {
   [type='text'],
   [type='email'],

@@ -31,7 +31,7 @@ export const MyInfo = () => {
 
 const S = {
   Box: styled.div`
-    ${tw`min-h-screen p-20`}
+    ${tw`min-h-screen p-20 min-w-[640px]`}
   `,
   ProfileBox: styled.div`
     ${tw`flex flex-col justify-center items-center space-y-3`}

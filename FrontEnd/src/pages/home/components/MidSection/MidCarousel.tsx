@@ -12,7 +12,7 @@ export const MidCarousel = () => {
     dispatch(setModalOpen({ imgUrl, title, body }));
     dispatch(setLocation({ lat, long }));
   };
-  const GRAY_COLOR = '#888888';
+  const GRAY_COLOR = 'white';
   const settings = {
     dots: false,
     infinite: true,
@@ -88,15 +88,15 @@ export const MidCarousel = () => {
                 <img
                   src={el.imageUrl}
                   alt=''
-                  className='transition-all duration-300 hover:scale-125'
+                  className='transition-all duration-300 hover:scale-125 w-full h-full'
                 />
               </S.ImageBox>
-              <S.SectionTitle>
-                <div>{el.title}</div>
-              </S.SectionTitle>
-              <S.SectionKoTitle>
-                <div>{el.desc}</div>
-              </S.SectionKoTitle>
+              <div className='absolute bottom-0 text-white'>
+                <S.SectionTitle>
+                  <div>{el.title}</div>
+                  <div>{el.desc}</div>
+                </S.SectionTitle>
+              </div>
             </S.CardBox>
           </S.Card>
         ))}
@@ -106,26 +106,17 @@ export const MidCarousel = () => {
 };
 
 const S = {
-  Section: styled.section`
-    ${tw`min-h-screen mx-auto max-w-7xl`}
-  `,
   SectionTitle: styled.div`
-    ${tw`text-xl font-medium ml-3 mt-3`}
-  `,
-  SectionKoTitle: styled.div`
-    ${tw`text-2xl font-bold m-3`}
-  `,
-  SectionContent: styled.div`
-    ${tw`flex justify-around`}
+    ${tw`text-xl font-medium`}
   `,
   Card: styled.div`
-    ${tw`relative flex items-center justify-center max-w-[250px] max-h-[500px] shadow-xl hover:cursor-pointer mb-10 mt-10`}
+    ${tw`relative flex items-center justify-center w-[300px] h-[400px] hover:cursor-pointer mb-10 mt-3`}
   `,
   CardBox: styled.div`
-    ${tw`w-full h-full`}
+    ${tw`w-full h-full relative px-3`}
   `,
   ImageBox: styled.div`
-    ${tw`overflow-hidden`}
+    ${tw`overflow-hidden w-full h-full`}
     img {
       ${tw`transition-all duration-300 hover:scale-125`}
     }
@@ -141,9 +132,9 @@ const S = {
     }
   `,
   Next: styled.div`
-    ${tw`w-20 h-10 transform scale-75 text-black z-10`}
+    ${tw`w-20 h-10 transform scale-75 text-black z-10 pr-5`}
   `,
   Prev: styled.div`
-    ${tw`w-20 h-10 text-black scale-75 dark:text-white z-10`}
+    ${tw`w-20 h-10 text-black scale-75 dark:text-white z-10 pl-5`}
   `,
 };

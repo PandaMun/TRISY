@@ -121,29 +121,20 @@ public class TourServiceImpl implements TourService{
     }
 
 
-
     /**
-     * TourSchedule 업데이트
-     * @param tourRequest
+     * Tour Name 수정
+     * @param tourName
+     * @param memberEmail
      * @param tourId
+     * @throws AuthenticationException
      */
     @Override
-    public void updateTourSchedule(TourRequest tourRequest, String memberEmail, Long tourId) throws AuthenticationException {
+    public void updateTourName(String tourName, String memberEmail, Long tourId) throws AuthenticationException {
         TourSchedule tourSchedule = tourRepository.findById(tourId).get();
         if(!tourSchedule.getMember().getEmail().equals(memberEmail)){
             throw new AuthenticationException("권한이 없습니다.");
         }
-        List<TourScheduleDetails> tourScheduleDetailsList = new ArrayList<>();
-        for(TourRequest.SpotInfo spotInfo : tourRequest.getSpotInfoList()){
-            TourScheduleDetails tourScheduleDetail = TourScheduleDetails.builder()
-                    .tourSpot(tourSpotRepository.findById(spotInfo.getSpotId()).get())
-                    .planDate(spotInfo.getPlanDate())
-                    .build();
-
-            tourScheduleDetailsList.add(tourScheduleDetail);
-        }
-
-        tourSchedule.updateTourSchedule(tourScheduleDetailsList);
+        tourSchedule.updateTourName(tourName);
 
         tourRepository.save(tourSchedule);
     }

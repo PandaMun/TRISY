@@ -1,63 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { getRandomBoardListApi } from '~/api/boardApi';
-import { Spinner } from '~/components/Shared/Spinner';
-
-interface Item {
-  img: string;
-  title: string;
-  desc: string;
-}
-
-const arr: Item[] = [
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-];
+import { BotCarousel } from './BotCarousel';
 
 export default function BotSection() {
-  const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
-    retry: 5,
-    staleTime: 1000 * 60 * 5,
-    refetchOnMount: false,
-  });
-  if (randomLoading) return <Spinner />;
-  console.log(random);
+  // console.log(random);
   return (
     <S.Section>
-      <S.SectionTitle>여행기</S.SectionTitle>
-      <S.SectionContent>
-        {arr.map((item: Item, index: number) => (
-          <S.Card key={index}>
-            <S.CardBox>
-              <S.ImageBox>
-                <img
-                  src={item.img}
-                  alt=''
-                  className='transition-all duration-300 hover:scale-125'
-                />
-              </S.ImageBox>
-              <S.ContentBox>
-                <div className=''>{item.title}</div>
-                <div className=''>{item.desc}</div>
-              </S.ContentBox>
-            </S.CardBox>
-          </S.Card>
-        ))}
-      </S.SectionContent>
+      <div className='text-center mt-10 font-nexon text-xl font-bold'>인기 여행기</div>
+      <div className='text-center font-nexon text-base font-bold text-slate-400 mb-2'>
+        POULAR TRAVELOG
+      </div>
+      <BotCarousel />
+      {/* <S.SectionMagazine5>
+        <SectionMagazine5 posts={random as board[]} />
+      </S.SectionMagazine5> */}
     </S.Section>
   );
 }
 
 const S = {
   Section: styled.div`
-    ${tw`min-h-screen mx-auto max-w-7xl`}
+    ${tw`min-h-screen mx-auto w-3/4`}
   `,
   SectionTitle: styled.div`
     ${tw`text-3xl font-bold text-center font-nexon`}
+  `,
+  SectionMagazine5: styled.div`
+    ${tw`pt-12 pb-16 lg:pb-28`}
   `,
   SectionContent: styled.div`
     ${tw`flex justify-around`}
