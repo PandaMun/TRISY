@@ -12,7 +12,9 @@ export default function TopSection() {
         console.log(entries);
         const { isIntersecting } = entries[0];
         if (isIntersecting) {
-          setShouldLoad(true);
+          setTimeout(() => {
+            setShouldLoad(true);
+          }, 5000);
           observer.disconnect();
         }
       },
