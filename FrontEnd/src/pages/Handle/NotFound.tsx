@@ -6,7 +6,7 @@ export const NotFound = () => {
   return (
     <div className='bg-pink-50 h-screen flex flex-col items-center justify-center'>
       <h1 className='text-4xl font-bold text-pink-500 mb-4'>404</h1>
-      <p className='text-xl text-pink-500 mb-8'>Oops! 페이지를 찾을 수 없어요.</p>
+      <p className='text-xl text-pink-500 mb-8'>Oops! 에러가 발.생.했.어.용.</p>
       <Fade>
         <Link to='/'>
           <button
