@@ -20,12 +20,12 @@ public class TourRequest {
     @Setter
     public static class SpotInfo {
         private Long spotId;
-
-        @JsonFormat(pattern = "yyyy-MM-dd")
-        private LocalDate planDate;
+        private Long planDate;
     }
 
     private String tourName;
+
+    private String location;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
