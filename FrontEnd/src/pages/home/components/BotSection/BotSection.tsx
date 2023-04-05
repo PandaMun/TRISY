@@ -4,19 +4,8 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { getRandomBoardListApi } from '~/api/boardApi';
 import { Spinner } from '~/components/Shared/Spinner';
-
-interface Item {
-  img: string;
-  title: string;
-  desc: string;
-}
-
-const arr: Item[] = [
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-  { img: './mainImage/jeju.jpg', title: 'JEJU', desc: '대한민국 제주도' },
-];
+import { SectionMagazine5 } from '~/pages/blog/components/SectionMagazine5';
+import { board } from '~/types/sharedTypes';
 
 export default function BotSection() {
   const { data: random, isLoading: randomLoading } = useQuery(['random'], getRandomBoardListApi, {
@@ -25,29 +14,12 @@ export default function BotSection() {
     refetchOnMount: false,
   });
   if (randomLoading) return <Spinner />;
-  console.log(random);
+  // console.log(random);
   return (
     <S.Section>
-      <S.SectionTitle>여행기</S.SectionTitle>
-      <S.SectionContent>
-        {arr.map((item: Item, index: number) => (
-          <S.Card key={index}>
-            <S.CardBox>
-              <S.ImageBox>
-                <img
-                  src={item.img}
-                  alt=''
-                  className='transition-all duration-300 hover:scale-125'
-                />
-              </S.ImageBox>
-              <S.ContentBox>
-                <div className=''>{item.title}</div>
-                <div className=''>{item.desc}</div>
-              </S.ContentBox>
-            </S.CardBox>
-          </S.Card>
-        ))}
-      </S.SectionContent>
+      <S.SectionMagazine5>
+        <SectionMagazine5 posts={random as board[]} />
+      </S.SectionMagazine5>
     </S.Section>
   );
 }
@@ -58,6 +30,9 @@ const S = {
   `,
   SectionTitle: styled.div`
     ${tw`text-3xl font-bold text-center font-nexon`}
+  `,
+  SectionMagazine5: styled.div`
+    ${tw`pt-12 pb-16 lg:pb-28`}
   `,
   SectionContent: styled.div`
     ${tw`flex justify-around`}

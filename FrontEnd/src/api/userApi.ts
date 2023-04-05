@@ -66,7 +66,12 @@ export const getAccessToken = async () => {
     });
     const headers = response.headers;
     const accessToken = headers['accesstoken'];
+    // const newRefToken = response.config.headers.refreshToken;
+
     const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
+    // const refTokenWithoutBearer = newRefToken.replace('Bearer ', '');
+
+    // console.log(headers);
     setTokens(accTokenWithoutBearer, refreshToken);
     return response.data;
   } catch (err) {

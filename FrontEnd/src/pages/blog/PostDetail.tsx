@@ -8,7 +8,7 @@ import { Line } from '~/components/Shared/Line';
 import { Spinner } from '~/components/Shared/Spinner';
 import { ErrorPage } from '../Handle/ErrorPage';
 import { getBoardById } from '~/api/boardApi';
-import { Link } from 'react-router-dom';
+import { Fade } from 'react-awesome-reveal';
 
 export const PostDetail = () => {
   const { id } = useParams<{ id: string; formattedDate: string }>();
@@ -20,6 +20,11 @@ export const PostDetail = () => {
   console.log(postDetails);
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorPage />;
+
+  setTimeout(() => {
+    const fadeOutText = document.querySelector('.fade-out-text');
+    fadeOutText?.classList.add('fade-out');
+  }, 14000);
 
   return (
     <div>
@@ -40,12 +45,19 @@ export const PostDetail = () => {
           {/* <img src={postDetails.image} alt={postDetails.title} /> */}
         </S.Box>
       )}
-      <Link
-        to='/'
-        className='p-10 mt-16 text-3xl font-bold text-center text-white border rounded-3xl bg-pink font-nexon max-w-4xl mx-auto block'
-      >
-        TRISY
-      </Link>
+      <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
+        <div className='fade-out-text'>
+          <Fade duration={8000} className='relative'>
+            <p className='absolute top-2 left-0 right-11 mr-10'>TRIP</p>
+          </Fade>
+          <Fade duration={8000} delay={5000} className='relative'>
+            <p className='absolute top-2 left-11 right-0 ml-10'>EASY</p>
+          </Fade>
+        </div>
+        <Fade duration={7000} delay={14500}>
+          <p className='text-5xl'>TRISY</p>
+        </Fade>
+      </div>
     </div>
   );
 };

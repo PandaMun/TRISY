@@ -10,9 +10,10 @@ import { CiShare1 } from 'react-icons/ci';
 
 export const SnsShare = () => {
   const location = useLocation();
-  const path = `http://localhost:3000${location.pathname}`;
+  const path = `http://j8c202.p.ssafy.io/#${location.pathname}`;
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(path);
+    console.log(location.pathname);
     alert('URL을 복사하였습니다..');
   };
   return (
