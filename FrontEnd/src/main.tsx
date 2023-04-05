@@ -28,7 +28,7 @@ const router = createHashRouter([
   {
     path: '/',
     element: <App />,
-    // errorElement: <NotFound />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
