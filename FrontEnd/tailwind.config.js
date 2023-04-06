@@ -19,6 +19,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        nexon: ['NEXON Lv2 Gothic', 'sans-serif'],
+      },
       colors: {
         // neutral: {
         //   50: '#f8fafc',
@@ -32,6 +35,7 @@ module.exports = {
         //   800: '#334155',
         //   900: '#334155',
         // },
+        pink: '#FECACA',
         primary: {
           50: customColors("--c-primary-50"),
           100: customColors("--c-primary-100"),
@@ -71,5 +75,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp'),],
 };

@@ -7,6 +7,7 @@ import com.c202.trisy.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,8 +27,9 @@ public class MemberServiceImpl implements MemberService {
                 .email(memberDto.getEmail())
                 .password(passwordEncoder.encode(memberDto.getPassword()))
                 .name(memberDto.getName())
-                .role(Role.COUNSELOR)
-                .content(memberDto.getContent())
+                .nickname(memberDto.getNickname())
+                .role(Role.USER)
+                .profileUrl("https://trisy.s3.ap-northeast-2.amazonaws.com/undraw_Profile_pic_re_iwgo_1680569302411.png")
                 .birth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE))
                 .phone(memberDto.getPhone())
                 .build();
@@ -50,10 +52,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long updateUser(Member authUser, MemberDto.Basic memberDto) {
 
-        authUser.changeContent(memberDto.getContent());
         authUser.changeName(memberDto.getName());
         authUser.changeBirth(LocalDate.parse(memberDto.getBirth(), DateTimeFormatter.ISO_DATE));
         authUser.changePhone(memberDto.getPhone());
+        authUser.changeNickname(memberDto.getNickname());
 
         Member save = memberRepository.save(authUser);
 
@@ -65,5 +67,12 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.delete(authUser);
         return true;
+    }
+
+    @Override
+    public void saveProfile(String memberEmail, String profileUrl) {
+        Member member = memberRepository.findByEmail(memberEmail).get();
+        member.updateProfile(profileUrl);
+        memberRepository.save(member);
     }
 }

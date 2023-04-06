@@ -3,6 +3,30 @@
 @tailwind utilities;
 @tailwind variants;
 
+@font-face {
+  font-family: 'NEXON Lv2 Gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.fade-out {
+  animation-name: fade-out;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
 @layer base {
   [type='text'],
   [type='email'],
@@ -33,4 +57,22 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* react-quill */
+
+.ql-align-center {
+  @apply text-center;
+}
+
+.ql-align-right {
+  @apply text-right;
+}
+
+.ql-align-left {
+  @apply text-left;
+}
+
+.nc-card-title {
+  @apply block text-lg font-semibold transition-colors text-neutral-900 dark:text-neutral-100 sm:text-2xl;
 }

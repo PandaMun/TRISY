@@ -29,10 +29,12 @@ public class MemberDto {
 
         String role;
 
-        String content;
-
         String birth;
 
+        String profileUrl;
+
         String phone;
+
+        String nickname;
     }
 }

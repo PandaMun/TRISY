@@ -43,13 +43,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper om = new ObjectMapper();
         Member member = null;
 
-//        try {
         try {
             member = om.readValue(request.getInputStream(), Member.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.debug(member.toString());
+            log.debug(member.toString());
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(member.getEmail(), member.getPassword());
 
@@ -61,39 +60,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             log.info("로그인 완료 됨 : " + principalDetails.getMember().getEmail()); // 로그인 정상적으로 되었다는 뜻
 
             return authentication;
-//        }
-//        catch (SecurityException | MalformedJwtException e) {
-//            request.setAttribute("exception", ExceptionCode.WRONG_TYPE_TOKEN.getCode());
-//        } catch (ExpiredJwtException e) {
-//            request.setAttribute("exception", ExceptionCode.EXPIRED_TOKEN.getCode());
-//        } catch (UnsupportedJwtException e) {
-//            request.setAttribute("exception", ExceptionCode.UNSUPPORTED_TOKEN.getCode());
-//        } catch (IllegalArgumentException e) {
-//            request.setAttribute("exception", ExceptionCode.WRONG_TOKEN.getCode());
-//        } catch (Exception e) {
-//            thr
-//            log.error("================================================");
-//            log.error("JwtFilter - doFilterInternal() 오류발생");
-//            log.error("token : {}");
-//            log.error("Exception Message : {}", e.getMessage());
-//            log.error("Exception StackTrace : {");
-//            e.printStackTrace();
-//            log.error("}");
-//            log.error("================================================");
-//            request.setAttribute("exception", ExceptionCode.UNKNOWN_ERROR.getCode());
-//        }
-
-//        filterChain.doFilter(request, response);
-//        } catch (StreamReadException e) {
-//            e.printStackTrace();
-//        } catch (DatabindException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new AuthenticationServiceException("Request Content-Type (application/json) Parsing error");
-//        }
-
-//        return null;
     }
 
     @Override
@@ -115,11 +81,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_HEADER_PREFIX+accessToken);
 
         String email = principalDetails.getMember().getEmail();
-//        String key = UUID.randomUUID().toString();
 
         String refreshToken = JWT.create()
                 .withSubject(principalDetails.getMember().getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXP_TIME))
+                .withClaim("email", principalDetails.getMember().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET_KEY));
 
         RefreshToken redisToken = new RefreshToken(email, refreshToken);

@@ -27,20 +27,28 @@ public class Member extends BaseTimeEntity{
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private Role role;
-    @Column(columnDefinition = "text")
-    private String content;
 
     private LocalDate birth;
     @Column(nullable = false,length = 11)
     private String phone;
 
+    @Column(nullable = false, length = 30)
+    private String nickname;
+
+    private String provider;
+    private String providerId;
+
+    private String profileUrl;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "survey_id")
+    private Survey survey;
+
     public void setUserPassword(String password) {
         this.password = password;
     }
 
-    public void changeContent(String content){
-        this.content = content;
-    }
+    public void changeNickname(String nickname) {this.nickname = nickname;}
     public void changeName(String name){
         this.name = name;
     }
@@ -49,5 +57,13 @@ public class Member extends BaseTimeEntity{
     }
     public void changePhone(String phone){
         this.phone=phone;
+    }
+
+    public void updateSurvey(Survey survey){
+        this.survey = survey;
+    }
+
+    public void updateProfile(String profileUrl){
+        this.profileUrl = profileUrl;
     }
 }

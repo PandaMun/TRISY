@@ -1,30 +1,34 @@
 package com.c202.trisy.tour.dto;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Builder
 public class TourRequest {
 
-    class SpotInfo{
+    @Getter
+    @Setter
+    public static class SpotInfo {
         private Long spotId;
-        private String spotName;
-        private LocalDate date;
+        private Long planDate;
     }
 
+    private String tourName;
 
-    private List<SpotInfo> spotList;
-
-
-
+    private String location;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+    private List<SpotInfo> spotInfoList;
 }

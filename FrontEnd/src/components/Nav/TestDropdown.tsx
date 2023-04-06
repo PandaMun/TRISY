@@ -5,6 +5,12 @@ import { Link } from 'react-router-dom';
 const links = [
   { href: '/', label: 'home' },
   { href: '/hello', label: 'hello' },
+  { href: '/blog', label: 'blog' },
+  { href: '/createPost', label: 'createPost' },
+  { href: '/mypage', label: 'mypage' },
+  { href: '/myinfo', label: '내 정보' },
+  { href: '/myreview', label: '여행후기' },
+  { href: '/mytrip', label: '여행기록' },
 ];
 
 export default function TestDropdown() {

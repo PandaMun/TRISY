@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +23,18 @@ public class TourSchedule extends BaseEntity{
 
     private LocalDate endDate;
 
+    private String location;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
 
-    @OneToMany(mappedBy = "tourSchedule")
+    @OneToMany(mappedBy = "tourSchedule", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TourScheduleDetails> tourScheduleList = new ArrayList<>();
 
 
-    public void updateTourSchedule(List<TourScheduleDetails> tourScheduleList){
-        this.tourScheduleList = tourScheduleList;
+    public void updateTourName(String tourName){
+        this.tourName = tourName;
     }
 }

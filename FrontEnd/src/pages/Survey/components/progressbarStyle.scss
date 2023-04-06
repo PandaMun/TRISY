@@ -1,0 +1,19 @@
+.container {
+  background-color: rgba(128, 128, 128, 0.1);
+  width: 30%;
+  height: 40px;
+  border-radius: 100px;
+  min-width: 500px;
+}
+
+.barCompleted {
+  background-color: lightblue;
+  border-radius: 100px;
+  width: 30%;
+  height: 40px;
+}
+
+.label {
+  font-size: 20px;
+  color: green;
+}
