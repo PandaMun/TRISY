@@ -14,13 +14,13 @@ import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '~/components/Shared/Spinner';
 
 interface IEditor {
-  htmlStr: string;
+  htmlStr?: string;
   setHtmlStr: React.Dispatch<React.SetStateAction<string>>;
   setThumbnailUrl: React.Dispatch<React.SetStateAction<string>>;
   initialContent?: string;
 }
 
-export const UpdateEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) => {
+export const UpdateEditor = ({ setHtmlStr, setThumbnailUrl }: IEditor) => {
   const { id } = useParams<{ id: string }>();
   const { data: postDetails, isLoading } = useQuery(['post', id], () => getBoardById(id as string));
   // console.log(postDetails);
@@ -32,11 +32,11 @@ export const UpdateEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) 
     try {
       if (rendered.current) return;
       rendered.current = true;
-      console.log(content);
+      // console.log(content);
       const fixedHTML = content.replace(/<img.*?>/gi, '');
       // const contentState = stateFromHTML(htmlStr as string);
       // console.log(contentState);
-      console.log(fixedHTML);
+      // console.log(fixedHTML);
       const blocksFromHtml = htmlToDraft(fixedHTML);
       // console.log(blocksFromHtml);
       if (blocksFromHtml && blocksFromHtml.entityMap) {
@@ -53,7 +53,7 @@ export const UpdateEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) 
 
   // editor 수정 이벤트
   const onEditorStateChange = (editorState: EditorState) => {
-    console.log(htmlStr);
+    // console.log(htmlStr);
     try {
       setEditorState(editorState);
       // setHtmlStr(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -68,7 +68,7 @@ export const UpdateEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) 
   const uploadCallback = (file: Blob) => {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      console.log(file);
+      // console.log(file);
       reader.onloadend = async () => {
         //   const formData = new FormData();
         //   await formData.append('multipartFiles', file);
