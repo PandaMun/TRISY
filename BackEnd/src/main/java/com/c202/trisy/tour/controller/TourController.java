@@ -24,18 +24,22 @@ public class TourController {
     private final TourService tourService;
 
     //여행지 검색(카테고리{대분류, 중분류, 소분류}, 이름)
-    @GetMapping("/{mainCategory}/{middleCategory}/{subCategory}")
-    public ResponseEntity<?> searchSpot(@RequestParam("spotName") String spotName,
-                                        @RequestParam("location") String Location,
-                                        @PathVariable("mainCategory") String mainCategory,
-                                        @PathVariable("middleCategory") String middleCategory,
-                                        @PathVariable("subCategory") String subCategory){
+//    @GetMapping("/{middleCategory}")
+//    public ResponseEntity<?> searchSubCategoryName(@PathVariable("middleCategory") String middleCategory){
+//
+//        List<String> subCategories = tourService.getSubCategories(middleCategory);
+//        return ResponseEntity.ok(subCategories);
+//    }
 
 
 
+//    @GetMapping("/{subCategory}/{siname}")
+//    public ResponseEntity<?> searchSubCategoryCode(@PathVariable("subCategory") String subCategory,@PathVariable("siname") String siname ){
+//
+////        Long id = tourService.getSubCategoryCode(subCategory);
+////        return ResponseEntity.ok(id);
+//    }
 
-        return null;
-    }
     //회원 설문조사 존재 확인 
     @GetMapping("/survey")
     public ResponseEntity<?> existSurvey(Authentication authentication){
@@ -141,11 +145,12 @@ public class TourController {
         try {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String memberEmail = principal.getMember().getEmail();
+            System.out.println(memberEmail);
             tourService.deleteTourSchedule(tourId,memberEmail);
         }catch (AuthenticationException e){
-            return new ResponseEntity("접근 권한이 없습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("접근 권한이 없습니다." + e.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            return new ResponseEntity("응답에 실패하였습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("응답에 실패하였습니다." + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok("success");
     }

@@ -1,13 +1,12 @@
 package com.c202.trisy.tour.service;
 
-import com.c202.trisy.entity.Member;
-import com.c202.trisy.entity.Survey;
-import com.c202.trisy.entity.TourSchedule;
-import com.c202.trisy.entity.TourScheduleDetails;
+import com.c202.trisy.entity.*;
 import com.c202.trisy.repository.MemberRepository;
+import com.c202.trisy.tour.dto.TourDetailsCoordinateResponse;
 import com.c202.trisy.tour.dto.TourDetailsResponse;
 import com.c202.trisy.tour.dto.TourRequest;
 import com.c202.trisy.tour.dto.TourResponse;
+import com.c202.trisy.tour.repository.ThemeRepository;
 import com.c202.trisy.tour.repository.TourRepository;
 import com.c202.trisy.tour.repository.TourSpotRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,8 @@ public class TourServiceImpl implements TourService{
     private final TourRepository tourRepository;
     private final MemberRepository memberRepository;
     private final TourSpotRepository tourSpotRepository;
+
+    private final ThemeRepository themeRepository;
 
     /**
      * Tour 전체조회
@@ -176,4 +177,25 @@ public class TourServiceImpl implements TourService{
 
         memberRepository.save(member);
     }
+
+//    @Override
+//    public List<String> getSubCategories(String middleCategoryName) {
+//
+//        List<String> subCategories = new ArrayList<String>();
+//
+//        List<Theme> themes = themeRepository.findTheme(middleCategoryName);
+//        for(Theme theme : themes){
+//            subCategories.add(theme.getSubCategoryName());
+//        }
+//
+//        return subCategories;
+//    }
+
+//    @Override
+//    public List<TourDetailsCoordinateResponse> getSpotList(String subCategoryName, String siName) {
+//        Theme bySubCategoryName = themeRepository.findBySubCategoryName(subCategoryName);
+//
+//    }
+
+
 }
