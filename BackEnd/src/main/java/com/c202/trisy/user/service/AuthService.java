@@ -108,7 +108,6 @@ public class AuthService {
                     .phone("01012345678")
                     .nickname("닉네임")
                     .provider("kakao")
-                    .profileUrl("https://trisy.s3.ap-northeast-2.amazonaws.com/undraw_Profile_pic_re_iwgo_1680569302411.png")
                     .providerId(profile.getId().toString())
                     .role(Role.USER).build();
             memberRepository.save(member);
