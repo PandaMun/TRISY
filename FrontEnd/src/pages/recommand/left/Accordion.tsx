@@ -3,9 +3,9 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 export const MenuAccordion = () => {
-  function classNames(arg0: string, arg1: string): string | undefined {
-    throw new Error('Function not implemented.');
-  }
+  // function classNames(arg0: string, arg1: string): string | undefined {
+  //   throw new Error('Function not implemented.');
+  // }
 
   return (
     <Menu as='div' className='relative inline-block text-left'>

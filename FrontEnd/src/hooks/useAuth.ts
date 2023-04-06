@@ -1,4 +1,4 @@
-import { getUserApi, getMyPageApi, getAccessToken } from './../api/userApi';
+import { getUserApi, getMyPageApi } from './../api/userApi';
 import { loginApi, signUpApi } from '../api/userApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
