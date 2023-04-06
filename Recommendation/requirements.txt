@@ -1,0 +1,4 @@
+uvicorn
+pymysql
+fastapi
+konlpy
