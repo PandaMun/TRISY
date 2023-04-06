@@ -14,6 +14,4 @@ public interface ThemeRepository extends JpaRepository<Theme,Long> {
 
     List<Theme> findAllByMiddleCategoryName(String middleCategoryName);
 
-
-    Theme findThemeBySubCategoryName(String subCategoryName);
 }

@@ -182,44 +182,45 @@ public class TourServiceImpl implements TourService{
         memberRepository.save(member);
     }
 
-    @Override
-    public List<String> getSubCategories(String middleCategoryName) {
-
-        List<String> subCategories = new ArrayList<String>();
-
-        List<Theme> themes = themeRepository.findAllByMiddleCategoryName(middleCategoryName);
-        for(Theme theme : themes){
-            subCategories.add(theme.getSubCategoryName());
-        }
-
-        return subCategories;
-    }
 
     @Override
-    public List<TourDetailsCoordinateResponse> getSpotList(String subCategoryName, String siName) {
-        Theme theme = themeRepository.findThemeBySubCategoryName(subCategoryName);
-        Region region = regionRepository.findRegionBySiName(siName);
+    public TourDetailsCoordinateResponse getSpotList(String subCategoryName, String siName) {
 
-        List<TourSpot> tourSpots = tourSpotRepository.findAllByTheme_IdAndRegion_Id(theme.getId(), region.getId());
+        List<Theme> subCategoryThemes = themeRepository.findAllByMiddleCategoryName(subCategoryName);
+        Region region = regionRepository.findAllBySiName(siName).get(0);
 
-        List<TourDetailsCoordinateResponse> response = new ArrayList<>();
+        List<TourDetailsCoordinateResponse.spotInfo> spotList = new ArrayList<>();
 
-        for(TourSpot tourSpot : tourSpots){
-            TourDetailsCoordinateResponse detailsCoordinateResponse = TourDetailsCoordinateResponse.builder()
-                    .contentId(tourSpot.getContentId())
-                    .id(tourSpot.getId())
-                    .spotInfo(tourSpot.getSpotInfo())
-                    .imageUrl(tourSpot.getImageUrl())
-                    .mainAddress(tourSpot.getMainAddress())
-                    .subAddress(tourSpot.getSubAddress())
-                    .lat(tourSpot.getLat())
-                    .lng(tourSpot.getLng())
-                    .spotName(tourSpot.getSpotName())
-                    .zipCode(tourSpot.getZipcode())
-                    .build();
 
-            response.add(detailsCoordinateResponse);
+        for(Theme theme : subCategoryThemes) {
+
+            List<TourSpot> tourSpots = tourSpotRepository.findAllByTheme_IdAndRegion_Id(theme.getId(), region.getId());
+
+
+            for (TourSpot tourSpot : tourSpots) {
+                TourDetailsCoordinateResponse.spotInfo detailsCoordinateResponse = TourDetailsCoordinateResponse.spotInfo.builder()
+                        .id(tourSpot.getId())
+                        .spot_info(tourSpot.getSpotInfo())
+                        .image_url(tourSpot.getImageUrl())
+                        .main_address(tourSpot.getMainAddress())
+                        .lat(tourSpot.getLat())
+                        .lng(tourSpot.getLng())
+                        .spot_name(tourSpot.getSpotName())
+                        .thumbnail_url(tourSpot.getThumbnailUrl())
+                        .build();
+
+                spotList.add(detailsCoordinateResponse);
+            }
         }
+
+
+        TourDetailsCoordinateResponse response = TourDetailsCoordinateResponse.builder()
+                .message("Success")
+                .result(spotList)
+                .code(200)
+                .build();
+
+
         return response;
     }
 
