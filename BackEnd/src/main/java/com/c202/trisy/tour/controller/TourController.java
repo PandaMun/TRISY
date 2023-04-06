@@ -24,12 +24,12 @@ public class TourController {
     private final TourService tourService;
 
     //여행지 검색(카테고리{대분류, 중분류, 소분류}, 이름)
-    @GetMapping("/{middleCategory}")
-    public ResponseEntity<?> searchSubCategoryName(@PathVariable("middleCategory") String middleCategory){
-
-        List<String> subCategories = tourService.getSubCategories(middleCategory);
-        return ResponseEntity.ok(subCategories);
-    }
+//    @GetMapping("/{middleCategory}")
+//    public ResponseEntity<?> searchSubCategoryName(@PathVariable("middleCategory") String middleCategory){
+//
+//        List<String> subCategories = tourService.getSubCategories(middleCategory);
+//        return ResponseEntity.ok(subCategories);
+//    }
 
 
 
