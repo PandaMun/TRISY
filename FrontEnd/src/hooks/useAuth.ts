@@ -31,12 +31,10 @@ export const useAuth = () => {
     },
     onError: () => {
       console.log('refresh failed');
-      removeTokens();
-      logout();
-      alert('로그인 세션이 만료되었습니다.');
     },
     refetchInterval: 3000, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
+    retry: 0, // 실패시 재시도 횟수
   });
 
   //로그인

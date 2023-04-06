@@ -3,7 +3,6 @@ import tw from 'twin.macro';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Link } from 'react-router-dom';
 import { userLogin } from '~/types/sharedTypes';
 import { useAuth } from '~/hooks/useAuth';
 // import { surveyCheckApi } from '~/api/boardApi';
@@ -41,9 +40,9 @@ export const SignInForm = () => {
       <S.PasswordLabel>
         <span>
           비밀번호
-          <Link to='/login' className='text-sm'>
+          {/* <Link to='/login' className='text-sm'>
             비밀번호를 잊으셨나요?
-          </Link>
+          </Link> */}
         </span>
         <S.Input
           type='password'

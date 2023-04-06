@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { SignInForm } from './components/SignInForm';
 import { SigninHeader } from './components/SigninHeader';
-import { SnsSignIn } from './components/SnsSignIn';
+// import { SnsSignIn } from './components/SnsSignIn';
 
 export const SignIn = () => {
   return (
     <S.Container>
       <SigninHeader />
       <S.Box>
-        <SnsSignIn />
+        {/* <SnsSignIn /> */}
         {/* OR */}
-        <S.OrBox>
+        {/* <S.OrBox>
           <span>OR</span>
           <div></div>
-        </S.OrBox>
+        </S.OrBox> */}
         <SignInForm />
         <S.NewUser>
           회원이 아니세요? {` `}

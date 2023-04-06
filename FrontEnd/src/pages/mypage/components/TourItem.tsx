@@ -57,14 +57,21 @@ export const TourItem = ({ tourId }: TourItemProps) => {
   const [tourName, setTourName] = useState<string>('');
 
   const findLocation = () => {
+    // console.log(tour?.location);
+    // console.log(ImgInfo);
     const items = ImgInfo.filter((item) => item.desc === tour?.location);
     if (!items) console.log('no items');
+    // console.log(items);
     if (items.length === 0) {
       const item = ImgInfo[0];
       setSrc(item.imageUrl);
       setKolocation(item.desc);
       setEnlocation(item.title.toUpperCase());
-      return;
+    } else {
+      const item = items[0];
+      setSrc(item.imageUrl);
+      setKolocation(item.desc);
+      setEnlocation(item.title.toUpperCase());
     }
   };
 
@@ -153,7 +160,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
 
 const S = {
   Box: styled.div`
-    ${tw`p-3 shadow-lg my-6 grid grid-cols-5 shadow-slate-500 min-w-[650px] w-full dark:border-2 dark:shadow-slate-700`}
+    ${tw`p-3 shadow-lg my-6 grid grid-cols-5 shadow-slate-500 min-w-[1200px] w-full dark:border-2 dark:shadow-slate-700`}
   `,
   ImageBox: styled.div`
     ${tw`col-span-1 w-full h-full rounded-xl`}
