@@ -205,80 +205,80 @@ const OptionBox = styled.section`
   width: 100%;
   height: 85vh;
 `;
-const TopSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-`;
-const MidSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-`;
-const OptionTitle = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
+// const TopSection = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   width: 300px;
+// `;
+// const MidSection = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   flex-grow: 1;
+// `;
+// const OptionTitle = styled.div`
+//   font-size: 1.5rem;
+//   font-weight: bold;
+// `;
 
-const CityTitle = styled.div`
-  font-weight: bold;
-  font-size: 3rem;
-`;
-const Datediv = styled.div`
-  font-weight: medium;
-  font-size: 1.5rem;
-  margin-bottom: 2px;
-  margin-top: 2px;
-`;
+// const CityTitle = styled.div`
+//   font-weight: bold;
+//   font-size: 3rem;
+// `;
+// const Datediv = styled.div`
+//   font-weight: medium;
+//   font-size: 1.5rem;
+//   margin-bottom: 2px;
+//   margin-top: 2px;
+// `;
 
-const ModalButtons = styled.div`
-  cursor: pointer;
-  color: #1a202c;
-  background: linear-gradient(to right, #90cdf4, #48bfe3);
-  background-color: #90cdf4;
-  background-image: linear-gradient(to right, #90cdf4, #48bfe3);
-  transition: background-color 0.2s ease-out, background-image 0.2s ease-out;
-  border-radius: 9999px;
-  font-weight: medium;
-  font-size: 0.875rem;
-  padding: 0.625rem 1.25rem;
-  text-align: center;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+// const ModalButtons = styled.div`
+//   cursor: pointer;
+//   color: #1a202c;
+//   background: linear-gradient(to right, #90cdf4, #48bfe3);
+//   background-color: #90cdf4;
+//   background-image: linear-gradient(to right, #90cdf4, #48bfe3);
+//   transition: background-color 0.2s ease-out, background-image 0.2s ease-out;
+//   border-radius: 9999px;
+//   font-weight: medium;
+//   font-size: 0.875rem;
+//   padding: 0.625rem 1.25rem;
+//   text-align: center;
+//   margin-right: 1rem;
+//   margin-bottom: 0.5rem;
+//   position: absolute;
+//   right: 1rem;
+//   bottom: 1rem;
 
-  &:hover {
-    background-color: #48bfe3;
-    background-image: linear-gradient(to left, #90cdf4, #48bfe3);
-  }
+//   &:hover {
+//     background-color: #48bfe3;
+//     background-image: linear-gradient(to left, #90cdf4, #48bfe3);
+//   }
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #90cdf4, 0 0 0 4px #48bfe3;
-  }
+//   &:focus {
+//     outline: none;
+//     box-shadow: 0 0 0 2px #90cdf4, 0 0 0 4px #48bfe3;
+//   }
 
-  &.dark:focus {
-    box-shadow: 0 0 0 2px #4fd1c5, 0 0 0 4px #38b2ac;
-  }
-`;
-const ColoredDiv = styled.div`
-  ${tw`rounded-lg border-4 border-black relative`}
-  width: 100%;
-  height: 200px;
-  overflow: auto;
-  margin: 10px;
-  flex: 1 0 calc(50% - 5px);
-`;
+//   &.dark:focus {
+//     box-shadow: 0 0 0 2px #4fd1c5, 0 0 0 4px #38b2ac;
+//   }
+// `;
+// const ColoredDiv = styled.div`
+//   ${tw`rounded-lg border-4 border-black relative`}
+//   width: 100%;
+//   height: 200px;
+//   overflow: auto;
+//   margin: 10px;
+//   flex: 1 0 calc(50% - 5px);
+// `;
 
-const StyledText = styled.span`
-  ${tw`absolute top-12 left-2 bg-white px-2 border-4 border-black rounded-lg -translate-y-full`}
-`;
+// const StyledText = styled.span`
+//   ${tw`absolute top-12 left-2 bg-white px-2 border-4 border-black rounded-lg -translate-y-full`}
+// `;
 
 {
   /* <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
