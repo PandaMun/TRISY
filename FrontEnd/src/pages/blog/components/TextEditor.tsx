@@ -77,7 +77,7 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
         placeholder='내용을 작성해주세요.'
         wrapperClassName='wrapper-class'
         editorClassName='editor-class'
-        toolbarClassName='toolbar-class'
+        toolbarClassName='toolbar-class dark:bg-slate-900 bg:text-white'
         localization={{
           locale: 'ko',
         }}

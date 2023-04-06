@@ -24,19 +24,19 @@ export const useAuth = () => {
     },
   });
   // 토큰 갱신
-  const useRefreshToken = useQuery(['ref'], getAccessToken, {
-    enabled: !!localStorage.getItem('refreshToken'),
-    onSuccess: () => {
-      console.log('refresh');
-    },
-    onError: () => {
-      console.log('refresh failed');
-    },
-    refetchInterval: 60000 * 10 * 9, // 1시간마다 갱신
-    refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
-    staleTime: 60000 * 10 * 10, // 1시간동안 캐시를 사용합니다.
-    retry: 5, // 실패시 재시도 횟수
-  });
+  // const useRefreshToken = useQuery(['ref'], getAccessToken, {
+  //   enabled: !!localStorage.getItem('refreshToken'),
+  //   onSuccess: () => {
+  //     console.log('refresh');
+  //   },
+  //   onError: () => {
+  //     console.log('refresh failed');
+  //   },
+  //   refetchInterval: 60000 * 10 * 9, // 1시간마다 갱신
+  //   refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
+  //   staleTime: 60000 * 10 * 10, // 1시간동안 캐시를 사용합니다.
+  //   retry: 5, // 실패시 재시도 횟수
+  // });
 
   //로그인
   const useLogin = useMutation(loginApi, {
@@ -82,8 +82,11 @@ export const useAuth = () => {
     // },
     onError: (error) => {
       console.log(error);
+      alert('로그인 세션이 종료되었습니다.');
+      logout();
     },
+    retry: 1,
   });
 
-  return { useSignUp, useLogin, logout, useUser, useMyPage, useRefreshToken };
+  return { useSignUp, useLogin, logout, useUser, useMyPage };
 };
