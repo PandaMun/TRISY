@@ -4,7 +4,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { pickPlace, selectRecommand, setPlace } from '../recommandSlice';
-import { SurveyResult } from '~/pages/Survey/SurveySlice';
+import { SurveyResult, pick } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
 import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
-import { createScheduleApi } from '~/api/boardApi';
+import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
 import tw from 'twin.macro';
 interface spot {
   date?: string;
@@ -29,6 +29,15 @@ export const PickList = () => {
   const dispatch = useAppDispatch();
   const [spotInfo, setSpotInfo] = useState<spot[]>([]);
   useEffect(() => {
+    const surveyCheck = async () => {
+      const res = await surveyCheckApi();
+      return res;
+    };
+    surveyCheck().then((re) => {
+      if (surveyResult.surveyPick.length < 10) {
+        dispatch(pick(re.toString()));
+      }
+    });
     axios
       .post('http://j8c202.p.ssafy.io:8000/fast/recommendation', {
         user_test: surveyResult.surveyPick,
@@ -36,9 +45,7 @@ export const PickList = () => {
       })
       .then((res: any) => {
         const result: spot[] = [...res.data.result];
-        console.log(res.data.result);
         setSpotInfo(result);
-        console.log(spotInfo);
         dispatch(setPlace(res.data.result));
       });
   }, []);
@@ -53,7 +60,7 @@ export const PickList = () => {
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
   dateList.push([]);
   const setSchedule = async () => {
-    if (location) dispatch(setLocation(location));
+    dispatch(setLocation({ location: location }));
     spotInfo.map((v: any) => {
       if (v.date !== '0') {
         dispatch(
@@ -61,7 +68,8 @@ export const PickList = () => {
         );
       }
     });
-    await createScheduleApi(ScheduleSlice);
+    console.log(ScheduleSlice);
+    await createScheduleApi(ScheduleSlice.location);
     dispatch(setModalOpen());
   };
   //style
@@ -132,6 +140,8 @@ export const PickList = () => {
         );
     });
   };
+  console.log('surveyResult.surveyPick');
+  console.log(surveyResult.surveyPick);
 
   if (pickList) {
     return (
@@ -148,6 +158,11 @@ export const PickList = () => {
             <button type='button' className='p-3 border-2' onClick={setSchedule}>
               일정 생성
             </button>
+            {surveyResult.surveyPick.length < 10 && (
+              <button type='button' className='p-3 border-2' onClick={setSchedule}>
+                취향 기반 추천 받기
+              </button>
+            )}
           </div>
           <div className=''>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>

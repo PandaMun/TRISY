@@ -54,6 +54,7 @@ export const surveyPushApi = async (result: { survey: string }): Promise<board> 
   const response = await boardApi.post(`/tour/survey`, result);
   return response.data;
 };
+
 export const surveyCheckApi = async (): Promise<board> => {
   const response = await boardApi.get(`/tour/survey`);
   return response.data;

@@ -11,7 +11,7 @@ const initialState = {
   location: '광주',
   startDate: '2023-04-07',
   endDate: '2023-04-10',
-  spotInfoList: [{ spotId: 1, spotName: '목포식당', planDate: 1 }],
+  spotInfoList: [],
   isOpen: false,
 };
 
@@ -19,8 +19,8 @@ const ScheduleSlice = createSlice({
   name: 'schedule',
   initialState,
   reducers: {
-    setLocation: (state: any, action: PayloadAction<string>) => {
-      state.location = action.payload;
+    setLocation: (state: any, action: PayloadAction<{ location: string | undefined }>) => {
+      state.location = action.payload.location;
     },
     setStartDate: (state: any, action: PayloadAction<Date>) => {
       const year = action.payload.getFullYear();
