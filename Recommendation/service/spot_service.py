@@ -119,6 +119,6 @@ def calc_cosine_sim(user_tf_idf, spot_tf_idf_list):
 
     d2 = sorted(result.items(), key=lambda x: x[1], reverse=True)
 
-    d2_dict = dict(d2[:10])
+    d2_dict = dict(d2[:30])
     return d2_dict
 
