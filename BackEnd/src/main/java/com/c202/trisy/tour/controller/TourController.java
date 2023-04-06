@@ -24,7 +24,7 @@ public class TourController {
     private final TourService tourService;
 
     //여행지 검색(카테고리{중분류})
-    @GetMapping("/middleCategory")
+    @GetMapping("/middlecategory")
     public ResponseEntity<?> searchSubCategoryName(@RequestBody Map<String,String> map){
 
         List<String> subCategories = tourService.getSubCategories(map.get("middleCategory"));
@@ -33,7 +33,7 @@ public class TourController {
 
 
 
-    @GetMapping("/subCategory")
+    @GetMapping("/subcategory")
     public ResponseEntity<?> searchSubCategoryCode(@RequestBody TourDetailRequest tourDetailRequest){
         List<TourDetailsCoordinateResponse> spotList = tourService.getSpotList(tourDetailRequest.getSubCategoryName(), tourDetailRequest.getSiName());
         return ResponseEntity.ok(spotList);
