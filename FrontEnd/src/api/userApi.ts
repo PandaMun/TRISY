@@ -57,7 +57,7 @@ export const updateProfileImgApi = async (payload: FormData) => {
 // accesStoken 재발급
 export const getAccessToken = async () => {
   try {
-    const localAccToken = localStorage.getItem('accessToken') as string;
+    // const localAccToken = localStorage.getItem('accessToken') as string;
     const refreshToken = localStorage.getItem('refreshToken') as string;
     const response = await axios.get('http://j8c202.p.ssafy.io:8080/api/token/refresh', {
       headers: {
