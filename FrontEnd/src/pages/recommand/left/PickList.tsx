@@ -136,6 +136,7 @@ export const PickList = () => {
                       key={spot.lat}
                       title={spot.spot_name}
                       src={spot.image_url ? spot.image_url : '/No_Image.jpg'}
+                      desc={spot.spot_info}
                       id={spot.id}
                     />
                   </StyledDragCard>

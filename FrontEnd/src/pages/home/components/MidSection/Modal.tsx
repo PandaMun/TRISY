@@ -31,8 +31,8 @@ export const Modal = () => {
   };
   const gotoMap = () => {
     const range = (state[0].endDate - state[0].startDate) / (1000 * 60 * 60 * 24) + 1;
-    dispatch(setStartDate(state[0].startDate));
-    dispatch(setEndtDate(state[0].endDate));
+    dispatch(setStartDate(state[0].startDate.toString()));
+    dispatch(setEndtDate(state[0].endDate.toString()));
     if (user) {
       const startDate = state[0].startDate.toString();
       const endDate = state[0].endDate.toString();

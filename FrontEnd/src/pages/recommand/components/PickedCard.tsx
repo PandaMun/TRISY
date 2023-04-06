@@ -1,19 +1,18 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useAppDispatch } from '~/app/hooks';
-import { pickPlace } from '../recommandSlice';
+
 import { HiQuestionMarkCircle } from 'react-icons/hi';
+import { setDModalOpen } from '../DetailSlice';
 interface CardInfo {
   src: string;
   title: string;
   id: number;
+  desc: string;
 }
-export const PickedCard = ({ title, src, id }: CardInfo) => {
+export const PickedCard = ({ title, src, id, desc }: CardInfo) => {
   const dispatch = useAppDispatch();
 
-  const handleClick = (id: number): void => {
-    dispatch(pickPlace({ id }));
-  };
   return (
     <>
       <CardDiv>
@@ -22,7 +21,9 @@ export const PickedCard = ({ title, src, id }: CardInfo) => {
           <RecommandTitle>{title}</RecommandTitle>
         </Textdiv>
         <PlusButton>
-          <HiQuestionMarkCircle onClick={() => handleClick(id)} />
+          <HiQuestionMarkCircle
+            onClick={() => dispatch(setDModalOpen({ imgUrl: src, title, desc }))}
+          />
         </PlusButton>
       </CardDiv>
     </>
