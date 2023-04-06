@@ -13,7 +13,6 @@ import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
-import { MenuAccordion } from './Accordion';
 
 import tw from 'twin.macro';
 interface spot {
@@ -136,7 +135,7 @@ export const PickList = () => {
                     <PickedCard
                       key={spot.lat}
                       title={spot.spot_name}
-                      src={spot.image_url}
+                      src={spot.image_url ? spot.image_url : '/No_Image.jpg'}
                       id={spot.id}
                     />
                   </StyledDragCard>
@@ -152,7 +151,7 @@ export const PickList = () => {
     return (
       <>
         <OptionBox>
-          <div className=''>
+          <div className='flex felx-row'>
             <div>{location}</div>
             <div>
               {ModalSlice.range - 1}박{ModalSlice.range}일
@@ -163,7 +162,6 @@ export const PickList = () => {
             <button type='button' className='p-3 border-2' onClick={setSchedule}>
               일정 생성
             </button>
-            {surveyResult.surveyPick.length > 10 && <MenuAccordion />}
           </div>
           <div className=''>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>

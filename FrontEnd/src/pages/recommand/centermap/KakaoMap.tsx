@@ -19,8 +19,6 @@ export const KakaoMap = () => {
   const Long = currentLocation.long;
   const pickList = currentState.pickList;
   useEffect(() => {
-    console.log(Lat);
-    console.log(pickList);
     const { kakao } = window;
     const container = mapRef.current;
     const options = {
