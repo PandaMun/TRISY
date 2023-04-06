@@ -44,7 +44,7 @@ export const TextEditor = ({ htmlStr, setHtmlStr, setThumbnailUrl }: IEditor) =>
   const uploadCallback = (file: Blob) => {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      console.log(file);
+      // console.log(file);
       reader.onloadend = async () => {
         //   const formData = new FormData();
         //   await formData.append('multipartFiles', file);
