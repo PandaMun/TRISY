@@ -13,7 +13,6 @@ import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
-import { MenuAccordion } from './Accordion';
 
 import tw from 'twin.macro';
 interface spot {
@@ -136,7 +135,8 @@ export const PickList = () => {
                     <PickedCard
                       key={spot.lat}
                       title={spot.spot_name}
-                      src={spot.image_url}
+                      src={spot.image_url ? spot.image_url : '/No_Image.jpg'}
+                      desc={spot.spot_info}
                       id={spot.id}
                     />
                   </StyledDragCard>
@@ -152,18 +152,11 @@ export const PickList = () => {
     return (
       <>
         <OptionBox>
-          <div className=''>
-            <div>{location}</div>
-            <div>
-              {ModalSlice.range - 1}박{ModalSlice.range}일
-            </div>
+          <div className='font-nexon text-center font-bold'>
+            <div className='text-3xl'>{location}</div>
             <div>
               {ConvertDate(ModalSlice.startDate)} ~ {ConvertDate(ModalSlice.endDate)}
             </div>
-            <button type='button' className='p-3 border-2' onClick={setSchedule}>
-              일정 생성
-            </button>
-            {surveyResult.surveyPick.length > 10 && <MenuAccordion />}
           </div>
           <div className=''>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
@@ -198,6 +191,7 @@ export const PickList = () => {
                 })}
               </div>
             </DragDropContext>
+            <ModalButtons onClick={setSchedule}>일정생성</ModalButtons>
           </div>
         </OptionBox>
       </>
@@ -251,38 +245,38 @@ const OptionBox = styled.section`
 //   margin-top: 2px;
 // `;
 
-// const ModalButtons = styled.div`
-//   cursor: pointer;
-//   color: #1a202c;
-//   background: linear-gradient(to right, #90cdf4, #48bfe3);
-//   background-color: #90cdf4;
-//   background-image: linear-gradient(to right, #90cdf4, #48bfe3);
-//   transition: background-color 0.2s ease-out, background-image 0.2s ease-out;
-//   border-radius: 9999px;
-//   font-weight: medium;
-//   font-size: 0.875rem;
-//   padding: 0.625rem 1.25rem;
-//   text-align: center;
-//   margin-right: 1rem;
-//   margin-bottom: 0.5rem;
-//   position: absolute;
-//   right: 1rem;
-//   bottom: 1rem;
+const ModalButtons = styled.div`
+  cursor: pointer;
+  color: #1a202c;
+  background: linear-gradient(to right, #90cdf4, #48bfe3);
+  background-color: #90cdf4;
+  background-image: linear-gradient(to right, #90cdf4, #48bfe3);
+  transition: background-color 0.2s ease-out, background-image 0.2s ease-out;
+  border-radius: 9999px;
+  font-weight: medium;
+  font-size: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  text-align: center;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
 
-//   &:hover {
-//     background-color: #48bfe3;
-//     background-image: linear-gradient(to left, #90cdf4, #48bfe3);
-//   }
+  &:hover {
+    background-color: #48bfe3;
+    background-image: linear-gradient(to left, #90cdf4, #48bfe3);
+  }
 
-//   &:focus {
-//     outline: none;
-//     box-shadow: 0 0 0 2px #90cdf4, 0 0 0 4px #48bfe3;
-//   }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #90cdf4, 0 0 0 4px #48bfe3;
+  }
 
-//   &.dark:focus {
-//     box-shadow: 0 0 0 2px #4fd1c5, 0 0 0 4px #38b2ac;
-//   }
-// `;
+  &.dark:focus {
+    box-shadow: 0 0 0 2px #4fd1c5, 0 0 0 4px #38b2ac;
+  }
+`;
 // const ColoredDiv = styled.div`
 //   ${tw`rounded-lg border-4 border-black relative`}
 //   width: 100%;

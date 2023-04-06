@@ -22,19 +22,21 @@ const ScheduleSlice = createSlice({
     setLocation: (state: any, action: PayloadAction<{ location: string | undefined }>) => {
       state.location = action.payload.location;
     },
-    setStartDate: (state: any, action: PayloadAction<Date>) => {
-      const year = action.payload.getFullYear();
-      const month = action.payload.getMonth() + 1;
-      const day = action.payload.getDate();
-      const startDate = `${year}-${month}-${day}`;
-      state.startDate = startDate;
+    setStartDate: (state: any, action: PayloadAction<string>) => {
+      const dateObject = new Date(action.payload);
+      const year = dateObject.getFullYear();
+      const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObject.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      state.startDate = formattedDate;
     },
-    setEndtDate: (state: any, action: PayloadAction<Date>) => {
-      const year = action.payload.getFullYear();
-      const month = action.payload.getMonth() + 1;
-      const day = action.payload.getDate();
-      const setEndtDate = `${year}-${month}-${day}`;
-      state.setEndtDate = setEndtDate;
+    setEndtDate: (state: any, action: PayloadAction<string>) => {
+      const dateObject = new Date(action.payload);
+      const year = dateObject.getFullYear();
+      const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObject.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      state.setEndtDate = formattedDate;
     },
     setspotInfoList: (state: any, action: PayloadAction<spotInfo>) => {
       const id = action.payload.spotId;
