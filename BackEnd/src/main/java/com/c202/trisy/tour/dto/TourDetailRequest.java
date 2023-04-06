@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TourDetailRequest {
 
-    private String subCategoryName;
+    private String middleCategoryName;
 
     private String siName;
 }
