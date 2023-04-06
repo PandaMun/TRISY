@@ -55,10 +55,10 @@ export const KakaoMap = () => {
   );
 };
 const MapDiv = styled.section`
-  min-width: 60vw;
+  min-width: 40vw;
   display: flex;
 `;
 const MapContainer = styled.div`
-  height: 80vh;
+  height: 90vh;
   flex-grow: 1;
 `;

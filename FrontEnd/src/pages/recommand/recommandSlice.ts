@@ -12,10 +12,7 @@ const recommandSlice = createSlice({
   initialState,
   reducers: {
     setPlace: (state: any, action: PayloadAction<any>) => {
-      console.log('ddddddddddddddddddd');
       state.recommandList = [...action.payload];
-      console.log(state.recommandList);
-      console.log('ddddddddddddddddddd');
     },
     pickPlace: (state: any, action: PayloadAction<{ id: number }>) => {
       console.log('state.recommandList');
@@ -26,8 +23,6 @@ const recommandSlice = createSlice({
           break;
         }
       }
-      console.log(state.pickList);
-      console.log('state.pickList');
     },
 
     pickPop: (state: any, action: PayloadAction<any>) => {

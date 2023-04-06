@@ -2,18 +2,15 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { KakaoMap } from './centermap/KakaoMap';
 import { PickList } from './left/PickList';
-import { useState } from 'react';
 import { ExitModal } from './components/ExitModal';
-import { SurveyModal } from './components/SurveyModal';
+import { useAppSelector } from '~/app/hooks';
+import { schedule } from './left/ScheduleSlice';
 export const Recommand = () => {
-  const [showModal] = useState(false);
-  const [showSurveyModal] = useState(true);
-
+  const showExitModal = useAppSelector(schedule);
   return (
     <>
-      {showModal && <ExitModal />}
-      {showSurveyModal && <SurveyModal />}
       <MainContainer>
+        {showExitModal.isOpen && <ExitModal />}
         <KakaoMap />
         <PickList />
       </MainContainer>

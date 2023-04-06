@@ -12,6 +12,7 @@ const initialState = {
   startDate: '2023-04-07',
   endDate: '2023-04-10',
   spotInfoList: [{ spotId: 1, spotName: '목포식당', planDate: 1 }],
+  isOpen: false,
 };
 
 const ScheduleSlice = createSlice({
@@ -41,9 +42,23 @@ const ScheduleSlice = createSlice({
       const date = action.payload.planDate;
       state.spotInfoList = [...state.spotInfoList, { spotId: id, spotName: name, planDate: date }];
     },
+    setModalOpen: (state: any) => {
+      state.isOpen = true;
+      console.log('sex');
+    },
+    setModalClose: (state: any) => {
+      state.isOpen = false;
+    },
   },
 });
 
-export const { setLocation, setStartDate, setEndtDate, setspotInfoList } = ScheduleSlice.actions;
+export const {
+  setLocation,
+  setStartDate,
+  setEndtDate,
+  setspotInfoList,
+  setModalOpen,
+  setModalClose,
+} = ScheduleSlice.actions;
 export const schedule = (state: RootState) => state.schedule;
 export default ScheduleSlice.reducer;

@@ -3,7 +3,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import { pickPlace, pickPop, selectRecommand, setPlace } from '../recommandSlice';
+import { pickPlace, selectRecommand, setPlace } from '../recommandSlice';
 import { SurveyResult } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
@@ -11,8 +11,9 @@ import { ModalState } from '~/pages/home/components/MidSection/ModalSlice';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
-import { schedule, setLocation, setspotInfoList } from './ScheduleSlice';
+import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi } from '~/api/boardApi';
+import tw from 'twin.macro';
 interface spot {
   date?: string;
   id?: number;
@@ -50,7 +51,7 @@ export const PickList = () => {
   const pickList = currentState.pickList;
 
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
-  console.log(dateList);
+  dateList.push([]);
   const setSchedule = async () => {
     if (location) dispatch(setLocation(location));
     spotInfo.map((v: any) => {
@@ -61,7 +62,18 @@ export const PickList = () => {
       }
     });
     await createScheduleApi(ScheduleSlice);
+    dispatch(setModalOpen());
   };
+  //style
+  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
+    userSelect: 'none',
+    padding: 10,
+    withd: `500px`,
+    margin: `5 0`,
+    border: '1px solid #ccc',
+    background: isDragging ? 'lightgreen' : 'red',
+    ...draggableStyle,
+  });
   //dragEnd
   const onDragEnd = (result: any) => {
     if (!result.destination) {
@@ -95,14 +107,15 @@ export const PickList = () => {
       if (spot.date === dropId)
         return (
           <Draggable draggableId={spot.id.toString()} index={idx} key={spot.id}>
-            {(provided) => {
+            {(provided, snapshot) => {
               return (
                 <div
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                   ref={provided.innerRef}
+                  style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                 >
-                  <div>
+                  <div className='w-40'>
                     <PickedCard
                       key={spot.lat}
                       title={spot.spot_name}
@@ -139,7 +152,7 @@ export const PickList = () => {
                   return (
                     <div
                       key={idx}
-                      className={`map${idx} ${idx !== 0 ? 'auto-cols' : 'col-span-full'}`}
+                      className={`map${idx} ${idx !== 0 ? 'auto-cols mx-4' : 'col-span-full'}`}
                     >
                       <Droppable droppableId={idx.toString()} key={idx.toString()}>
                         {(provided) => (
@@ -148,6 +161,7 @@ export const PickList = () => {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                           >
+                            {idx && <StyledText>{`${idx}일차`}</StyledText>}
                             {spotInfoDatas(idx.toString())}
                             {provided.placeholder}
                           </ColoredDiv>
@@ -236,9 +250,14 @@ const ModalButtons = styled.div`
   }
 `;
 const ColoredDiv = styled.div`
+  ${tw`rounded-lg border-4 border-black relative`}
   width: 100%;
   height: 200px;
+  overflow: auto;
   margin: 10px;
-  background-color: #f0f0f0;
   flex: 1 0 calc(50% - 5px);
+`;
+
+const StyledText = styled.span`
+  ${tw`absolute top-12 left-2 bg-white px-2 border-4 border-black rounded-lg -translate-y-full`}
 `;
