@@ -24,9 +24,8 @@ public interface TourService {
 
     void addSurvey(String memberEmail, String survey);
 
-//    List<String> getSubCategories(String middleCategoryName);
-//
-//    List<TourDetailsCoordinateResponse> getSpotList(String subCategoryName, String siName);
+
+    TourDetailsCoordinateResponse getSpotList(String subCategoryName, String siName);
 
 
 }

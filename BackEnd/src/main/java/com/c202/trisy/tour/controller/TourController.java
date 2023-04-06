@@ -23,22 +23,12 @@ public class TourController {
 
     private final TourService tourService;
 
-    //여행지 검색(카테고리{대분류, 중분류, 소분류}, 이름)
-//    @GetMapping("/{middleCategory}")
-//    public ResponseEntity<?> searchSubCategoryName(@PathVariable("middleCategory") String middleCategory){
-//
-//        List<String> subCategories = tourService.getSubCategories(middleCategory);
-//        return ResponseEntity.ok(subCategories);
-//    }
 
-
-
-//    @GetMapping("/{subCategory}/{siname}")
-//    public ResponseEntity<?> searchSubCategoryCode(@PathVariable("subCategory") String subCategory,@PathVariable("siname") String siname ){
-//
-////        Long id = tourService.getSubCategoryCode(subCategory);
-////        return ResponseEntity.ok(id);
-//    }
+    @GetMapping("/spot")
+    public ResponseEntity<?> searchSubCategoryCode(@RequestBody TourDetailRequest tourDetailRequest){
+        TourDetailsCoordinateResponse spotList = tourService.getSpotList(tourDetailRequest.getMiddleCategoryName(), tourDetailRequest.getSiName());
+        return ResponseEntity.ok(spotList);
+    }
 
     //회원 설문조사 존재 확인 
     @GetMapping("/survey")

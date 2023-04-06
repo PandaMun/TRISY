@@ -6,6 +6,7 @@ import com.c202.trisy.tour.dto.TourDetailsCoordinateResponse;
 import com.c202.trisy.tour.dto.TourDetailsResponse;
 import com.c202.trisy.tour.dto.TourRequest;
 import com.c202.trisy.tour.dto.TourResponse;
+import com.c202.trisy.tour.repository.RegionRepository;
 import com.c202.trisy.tour.repository.ThemeRepository;
 import com.c202.trisy.tour.repository.TourRepository;
 import com.c202.trisy.tour.repository.TourSpotRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +28,8 @@ public class TourServiceImpl implements TourService{
     private final TourSpotRepository tourSpotRepository;
 
     private final ThemeRepository themeRepository;
+
+    private final RegionRepository regionRepository;
 
     /**
      * Tour 전체조회
@@ -178,24 +182,47 @@ public class TourServiceImpl implements TourService{
         memberRepository.save(member);
     }
 
-//    @Override
-//    public List<String> getSubCategories(String middleCategoryName) {
-//
-//        List<String> subCategories = new ArrayList<String>();
-//
-//        List<Theme> themes = themeRepository.findTheme(middleCategoryName);
-//        for(Theme theme : themes){
-//            subCategories.add(theme.getSubCategoryName());
-//        }
-//
-//        return subCategories;
-//    }
 
-//    @Override
-//    public List<TourDetailsCoordinateResponse> getSpotList(String subCategoryName, String siName) {
-//        Theme bySubCategoryName = themeRepository.findBySubCategoryName(subCategoryName);
-//
-//    }
+    @Override
+    public TourDetailsCoordinateResponse getSpotList(String subCategoryName, String siName) {
+
+        List<Theme> subCategoryThemes = themeRepository.findAllByMiddleCategoryName(subCategoryName);
+        Region region = regionRepository.findAllBySiName(siName).get(0);
+
+        List<TourDetailsCoordinateResponse.spotInfo> spotList = new ArrayList<>();
+
+
+        for(Theme theme : subCategoryThemes) {
+
+            List<TourSpot> tourSpots = tourSpotRepository.findAllByTheme_IdAndRegion_Id(theme.getId(), region.getId());
+
+
+            for (TourSpot tourSpot : tourSpots) {
+                TourDetailsCoordinateResponse.spotInfo detailsCoordinateResponse = TourDetailsCoordinateResponse.spotInfo.builder()
+                        .id(tourSpot.getId())
+                        .spot_info(tourSpot.getSpotInfo())
+                        .image_url(tourSpot.getImageUrl())
+                        .main_address(tourSpot.getMainAddress())
+                        .lat(tourSpot.getLat())
+                        .lng(tourSpot.getLng())
+                        .spot_name(tourSpot.getSpotName())
+                        .thumbnail_url(tourSpot.getThumbnailUrl())
+                        .build();
+
+                spotList.add(detailsCoordinateResponse);
+            }
+        }
+
+
+        TourDetailsCoordinateResponse response = TourDetailsCoordinateResponse.builder()
+                .message("Success")
+                .result(spotList)
+                .code(200)
+                .build();
+
+
+        return response;
+    }
 
 
 }
