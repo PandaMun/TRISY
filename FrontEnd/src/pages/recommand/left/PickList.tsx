@@ -68,9 +68,14 @@ export const PickList = () => {
         );
       }
     });
-    console.log(ScheduleSlice);
-    await createScheduleApi(ScheduleSlice.location);
     dispatch(setModalOpen());
+    await createScheduleApi({
+      tourName: ScheduleSlice.tourName,
+      location: ScheduleSlice.location,
+      startDate: ScheduleSlice.startDate,
+      endDate: ScheduleSlice.endDate,
+      spotInfoList: ScheduleSlice.spotInfoList,
+    });
   };
   //style
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
@@ -140,8 +145,6 @@ export const PickList = () => {
         );
     });
   };
-  console.log('surveyResult.surveyPick');
-  console.log(surveyResult.surveyPick);
 
   if (pickList) {
     return (
@@ -158,9 +161,9 @@ export const PickList = () => {
             <button type='button' className='p-3 border-2' onClick={setSchedule}>
               일정 생성
             </button>
-            {surveyResult.surveyPick.length < 10 && (
+            {surveyResult.surveyPick.length > 10 && (
               <button type='button' className='p-3 border-2' onClick={setSchedule}>
-                취향 기반 추천 받기
+                간편 검색
               </button>
             )}
           </div>

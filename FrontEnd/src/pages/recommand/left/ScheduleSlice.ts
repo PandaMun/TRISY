@@ -26,14 +26,14 @@ const ScheduleSlice = createSlice({
       const year = action.payload.getFullYear();
       const month = action.payload.getMonth() + 1;
       const day = action.payload.getDate();
-      const startDate = `${year}년 ${month}월 ${day}일`;
+      const startDate = `${year}-${month}-${day}`;
       state.startDate = startDate;
     },
     setEndtDate: (state: any, action: PayloadAction<Date>) => {
       const year = action.payload.getFullYear();
       const month = action.payload.getMonth() + 1;
       const day = action.payload.getDate();
-      const setEndtDate = `${year}년 ${month}월 ${day}일`;
+      const setEndtDate = `${year}-${month}-${day}`;
       state.setEndtDate = setEndtDate;
     },
     setspotInfoList: (state: any, action: PayloadAction<spotInfo>) => {
@@ -44,7 +44,6 @@ const ScheduleSlice = createSlice({
     },
     setModalOpen: (state: any) => {
       state.isOpen = true;
-      console.log('sex');
     },
     setModalClose: (state: any) => {
       state.isOpen = false;

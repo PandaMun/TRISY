@@ -11,6 +11,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { ko } from 'date-fns/locale';
 import { useAuth } from '~/hooks/useAuth';
 import { useState } from 'react';
+import { setEndtDate, setStartDate } from '~/pages/recommand/left/ScheduleSlice';
 export const Modal = () => {
   const [state, setState] = useState<any>([
     {
@@ -30,6 +31,8 @@ export const Modal = () => {
   };
   const gotoMap = () => {
     const range = (state[0].endDate - state[0].startDate) / (1000 * 60 * 60 * 24) + 1;
+    dispatch(setStartDate(state[0].startDate));
+    dispatch(setEndtDate(state[0].endDate));
     if (user) {
       const startDate = state[0].startDate.toString();
       const endDate = state[0].endDate.toString();
