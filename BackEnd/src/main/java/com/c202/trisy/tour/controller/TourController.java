@@ -24,7 +24,7 @@ public class TourController {
     private final TourService tourService;
 
 
-    @GetMapping("/spot")
+    @PostMapping("/spot")
     public ResponseEntity<?> searchSubCategoryCode(@RequestBody TourDetailRequest tourDetailRequest){
         TourDetailsCoordinateResponse spotList = tourService.getSpotList(tourDetailRequest.getMiddleCategoryName(), tourDetailRequest.getSiName());
         return ResponseEntity.ok(spotList);
