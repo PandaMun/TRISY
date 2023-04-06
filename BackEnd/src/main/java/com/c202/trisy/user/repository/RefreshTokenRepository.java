@@ -16,23 +16,23 @@ public class RefreshTokenRepository {
     private RedisTemplate redisTemplate;
 
     public RefreshTokenRepository(final RedisTemplate redisTemplate) {
-                    this.redisTemplate = redisTemplate;
-                }
+        this.redisTemplate = redisTemplate;
+    }
 
-                public void save(final RefreshToken refreshToken) {
-                    redisTemplate.opsForValue().set(
-                            refreshToken.getEmail(),
-                            refreshToken.getRefreshToken(),
-                            JwtProperties.REFRESH_EXP_TIME,
-                            TimeUnit.MILLISECONDS
-                    );
-                }
+    public void save(final RefreshToken refreshToken) {
+        redisTemplate.opsForValue().set(
+                refreshToken.getEmail(),
+                refreshToken.getRefreshToken(),
+                JwtProperties.REFRESH_EXP_TIME,
+                TimeUnit.MILLISECONDS
+        );
+    }
 
-                public Optional<RefreshToken> findById(final String refreshToken) {
-                    ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-                    String email = valueOperations.get(refreshToken);
+    public Optional<RefreshToken> findById(final String refreshToken) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String email = valueOperations.get(refreshToken);
 
-                    if (Objects.isNull(email)) {
+        if (Objects.isNull(email)) {
             return Optional.empty();
         }
 
