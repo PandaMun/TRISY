@@ -32,7 +32,7 @@ export default function TopSection() {
   return (
     <S.Section>
       <S.LeftSection>
-        <S.SiteIntroduction>AI 여행 스케줄링 플래너</S.SiteIntroduction>
+        <S.SiteIntroduction>여행 스케줄링 플래너</S.SiteIntroduction>
         <S.SiteName>TRISY</S.SiteName>
         <button type='button' onClick={viewportDown}>
           시작하기

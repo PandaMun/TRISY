@@ -50,7 +50,7 @@ export const HowToUse = () => {
 
 const S = {
   Box: styled.section`
-    ${tw`p-10 px-48`}
+    ${tw`p-10 px-48 max-w-[1400px] mx-auto`}
   `,
   Title: styled.h1`
     ${tw`text-4xl font-nexon text-center font-bold`}

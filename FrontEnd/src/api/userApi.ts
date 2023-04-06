@@ -57,6 +57,7 @@ export const updateProfileImgApi = async (payload: FormData) => {
 // accesStoken 재발급
 export const getAccessToken = async () => {
   try {
+    const localAccToken = localStorage.getItem('accessToken') as string;
     const refreshToken = localStorage.getItem('refreshToken') as string;
     const response = await axios.get('http://j8c202.p.ssafy.io:8080/api/token/refresh', {
       headers: {
@@ -66,8 +67,9 @@ export const getAccessToken = async () => {
     });
     const headers = response.headers;
     const accessToken = headers['accesstoken'];
+    // if ()
     // const newRefToken = response.config.headers.refreshToken;
-
+    // console.log('accessToken:', accessToken);
     const accTokenWithoutBearer = accessToken.replace('Bearer ', '');
     // const refTokenWithoutBearer = newRefToken.replace('Bearer ', '');
 
@@ -76,7 +78,9 @@ export const getAccessToken = async () => {
     return response.data;
   } catch (err) {
     console.log(err);
-    throw err;
+    const localAccToken = localStorage.getItem('accessToken') as string;
+    const refreshToken = localStorage.getItem('refreshToken') as string;
+    setTokens(localAccToken, refreshToken);
   }
 };
 

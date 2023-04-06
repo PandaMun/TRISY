@@ -68,10 +68,11 @@ export const PickList = () => {
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
     userSelect: 'none',
     padding: 10,
-    withd: `500px`,
+    // withd: `500px`,
     margin: `5 0`,
     border: '1px solid #ccc',
-    background: isDragging ? 'lightgreen' : 'red',
+    width: '200px',
+    background: isDragging ? 'lightgreen' : '',
     ...draggableStyle,
   });
   //dragEnd
@@ -114,15 +115,16 @@ export const PickList = () => {
                   {...provided.dragHandleProps}
                   ref={provided.innerRef}
                   style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                  className=''
                 >
-                  <div className='w-40'>
+                  <StyledDragCard>
                     <PickedCard
                       key={spot.lat}
                       title={spot.spot_name}
                       src={spot.image_url}
                       id={spot.id}
                     />
-                  </div>
+                  </StyledDragCard>
                 </div>
               );
             }}
@@ -135,36 +137,44 @@ export const PickList = () => {
     return (
       <>
         <OptionBox>
-          <TopSection>
-            <CityTitle>{location}</CityTitle>
-            <CityTitle>
+          <div className=''>
+            <div>{location}</div>
+            <div>
               {ModalSlice.range - 1}박{ModalSlice.range}일
-            </CityTitle>
-            <Datediv>
+            </div>
+            <div>
               {ConvertDate(ModalSlice.startDate)} ~ {ConvertDate(ModalSlice.endDate)}
-            </Datediv>
-          </TopSection>
-          <MidSection>
+            </div>
+            <button type='button' className='p-3 border-2' onClick={setSchedule}>
+              일정 생성
+            </button>
+          </div>
+          <div className=''>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-              <OptionTitle>선택 목록</OptionTitle>
-              <div className={`grid grid-cols-${dateList.length - 1} w-[100%]`}>
+              {/* <OptionTitle>추천 목록</OptionTitle> */}
+              <div className={`grid grid-cols-1 w-full h-full`}>
                 {dateList.map((_v, idx) => {
                   return (
                     <div
                       key={idx}
-                      className={`map${idx} ${idx !== 0 ? 'auto-cols mx-4' : 'col-span-full'}`}
+                      className={`map${idx} ${
+                        idx > 1 ? 'hidden' : 'col-span-1'
+                      } flex border-4 m-3 p-3 h-[300px] w-full overflow-x-scroll`}
                     >
                       <Droppable droppableId={idx.toString()} key={idx.toString()}>
                         {(provided) => (
-                          <ColoredDiv
-                            className={`cardlists_${idx}`}
+                          <div
+                            className={`ColoredDiv cardlists_${idx} flex relative`}
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                           >
-                            {idx && <StyledText>{`${idx}일차`}</StyledText>}
+                            <div className={`${idx < 2 ? '' : 'hidden'} w-[90px]`}>
+                              {idx === 0 ? '추천리스트' : '여행지'}
+                            </div>
+                            {/* {idx && <StyledText>{`${idx}일차`}</StyledText>} */}
                             {spotInfoDatas(idx.toString())}
                             {provided.placeholder}
-                          </ColoredDiv>
+                          </div>
                         )}
                       </Droppable>
                     </div>
@@ -172,20 +182,28 @@ export const PickList = () => {
                 })}
               </div>
             </DragDropContext>
-          </MidSection>
-          <ModalButtons onClick={setSchedule}>일정 생성</ModalButtons>
+          </div>
         </OptionBox>
       </>
     );
   }
   return <h1>추천 없음</h1>;
 };
+const StyledDragCard = styled.div`
+  ${tw`w-full h-full`}
+  Section {
+    ${tw`w-full h-full flex flex-col`}
+  }
+  img {
+    ${tw`w-full h-3/4`}
+  }
+`;
 
 const OptionBox = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 80vh;
+  height: 85vh;
 `;
 const TopSection = styled.div`
   display: flex;
@@ -261,3 +279,33 @@ const ColoredDiv = styled.div`
 const StyledText = styled.span`
   ${tw`absolute top-12 left-2 bg-white px-2 border-4 border-black rounded-lg -translate-y-full`}
 `;
+
+{
+  /* <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+              <OptionTitle>선택 목록</OptionTitle>
+              <div className={`grid grid-cols-${dateList.length - 1} w-[100%]`}>
+                {dateList.map((_v, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className={`map${idx} ${idx !== 0 ? 'auto-cols mx-4' : 'col-span-full'}`}
+                    >
+                      <Droppable droppableId={idx.toString()} key={idx.toString()}>
+                        {(provided) => (
+                          <ColoredDiv
+                            className={`cardlists_${idx}`}
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                          >
+                            {idx && <StyledText>{`${idx}일차`}</StyledText>}
+                            {spotInfoDatas(idx.toString())}
+                            {provided.placeholder}
+                          </ColoredDiv>
+                        )}
+                      </Droppable>
+                    </div>
+                  );
+                })}
+              </div>
+            </DragDropContext> */
+}
