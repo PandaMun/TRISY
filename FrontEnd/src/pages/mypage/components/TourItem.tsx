@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { delTourApi, getTourByIdApi, updateTourNameApi } from '~/api/boardApi';
+import { getTourApi, delTourApi, getTourByIdApi, updateTourNameApi } from '~/api/boardApi';
 import { Button } from '~/components/Shared/Button';
 import { useAuth } from '~/hooks/useAuth';
 import { ImgInfo } from '~/pages/home/components/MidSection/ImgInfo';
@@ -15,6 +15,7 @@ interface TourItemProps {
 }
 
 export const TourItem = ({ tourId }: TourItemProps) => {
+  const [schedule, setSchedule] = useState<string>();
   const client = useQueryClient();
   const { useMyPage } = useAuth();
   const { data: user } = useMyPage;
@@ -29,11 +30,22 @@ export const TourItem = ({ tourId }: TourItemProps) => {
   const handleReview = () => {
     navigate(`/createPost/${id}`);
   };
+  /////////////////lcm
+  const handlePlan = async () => {
+    const res = await getTourApi(tourId);
+    console.log(res);
+    let TripSchedule = '';
 
-  // const handlePlan = () => {
-  //   console.log('plan');
-  // };
+    res.tourDetailsResponseList.map((el: any) => {
+      console.log(el);
 
+      TripSchedule += `${el.spotName} - `;
+    });
+    TripSchedule = TripSchedule.slice(0, -2);
+    console.log(TripSchedule);
+    setSchedule(TripSchedule);
+  };
+  /////////////////////////
   // const handleLink = () => {
   //   console.log('link');
   // };
@@ -136,6 +148,14 @@ export const TourItem = ({ tourId }: TourItemProps) => {
             text='리뷰 작성'
             onClick={handleReview}
           />
+          {/*  lcm */}
+          <Button
+            type='button'
+            className='mypage-detail-button'
+            text='일정 계획'
+            onClick={handlePlan}
+          />
+          {/*  */}
           {/* <Button
             type='button'
             className='mypage-detail-button'
@@ -155,6 +175,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
             onClick={handleDelete}
           />
         </S.DetailButtonBox>
+        <div>{schedule}</div>
       </S.DetailBox>
     </S.Box>
   );

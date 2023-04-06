@@ -68,3 +68,9 @@ export const updateTourNameApi = async (id: string, tourName: string): Promise<t
   const response = await boardApi.put(`/tour/${id}`, { tourName: tourName });
   return response.data;
 };
+///////////////// lcm
+export const getTourApi = async (id: string) => {
+  const response = await boardApi.get(`/tour/${id}`);
+  return response.data;
+};
+////////////////
