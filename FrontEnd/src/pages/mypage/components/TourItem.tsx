@@ -30,18 +30,19 @@ export const TourItem = ({ tourId }: TourItemProps) => {
     navigate(`/createPost/${id}`);
   };
 
-  const handlePlan = () => {
-    console.log('plan');
-  };
+  // const handlePlan = () => {
+  //   console.log('plan');
+  // };
 
-  const handleLink = () => {
-    console.log('link');
-  };
+  // const handleLink = () => {
+  //   console.log('link');
+  // };
 
   const handleDelete = async () => {
     if (window.confirm(`정말로 삭제하시겠습니까?`)) {
-      const res = await delTourApi(id);
+      const res = await delTourApi(tourId);
       console.log(res);
+      client.invalidateQueries(['tours']);
     }
   };
 
@@ -74,6 +75,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
       setEnlocation(item.title.toUpperCase());
     }
   };
+  // console.log(tour);
 
   useEffect(() => {
     findLocation();
@@ -98,7 +100,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
               <span>여행이름</span>
               <input
                 type='text'
-                value={tourName}
+                value={tourName || ''}
                 className='w-fit text-xl'
                 onChange={(e) => {
                   setTourName(e.currentTarget.value);
@@ -119,7 +121,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
           <section>
             <div>
               <span>여행스팟</span>
-              {tour?.tourDetailsResponseList.length}
+              {/* {tour?.tourDetailsResponseList.length} */}
             </div>
             <div>
               <span>여행종료</span>
@@ -134,7 +136,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
             text='리뷰 작성'
             onClick={handleReview}
           />
-          <Button
+          {/* <Button
             type='button'
             className='mypage-detail-button'
             text='일정 계획'
@@ -145,7 +147,7 @@ export const TourItem = ({ tourId }: TourItemProps) => {
             className='mypage-detail-button'
             text='일정 공유'
             onClick={handleLink}
-          />
+          /> */}
           <Button
             type='button'
             className='mypage-detail-button'

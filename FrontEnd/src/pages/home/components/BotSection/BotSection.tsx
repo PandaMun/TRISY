@@ -12,6 +12,7 @@ export default function BotSection() {
         POULAR TRAVELOG
       </div>
       <BotCarousel />
+
       {/* <S.SectionMagazine5>
         <SectionMagazine5 posts={random as board[]} />
       </S.SectionMagazine5> */}
@@ -21,7 +22,7 @@ export default function BotSection() {
 
 const S = {
   Section: styled.div`
-    ${tw`min-h-screen mx-auto w-3/4`}
+    ${tw`mx-auto w-3/4`}
   `,
   SectionTitle: styled.div`
     ${tw`text-3xl font-bold text-center font-nexon`}

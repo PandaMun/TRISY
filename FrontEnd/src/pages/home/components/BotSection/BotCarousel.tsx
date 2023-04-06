@@ -139,9 +139,9 @@ const S = {
     }
   `,
   Next: styled.div`
-    ${tw`w-20 h-[800px] scale-110 z-10 pr-5`}
+    ${tw`w-20 h-[8px] scale-110 z-10 pr-5 absolute top-[180px]`}
   `,
   Prev: styled.div`
-    ${tw`w-20 h-[800px] scale-110 z-10 pl-5`}
+    ${tw`w-20 h-[8px] scale-110 z-10 pl-5 absolute top-[180px]`}
   `,
 };

@@ -45,7 +45,7 @@ export const PostDetail = () => {
           {/* <img src={postDetails.image} alt={postDetails.title} /> */}
         </S.Box>
       )}
-      <div className='p-10 mb-16 text-3xl font-bold text-center text-white border lg:mb-32 rounded-3xl bg-pink font-nexon'>
+      <div className='p-10 text-3xl font-bold text-center text-white border rounded-3xl bg-pink font-nexon max-w-4xl mx-auto'>
         <div className='fade-out-text'>
           <Fade duration={8000} className='relative'>
             <p className='absolute top-2 left-0 right-11 mr-10'>TRIP</p>
@@ -64,7 +64,7 @@ export const PostDetail = () => {
 
 const S = {
   Box: styled.section`
-    ${tw`max-w-4xl mx-auto mt-12`}
+    ${tw`max-w-4xl mx-auto min-h-[90vh]`}
   `,
   Container: styled.div`
     ${tw`container relative mx-auto`}
@@ -73,7 +73,7 @@ const S = {
     ${tw`pt-12 pb-16 lg:pb-28`}
   `,
   Viewer: styled.div`
-    ${tw`min-h-[600px] border-b-2 pb-5`}
+    ${tw`min-h-[800px] border-b-2 pb-5`}
     ol {
       ${tw`list-decimal list-inside`}
     }
