@@ -90,7 +90,7 @@ export const Survey = () => {
           {AList[(step - 10) / 10].map((el: any, index: number) => (
             <Button
               key={index}
-              style={{ width: '440px', height: '66px' }}
+              style={{ width: '440px', height: '66px', margin: '10px' }}
               onClick={() => {
                 handleClick(el);
               }}
@@ -200,11 +200,11 @@ const LoadingDiv = styled.div<{ visible: boolean }>`
 `;
 
 const Question = styled.div`
-  ${tw`font-bold text-4xl mb-[150px]`}
+  ${tw`font-bold text-4xl mb-[100px] dark:text-black`}
 `;
 
 const Trisy = styled.div`
-  ${tw`font-extrabold text-3xl `}
+  ${tw`font-extrabold text-3xl dark:text-black `}
 `;
 const LoadingMessage = styled.div`
   ${tw`font-extrabold text-3xl mb-3`}
@@ -213,7 +213,7 @@ const LoadingMessage2 = styled.div`
   ${tw`font-extrabold text-3xl `}
 `;
 const Footer = styled.div`
-  ${tw`font-bold text-xl `}
+  ${tw`font-bold text-xl dark:text-black `}
 `;
 const Button = styled.button`
   ${tw`m-6 inline-block px-6 py-3 rounded-full bg-white text-black font-bold text-lg focus:outline-none transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg`}
