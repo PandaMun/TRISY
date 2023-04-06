@@ -145,6 +145,7 @@ public class TourController {
         try {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String memberEmail = principal.getMember().getEmail();
+            System.out.println(memberEmail);
             tourService.deleteTourSchedule(tourId,memberEmail);
         }catch (AuthenticationException e){
             return new ResponseEntity("접근 권한이 없습니다." + e.getMessage(), HttpStatus.BAD_REQUEST);
