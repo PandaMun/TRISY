@@ -13,6 +13,8 @@ import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
+import { MenuAccordion } from './Accordion';
+
 import tw from 'twin.macro';
 interface spot {
   date?: string;
@@ -162,9 +164,9 @@ export const PickList = () => {
               일정 생성
             </button>
             {surveyResult.surveyPick.length > 10 && (
-              <button type='button' className='p-3 border-2' onClick={setSchedule}>
-                간편 검색
-              </button>
+              <>
+                <MenuAccordion />
+              </>
             )}
           </div>
           <div className=''>

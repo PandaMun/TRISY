@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { MidCarousel } from './MidCarousel';
 import { Modal } from './Modal';
-
 export default function MidSection() {
   return (
     <>
@@ -14,6 +13,7 @@ export default function MidSection() {
             <br /> 여행지를 추천해주는 쉽고 간편한 여행 일정 플래너
           </div>
         </S.LeftSection>
+
         <S.RightSection>
           <div>
             <h1>STEP 1</h1>
