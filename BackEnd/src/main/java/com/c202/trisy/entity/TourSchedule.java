@@ -30,7 +30,7 @@ public class TourSchedule extends BaseEntity{
     private Member member;
 
 
-    @OneToMany(mappedBy = "tourSchedule", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "tourSchedule", cascade = {CascadeType.PERSIST, CascadeType.MERGE , CascadeType.REMOVE} , orphanRemoval = true)
     private List<TourScheduleDetails> tourScheduleList = new ArrayList<>();
 
 
