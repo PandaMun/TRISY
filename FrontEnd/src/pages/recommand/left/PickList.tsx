@@ -61,6 +61,7 @@ export const PickList = () => {
         );
       }
     });
+    console.log(ScheduleSlice);
     await createScheduleApi(ScheduleSlice);
     dispatch(setModalOpen());
   };

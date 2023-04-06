@@ -27,14 +27,15 @@ export const useAuth = () => {
   const useRefreshToken = useQuery(['ref'], getAccessToken, {
     enabled: !!localStorage.getItem('refreshToken'),
     onSuccess: () => {
-      // console.log('refresh', data);
+      console.log('refresh');
     },
     onError: () => {
       console.log('refresh failed');
     },
-    refetchInterval: 3000, // 1시간마다 갱신
+    refetchInterval: 60000 * 10 * 9, // 1시간마다 갱신
     refetchIntervalInBackground: true, // 백그라운드에서도 실행합니다.
-    retry: 0, // 실패시 재시도 횟수
+    staleTime: 60000 * 10 * 10, // 1시간동안 캐시를 사용합니다.
+    retry: 5, // 실패시 재시도 횟수
   });
 
   //로그인
