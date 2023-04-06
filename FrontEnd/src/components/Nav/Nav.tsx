@@ -31,7 +31,7 @@ export default function Nav() {
       <S.RightBox>
         <>
           <SwitchDarkMode />
-          <Link to='/survey'>여행시작</Link>
+          <Link to='/survey'>취향검사</Link>
           <Link to='/blog'>여행후기</Link>
           <Link to='/howToUse'>이용방법</Link>
           {user && <LoginDropdwon />}

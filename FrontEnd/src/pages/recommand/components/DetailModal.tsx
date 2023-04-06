@@ -10,6 +10,12 @@ export const DetailModal = () => {
   const onClose = () => {
     dispatch(setDModalClose());
   };
+  const NaverSearch = () => {
+    window.open(`https://search.naver.com/search.naver?query=${DModalSlice.title}`);
+  };
+  const InstaSearch = () => {
+    window.open(`https://www.instagram.com/explore/tags/${DModalSlice.title}`);
+  };
   return (
     <>
       <ModalOverlay onClick={onClose}>
@@ -20,6 +26,32 @@ export const DetailModal = () => {
           <ModalImage src={DModalSlice.imgUrl} alt='Modal Image' />
           <ModalHeader>{DModalSlice.title}</ModalHeader>
           <ModalDescription>{DModalSlice.desc}</ModalDescription>
+          <IconDiv>
+            <Icon
+              tabIndex={0}
+              role='button'
+              onClick={() => NaverSearch()}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  console.log('Pressed Enter or Space');
+                }
+              }}
+            >
+              <SearchIcon src='naver.png' alt='naver' />
+            </Icon>
+            <Icon
+              tabIndex={0}
+              role='button'
+              onClick={() => InstaSearch()}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  console.log('Pressed Enter or Space');
+                }
+              }}
+            >
+              <SearchIcon src='insta.png' alt='insta' />
+            </Icon>
+          </IconDiv>
         </InfoDiv>
       </ModalOverlay>
     </>
@@ -31,11 +63,7 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
 `;
-const ModalWrapper = styled.div`
-  ${tw`bg-white w-[20vw] min-w-[360px] rounded-xl shadow-md relative flex flex-row`}
-  top: 25%;
-  transform: translate(-50%, -50%);
-`;
+
 const ModalHeader = styled.div`
   ${tw`flex justify-between items-center text-lg font-semibold mb-3 ml-2`}
 `;
@@ -49,10 +77,6 @@ const ModalDescription = styled.p`
   ${tw` text-sm mb-3 ml-5 mr-5`}
 `;
 
-const ModalButtons = styled.div`
-  ${tw`hover:cursor-pointer  text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-2 absolute right-3 bottom-3`}
-`;
-
 const CloseButton = styled.button`
   ${tw`text-3xl font-bold p-1 rounded-full hover:opacity-100 absolute top-3 right-3 opacity-80`}
   color: rgba(255, 255, 255, 0.8);
@@ -60,9 +84,16 @@ const CloseButton = styled.button`
     color: rgba(255, 255, 255, 1);
   }
 `;
-const DateDiv = styled.div`
-  ${tw`bg-white w-[20vw] min-w-[360px] shadow-md relative flex justify-center items-center`}
-`;
 const InfoDiv = styled.div`
   ${tw`bg-white w-[25vw] min-w-[360px] shadow-md relative`}
+`;
+const IconDiv = styled.div`
+  ${tw`flex flex-row justify-end bg-white w-[25vw] min-w-[360px] shadow-md relative`}
+`;
+const Icon = styled.div`
+  ${tw`mx-2 mb-1`}
+`;
+
+const SearchIcon = styled.img`
+  ${tw`w-[30px]`}
 `;

@@ -7,10 +7,10 @@ import { setDModalOpen } from '../DetailSlice';
 interface CardInfo {
   src: string;
   title: string;
-  id: number;
+  id?: number;
   desc: string;
 }
-export const PickedCard = ({ title, src, id, desc }: CardInfo) => {
+export const PickedCard = ({ title, src,  desc }: CardInfo) => {
   const dispatch = useAppDispatch();
 
   return (

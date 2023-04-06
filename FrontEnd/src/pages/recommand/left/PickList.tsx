@@ -3,7 +3,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import { pickPlace, selectRecommand, setPlace } from '../recommandSlice';
+import { pickPlace, pickPop, selectRecommand, setPlace } from '../recommandSlice';
 import { SurveyResult, pick } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
@@ -39,6 +39,7 @@ export const PickList = () => {
         dispatch(pick(re.toString()));
       }
     });
+    //츠천 받기
     axios
       .post('http://j8c202.p.ssafy.io:8000/fast/recommendation', {
         user_test: surveyResult.surveyPick,
@@ -62,14 +63,18 @@ export const PickList = () => {
   dateList.push([]);
   const setSchedule = async () => {
     dispatch(setLocation({ location: location }));
-    spotInfo.map((v: any) => {
+
+    const promises = spotInfo.map((v: any) => {
       if (v.date !== '0') {
-        dispatch(
+        return dispatch(
           setspotInfoList({ spotId: v.id, spotName: v.spot_name, planDate: parseInt(v.date) }),
         );
       }
+      return Promise.resolve();
     });
-    dispatch(setModalOpen());
+
+    await Promise.all(promises);
+
     await createScheduleApi({
       tourName: ScheduleSlice.tourName,
       location: ScheduleSlice.location,
@@ -77,6 +82,8 @@ export const PickList = () => {
       endDate: ScheduleSlice.endDate,
       spotInfoList: ScheduleSlice.spotInfoList,
     });
+
+    await dispatch(setModalOpen());
   };
   //style
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
@@ -101,7 +108,6 @@ export const PickList = () => {
       index = spots.findIndex((v: any) => v.id === parseInt(result.draggableId));
       const newSpots = spots.map((o: any) => ({ ...o }));
       const findObj: any = newSpots[index];
-      console.log(findObj);
       findObj.date = destination.droppableId;
       newSpots.splice(index, 1);
       spots = [...newSpots, findObj];
@@ -114,6 +120,15 @@ export const PickList = () => {
         spots.splice(destination.index, 0, selectSpot);
         setSpotInfo(spots);
       }
+    }
+    console.log(spots[index]);
+    console.log(destination.droppableId);
+    if (destination.droppableId == 0) {
+      index = spots.findIndex((v: any) => v.id === parseInt(result.draggableId));
+      // const newSpots = spots.map((o: any) => ({ ...o }));
+      // const findObj: any = newSpots[index];
+      const findObj: any = spots[index];
+      dispatch(pickPop({ id: findObj.id }));
     }
   };
   //DRAGGABLE
