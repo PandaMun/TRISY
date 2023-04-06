@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { setLocation, setModalOpen } from '~/pages/home/components/MidSection/ModalSlice';
-import { ImgInfo } from '~/pages/home/components/MidSection/ImgInfo';
+import { ImgInfo2 } from '~/pages/home/components/MidSection/ImgInfo';
 export const SurveyCarousel = () => {
   const dispatch = useDispatch();
   const modalOpen = (imgUrl: string, title: string, body: string, lat: number, long: number) => {
@@ -17,6 +17,9 @@ export const SurveyCarousel = () => {
     dots: false,
     infinite: true,
     speed: 500,
+    autoplay: true, // 자동으로 넘어가게 설정
+    autoplaySpeed: 3000, // 자동으로 넘어가는 간격(ms)
+    pauseOnHover: true, // 마우스 호버 시 일시정지
     slidesToShow: 5,
     slidesToScroll: 1,
     arrows: true,
@@ -76,7 +79,7 @@ export const SurveyCarousel = () => {
   return (
     <>
       <S.StyledSlider {...settings}>
-        {ImgInfo.map((el, idx) => (
+        {ImgInfo2.map((el, idx) => (
           <S.Card
             key={idx}
             onClick={() => {
@@ -113,7 +116,7 @@ const S = {
     ${tw`text-xl font-medium ml-3 mt-3`}
   `,
   SectionKoTitle: styled.div`
-    ${tw`text-2xl font-bold m-3`}
+    ${tw`text-2xl font-bold m-3 `}
   `,
   SectionContent: styled.div`
     ${tw`flex justify-around`}
@@ -122,7 +125,7 @@ const S = {
     ${tw`relative flex items-center justify-center max-w-[250px] max-h-[500px] shadow-xl hover:cursor-pointer mb-10 mt-10`}
   `,
   CardBox: styled.div`
-    ${tw`w-full h-full bg-white`}
+    ${tw`w-full h-full bg-white dark:bg-[#1f2937]`}
   `,
   ImageBox: styled.div`
     ${tw`overflow-hidden`}
