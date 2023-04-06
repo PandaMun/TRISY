@@ -163,11 +163,7 @@ export const PickList = () => {
             <button type='button' className='p-3 border-2' onClick={setSchedule}>
               일정 생성
             </button>
-            {surveyResult.surveyPick.length > 10 && (
-              <>
-                <MenuAccordion />
-              </>
-            )}
+            {surveyResult.surveyPick.length > 10 && <MenuAccordion />}
           </div>
           <div className=''>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
