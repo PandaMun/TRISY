@@ -58,11 +58,11 @@ export const PickList = () => {
 
   const { location } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
-
+  console.log(location);
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
   dateList.push([]);
   const setSchedule = async () => {
-    dispatch(setLocation({ location: location }));
+    await dispatch(setLocation({ location }));
 
     const promises = spotInfo.map((v: any) => {
       if (v.date !== '0') {
@@ -74,7 +74,13 @@ export const PickList = () => {
     });
 
     await Promise.all(promises);
-
+    console.log({
+      tourName: ScheduleSlice.tourName,
+      location: ScheduleSlice.location,
+      startDate: ScheduleSlice.startDate,
+      endDate: ScheduleSlice.endDate,
+      spotInfoList: ScheduleSlice.spotInfoList,
+    });
     await createScheduleApi({
       tourName: ScheduleSlice.tourName,
       location: ScheduleSlice.location,
