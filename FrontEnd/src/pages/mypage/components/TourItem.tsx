@@ -45,10 +45,6 @@ export const TourItem = ({ tourId }: TourItemProps) => {
     console.log(TripSchedule);
     setSchedule(TripSchedule);
   };
-  /////////////////////////
-  // const handleLink = () => {
-  //   console.log('link');
-  // };
 
   const handleDelete = async () => {
     if (window.confirm(`정말로 삭제하시겠습니까?`)) {

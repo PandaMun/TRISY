@@ -3,7 +3,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import { pickPlace, pickPop, selectRecommand, setPlace } from '../recommandSlice';
+import { clearPlace, pickPlace, pickPop, selectRecommand, setPlace } from '../recommandSlice';
 import { SurveyResult, pick } from '~/pages/Survey/SurveySlice';
 import { useParams } from 'react-router-dom';
 import { ConvertDate } from '../components/ConvertDate';
