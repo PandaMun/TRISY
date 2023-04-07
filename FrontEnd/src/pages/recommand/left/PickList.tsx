@@ -84,6 +84,7 @@ export const PickList = () => {
     });
 
     await dispatch(setModalOpen());
+    await dispatch(clearPlace());
   };
   //style
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({

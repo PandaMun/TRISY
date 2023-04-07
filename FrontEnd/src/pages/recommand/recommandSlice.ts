@@ -35,9 +35,12 @@ const recommandSlice = createSlice({
         }
       }
     },
+    clearPlace: (state: any) => {
+      state.pickList = [];
+    },
   },
 });
 
-export const { setPlace, pickPlace, pickPop } = recommandSlice.actions;
+export const { setPlace, pickPlace, pickPop, clearPlace } = recommandSlice.actions;
 export const selectRecommand = (state: RootState) => state.recommand;
 export default recommandSlice.reducer;
