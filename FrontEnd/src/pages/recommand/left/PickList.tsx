@@ -238,8 +238,9 @@ const StyledDragCard = styled.div`
 const OptionBox = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   height: 85vh;
+  overflow-x: hidden;
 `;
 // const TopSection = styled.div`
 //   display: flex;

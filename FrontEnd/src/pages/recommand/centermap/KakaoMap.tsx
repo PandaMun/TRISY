@@ -52,7 +52,7 @@ export const KakaoMap = () => {
   );
 };
 const MapDiv = styled.section`
-  min-width: 40vw;
+  min-width: 35vw;
   display: flex;
 `;
 const MapContainer = styled.div`
