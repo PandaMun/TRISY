@@ -8,7 +8,7 @@ interface spotInfo {
 }
 const initialState = {
   tourName: '여행명',
-  location: '광주',
+  location: '제주도',
   startDate: '2023-04-07',
   endDate: '2023-04-10',
   spotInfoList: [],
