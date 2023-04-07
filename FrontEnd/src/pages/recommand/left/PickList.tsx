@@ -192,7 +192,11 @@ export const PickList = () => {
                         idx > 1 ? 'hidden' : 'col-span-1'
                       } flex border-4 m-3 p-3 h-[300px] w-full overflow-x-scroll`}
                     >
-                      <Droppable droppableId={idx.toString()} key={idx.toString()}>
+                      <Droppable
+                        droppableId={idx.toString()}
+                        key={idx.toString()}
+                        direction='horizontal'
+                      >
                         {(provided) => (
                           <div
                             className={`ColoredDiv cardlists_${idx} flex relative`}
