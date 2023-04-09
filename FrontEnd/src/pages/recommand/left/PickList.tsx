@@ -13,7 +13,7 @@ import axios from 'axios';
 import { PickedCard } from '../components/PickedCard';
 import { schedule, setLocation, setModalOpen, setspotInfoList } from './ScheduleSlice';
 import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
-
+import { COLORS } from '../../Survey/components/QList';
 import tw from 'twin.macro';
 interface spot {
   date?: string;
@@ -128,12 +128,9 @@ export const PickList = () => {
         setSpotInfo(spots);
       }
     }
-    console.log(spots[index]);
-    console.log(destination.droppableId);
+
     if (destination.droppableId == 0) {
       index = spots.findIndex((v: any) => v.id === parseInt(result.draggableId));
-      // const newSpots = spots.map((o: any) => ({ ...o }));
-      // const findObj: any = newSpots[index];
       const findObj: any = spots[index];
       dispatch(pickPop({ id: findObj.id }));
     }
@@ -151,7 +148,7 @@ export const PickList = () => {
                   {...provided.dragHandleProps}
                   ref={provided.innerRef}
                   style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                  className=''
+                  className='min-w-[200px]'
                 >
                   <StyledDragCard>
                     <PickedCard
@@ -189,7 +186,7 @@ export const PickList = () => {
                     <div
                       key={idx}
                       className={`map${idx} ${
-                        idx > 1 ? 'hidden' : 'col-span-1'
+                        idx > 1 ? '' : 'col-span-1'
                       } flex border-4 m-3 p-3 h-[300px] w-full overflow-x-scroll`}
                     >
                       <Droppable
@@ -199,12 +196,16 @@ export const PickList = () => {
                       >
                         {(provided) => (
                           <div
-                            className={`ColoredDiv cardlists_${idx} flex relative`}
+                            className={`ColoredDiv cardlists_${idx} flex relative w-[100%]`}
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                           >
-                            <div className={`${idx < 2 ? '' : 'hidden'} w-[90px]`}>
-                              {idx === 0 ? '추천리스트' : '여행지'}
+                            <div
+                              className={`${
+                                idx < 2 ? '' : `bg-${COLORS[idx]}`
+                              } min-w-[90px] font-nexon text-medium font-extrabold`}
+                            >
+                              {idx === 0 ? '추천리스트' : `${idx}일차`}
                             </div>
                             {/* {idx && <StyledText>{`${idx}일차`}</StyledText>} */}
                             {spotInfoDatas(idx.toString())}
@@ -226,9 +227,9 @@ export const PickList = () => {
   return <h1>추천 없음</h1>;
 };
 const StyledDragCard = styled.div`
-  ${tw`w-full h-full`}
+  ${tw`w-full h-full `}
   Section {
-    ${tw`w-full h-full flex flex-col`}
+    ${tw`w-full h-full flex flex-col `}
   }
   img {
     ${tw`w-full h-3/4`}
