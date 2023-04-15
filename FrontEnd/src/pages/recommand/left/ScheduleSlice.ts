@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '~/app/store';
 interface spotInfo {
@@ -42,13 +42,23 @@ const ScheduleSlice = createSlice({
       const id = action.payload.spotId;
       const name = action.payload.spotName;
       const date = action.payload.planDate;
-      state.spotInfoList = [...state.spotInfoList, { spotId: id, spotName: name, planDate: date }];
+      const newSpotInfoList = [
+        ...state.spotInfoList,
+        { spotId: id, spotName: name, planDate: date },
+      ];
+      state.spotInfoList = newSpotInfoList;
+      console.log('스팟인포 리스트');
     },
     setModalOpen: (state: any) => {
       state.isOpen = true;
     },
     setModalClose: (state: any) => {
       state.isOpen = false;
+    },
+    setSpotInfoClear: (state: any) => {
+      state.spotInfoList = [];
+      console.log('클리어');
+      console.log(current(state));
     },
   },
 });
@@ -60,6 +70,7 @@ export const {
   setspotInfoList,
   setModalOpen,
   setModalClose,
+  setSpotInfoClear,
 } = ScheduleSlice.actions;
 export const schedule = (state: RootState) => state.schedule;
 export default ScheduleSlice.reducer;

@@ -15,6 +15,7 @@ import { schedule, setLocation, setModalOpen, setspotInfoList } from './Schedule
 import { createScheduleApi, surveyCheckApi } from '~/api/boardApi';
 import { COLORS } from '../../Survey/components/QList';
 import tw from 'twin.macro';
+import { current } from '@reduxjs/toolkit';
 interface spot {
   date?: string;
   id?: number;
@@ -43,7 +44,7 @@ export const PickList = () => {
     axios
       .post('http://j8c202.p.ssafy.io:8000/fast/recommendation', {
         user_test: surveyResult.surveyPick,
-        si_name: location,
+        si_name: selectedLocation,
       })
       .then((res: any) => {
         const result: spot[] = [...res.data.result];
@@ -56,38 +57,44 @@ export const PickList = () => {
   const ModalSlice = useAppSelector(ModalState);
   const ScheduleSlice = useAppSelector(schedule);
 
-  const { location } = useParams<{ location: string }>();
+  const { location: selectedLocation } = useParams<{ location: string }>();
   const pickList = currentState.pickList;
-  console.log(location);
+
   const dateList = new Array(ModalSlice.range).fill([]).map(() => []);
   dateList.push([]);
+  // 스케쥴 전송
   const setSchedule = async () => {
-    await dispatch(setLocation({ location }));
+    await dispatch(setLocation({ location: selectedLocation }));
 
     const promises = spotInfo.map((v: any) => {
       if (v.date !== '0') {
-        return dispatch(
-          setspotInfoList({ spotId: v.id, spotName: v.spot_name, planDate: parseInt(v.date) }),
-        );
+        return new Promise((resolve) => {
+          resolve(
+            dispatch(
+              setspotInfoList({
+                spotId: v.id,
+                spotName: v.spot_name,
+                planDate: parseInt(v.date),
+              }),
+            ),
+          );
+        });
       }
-      return Promise.resolve();
     });
 
-    await Promise.all(promises);
-    console.log({
-      tourName: ScheduleSlice.tourName,
-      location: ScheduleSlice.location,
-      startDate: ScheduleSlice.startDate,
-      endDate: ScheduleSlice.endDate,
-      spotInfoList: ScheduleSlice.spotInfoList,
+    await Promise.allSettled(promises);
+    const { tourName, location, startDate, endDate, spotInfoList } = ScheduleSlice;
+
+    console.log('데이터 반출 전');
+    const response = await createScheduleApi({
+      tourName,
+      location,
+      startDate,
+      endDate,
+      spotInfoList,
     });
-    await createScheduleApi({
-      tourName: ScheduleSlice.tourName,
-      location: ScheduleSlice.location,
-      startDate: ScheduleSlice.startDate,
-      endDate: ScheduleSlice.endDate,
-      spotInfoList: ScheduleSlice.spotInfoList,
-    });
+
+    console.log(response); // response 확인용
 
     await dispatch(setModalOpen());
     await dispatch(clearPlace());
@@ -172,7 +179,7 @@ export const PickList = () => {
       <>
         <OptionBox>
           <div className='font-nexon text-center font-bold'>
-            <div className='text-3xl'>{location}</div>
+            <div className='text-3xl'>{selectedLocation}</div>
             <div>
               {ConvertDate(ModalSlice.startDate)} ~ {ConvertDate(ModalSlice.endDate)}
             </div>
