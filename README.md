@@ -49,16 +49,16 @@ Backend
 
 ---
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67c1f448-e2ff-404c-8872-6afc8f34234c/Untitled.png)
+![Achitecture](/image/Achitecture.png)
 
 ### 클래스 다이어그램
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce4a9529-4ef9-4d2d-9911-4bfa3569b9fd/Untitled.png)
+![ClassDiagram](/image/ClassDiagram.png)
 
 ### 여행 추천 화면
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1471074c-f85c-47c4-9393-3162eb10a822/Untitled.png)
+![Recommend](/image/Recommend.png)
 
 ### 여행 후기 공유
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b1ff5693-01bc-4ec7-a13e-ffb3717b4a69/Untitled.png)
+![Review](/image/Review.png)
